@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "객체지향 프로그래밍"
-subtitle: "R 마크다운 파이썬(Python) 환경설정"
+subtitle: "파이썬(Python) OOP"
 author:
     name: xwMOOC
 date: "`r Sys.Date()`"
@@ -24,36 +24,6 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
 
 ```
 
-# R마크다운 파이썬 환경설정 {#rmarkdown-python} 
-
-R마크다운으로 파이썬 객체지향 프로그래밍 내용을 정리할 예정이라 `reticulate` 팩키지를 설치하고,
-`anaconda3`도 설치한다. 아나콘다 내부에 파이썬이 들어있어 [Anaconda 2018.12 for Windows Installer](https://www.anaconda.com/distribution/#download-section) 웹사이트에서 다운로드 받아 설치한다.
-
-아나콘다를 설치한 경우 **환경설정**도 함께 진행한다. `제어판` &rarr; `시스템 및 보안` &rarr; `시스템`으로 이동해서 "고급 시스템 설정"으로 들어가서 **환경변수(N)...**로 들어간다. 환경변수에 다음 사항을 추가시킨다.
-단, `사용자명`에 본인 컴퓨터 사용자 계정을 지정한다.
-
-- `C:\Users\사용자명\Anaconda3\Library\bin`
-- `C:\Users\사용자명\Anaconda3`
-- `C:\Users\사용자명\Anaconda3\Scripts`
-
-```{r python-setting}
-library(reticulate)
-use_condaenv("anaconda3")
-```
-
-## 헬로 파이썬 {#rmarkdown-python-hello-world} 
-
-R 코드 덩어리(chunk)에 "```{python}" 으로 시작해서 파이썬 코드를 작성하고 "```"으로 마무리하여 파이썬 코드를 작성한다. 간단한 `for` 루프를 작서하여 리스트에 담긴 원소를 하나씩 출력하는 파이썬 코드를 작성한다.
-
-```{python hello-world}
-print("헬로 파이썬!!!")
-
-languages = ['R', '파이썬', 'C/C++', '자바', '루비']
-
-for language in languages:
-    print("프로그래밍 언어:", language)
-```
-
-# R마크다운 파이썬 환경설정 {#rmarkdown-python} 
+# 시작 {#rmarkdown-python-start} 
 
 
