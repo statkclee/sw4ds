@@ -65,3 +65,42 @@ def log_number(number):
 log_number(0)
 log_number('Korea')
 
+# 반복자 ------------------------------
+## for 루프 - 리스트
+languages = ["R", "파이썬", "C/C++"]
+
+for language in languages:
+  print(f"데이터 사이언스 언어: {language}")
+
+
+## for 루프 - 딕셔너리
+data_science = {"R": "젠틀맨, 이하카",
+                "파이썬": "귀도 반 로섬",
+                "C/C++": "톰슨, 리치"}
+
+for language, creator in data_science.items():
+    print(f"- 데이터 사이언스 언어: {language}, \n ㄴ 창시자: {creator}")
+
+## `for` 루프 반복자 - `enumerate`
+
+models = ["회귀분석", "기계학습", "딥러닝"]
+
+for index, model in enumerate(models):
+  print(f"- 데이터 사이언스 모형 {index+1}: {model}")
+
+print(list(enumerate(models)))
+
+## `for` 루프 반복자 - `zip`
+
+languages = ["R", "파이썬", "텐서플로우"]
+models   = ["회귀분석", "기계학습", "딥러닝"]
+
+for language, model in zip(languages, models):
+  print(f"데이터 사이언스 언어: {language}, 모형: {model}")
+
+## `for` 루프 반복자 - `zip` 압축풀기
+
+solution = zip(languages, models)
+
+print(*solution)
+
