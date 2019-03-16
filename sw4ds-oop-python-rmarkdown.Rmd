@@ -57,3 +57,10 @@ for language in languages:
 ```
 
 
+# 인터랙티브 파이썬 {#rmarkdown-python-repl} 
+
+`reticulate::repl_python()` 명령어를 R 콘솔에서 타이핑하게 되면 `>` 프롬프트가 `>>>`으로 변경되어 파이썬 코드를 **컨트롤+엔터(CTRL+Enter)키**를 입력하게 되면 RStudio IDE에서 파이썬 코드 개발작업을 수행할 수 있다.
+
+```{r python-ctrl-enter, eval=FALSE}
+reticulate::repl_python()
+```
