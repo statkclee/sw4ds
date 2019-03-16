@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "객체지향 프로그래밍"
-subtitle: "파이썬(Python) OOP"
+subtitle: "데이터 사이언스 파이썬 OOP"
 author:
     name: xwMOOC
 date: "`r Sys.Date()`"
@@ -21,9 +21,204 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
                       comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
 
+library(reticulate)
+use_condaenv("anaconda3")
+# reticulate::repl_python()
+```
+
+# 사용자 정의함수 {#python-user-defined-function} 
+
+사용자 정의함수(user-defined function)는 매개변수(parameter)를 갖는 함수와 매개변수를 갖는 함수로 크게 나눌 수 있고 함수결과를 반환하는 함수와 함수결과를 반환하지 않는 함수로 크게 나눌 수 있다.
+
+## 매개변수를 받지 않는 함수 {#python-user-defined-function-type-01} 
+
+`hello_world()` 함수는 인자가 없고 출력결과만 화면에 출력하는 가장 간단한 함수다.
+
+```{python python-function-no-parameter}
+def hello_world():
+    print("헬로월드!!!")
+    
+hello_world()  
+```
+
+## 매개변수를 받는 함수 {#python-user-defined-function-type-02} 
+
+`hello_world()` 함수는 인자가 없고 출력결과만 화면에 출력하는 가장 간단한 함수다.
+`f`를 문자열 앞에 추가하여 문자열임을 알리고 `{name}`과 같이 매개변수를 결합시킬 수도 있다.
+
+```{python python-function-parameter}
+def greeting(name):
+    print(f"안녕 {name}.")
+    
+greeting("정훈")
+```
+
+## 결과를 반환하는 함수 {#python-user-defined-function-type-03} 
+
+`add_number()` 함수는 매개변수 두개를 인자로 받아 `+` 연산을 한 후에 결과값(`sum_number`)을 반환시킨다.
+그래서, `add_number(10, 20)`이 수행된 결과는 `result` 객체에 저장되고 이를 다시 재사용해서 또다른 연산작업을 수행한 결과를 출력시킨다.
+
+```{python python-function-parameter-return}
+def add_number(first, second):
+    sum_number = first + second
+    print(f"두 숫자 합: {sum_number}.")
+    return sum_number
+    
+result = add_number(10, 20)
+
+print(result / 10)
+```
+
+## 다수 결과를 반환하는 함수 {#python-user-defined-function-type-04} 
+
+매개변수를 2개 이상 전달받을 수 있다. 하지만 반환되는 결과는 하나만 가능했다.
+매개변수 2개를 전달받아 사칙연산 작업을 수행하는 결과를 반환하고자 하는 경우 새로운 자료구조가 필요하다.
+우선 리스트로 사칙연산 수행결과를 반환하는 함수를 작성해보자.
+파이썬에서 리스트는 `[]`으로 생성한다.
+사칙연산 작업 결과 각각을 계산 한 후에 리스트로 `result` 변수에 저장한 후에 `print()` 함수로 결과를 확인한다.
+
+```{python python-function-parameter-multiple-return}
+def basic_operation(first, second):
+    sum_number = first + second
+    minus_number = first - second
+    multiply_number = first * second
+    divide_number = first / second
+    
+    result = [sum_number, minus_number, multiply_number, divide_number]
+    
+    return result
+
+op_result = basic_operation(10, 5)
+    
+print(op_result)
+```
+
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 10px;}
+</style>
+<div class = "blue">
+
+- 함수를 구성하는 기본요소
+    - 함수 머리(header): `def`로 함수임을 선언하고, 함수명과 함수인자를 기술, 마지막을 `:`으로 마무리.
+    - 함수 설명: `docstring`으로 `"""` ... `"""` 으로 함수에 대한 도움말을 기술한다. 함수가 하는 역할, 매개변수, 반환되는 값, 예제 등을 넣어 개발자가 봤을 때 피로도가 없도록 작성한다.
+    - 함수 몸통(body): 앞서 사칙연산처럼 함수가 수행해야 되는 작업을 기술한다.
+    - 반환(`return`): `return` 예약어로 함수작업결과 반환되는 값을 지정한다.
+
+```{python python-function-explain}
+def basic_operation(first, second):
+    """
+    숫자 두개를 받아 사칙연산을 수행하는 함수.
+    
+    예제
+        basic_operation(10, 20)
+    매개변수(args)
+        first(int): 정수형 숫자
+        second(int): 정수형 숫자
+    반환값(return)
+        리스트: +-*/ 사칙연산 결과
+    """
+    sum_number = first + second
+    minus_number = first - second
+    multiply_number = first * second
+    divide_number = first / second
+    
+    result = [sum_number, minus_number, multiply_number, divide_number]
+    
+    return result
+```
+
+</div>
+
+# 파이썬 자료형 {#python-data-structure}
+
+## 튜플(tuple) {#python-data-structure-tuple}
+
+**튜플(tuple)**은 리스트와 마찬가지로 값(value)을 다수 저장시킬 수 있지만 한번 생성된 튜플 내부 원소값은 변경시킬 수가 없다. 즉, 변경시킬 수 없는 `immutable` 자료구조로 `()`으로 생성시킨다.
+
+```{python python-tuple, eval=FALSE}
 
 ```
 
-# 시작 {#rmarkdown-python-start} 
+
+# 람다 함수 {#python-lambda}
+
+## 리스트 원소를 제곱 {#python-lambda-function-basic}
+
+`[1,2,3,4,5]`이 담겨있는 리스트 각 원소를 제곱하는 프로그램을 먼저 작성해 보자.
+리스트에 담겨있기 때문에 원소 각각을 꺼내서 제곱한 후에 이를 `data` 리스트 각 원소 위치에 맞춰 갱신해 주면 된다.
+
+```{python python-lambda}
+data = [1,2,3,4,5]
+
+for datum in data:
+    data[datum-1] = datum * datum
+
+print(data)
+```
+
+## 리스트 제곱 함수 {#python-lambda-function}
+
+두번째 사례로 함수(`square_num()`)를 만들어서 리스트를 매개변수로 던져 각 원소를 제곱하는 함수로 제작하여 결과를 출력시킨다.
+
+```{python python-lambda-function}
+data = [1,2,3,4,5]
+
+def square_num(data):
+    for datum in data:
+        data[datum-1] = datum * datum
+    return(data)    
+
+print(square_num(data))
+```
+
+## 람다 함수 {#python-lambda-function-example}
+
+먼저 `data` 리스트를 선언하고 `lambda` 함수를 사용해서 `data` 리스트 원소 하나만 제곱하도록 `lamdba` 함수를 정의힌다.
+
+```{python python-lambda-example-01}
+data = [1,2,3,4,5]
+
+square_number = lambda num: num * num
+
+print(square_number(data[1]))
+```
+
+`map()` 함수는 내부에 인자를 두개 갖는데, 하나는 함수, 다른 하나는 데이터가 된다. 즉 `map(function, data)` 형태로 요약되는데 `lambda num: num * num` 무명함수를 정의하게 되면 `data` 리스트 각 원소를 꺼내 원하는 연산작업을 각 원소별로 수행할 수 있게 된다.
+
+```{python python-lambda-example}
+data_data = map(lambda num: num * num, data)
+
+print(list(data_data))
+```
+
+# 오류 처리 {#python-error-handling}
+
+함수가 매번 올바르게 처리되는 경우는 없다. 경우에 따라서는 오류가 명백한 경우도 많아 이에 대한 예외처리가 필수적이다. 다음 사례를 살펴보면 `log_number()` 함수는 숫자를 매개변수로 넘겨받아 상용로그로 변환하는 역할  수행하는데 문자열 `Korea`가 넘어오게 되면 처리를 할 수 없는데 상식적으로 `Korea`에 상용로그를 취하게 되는 의미는 무엇을까? 이런 경우 오류가 나오는 것이 당연하다.
+
+```{python python-error, error=TRUE}
+# -*- coding: utf-8 -*-
+import math
+
+def log_number(number):
+    return math.log10(number)
+
+log_number(10)
+log_number('Korea')
+```
+
+먼저 입력받은 매개변수 `number`가 제대로 된 값인지를 점검하여 오류가 있는 경우 `ValueError()` 오류처리를 하고, 정상적인 처리가 불가능할 경우 `TypeError()`를 내서 처리를 한다.
 
 
+```{python python-error-handling, error=TRUE}
+def log_number(number):
+    if number < 0:
+        raise ValueError(f'number는 0 보다 커야 합니다.')
+    try:
+        return math.log10(number)
+    except TypeError:
+        print('number 문자는 안돼요')
+    
+log_number(0)
+log_number('Korea')
+```

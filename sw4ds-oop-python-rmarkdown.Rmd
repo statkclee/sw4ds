@@ -64,3 +64,71 @@ for language in languages:
 ```{r python-ctrl-enter, eval=FALSE}
 reticulate::repl_python()
 ```
+
+# 파이썬 파일 실행 [^BMI] {#rmarkdown-python-file} 
+
+[^BMI]: [식품안전나라, BMI계산기](http://www.foodsafetykorea.go.kr/portal/healthyfoodlife/bmiCalcurator.do?menu_no=3071&menu_grp=MENU_NEW03)
+
+비만 기준 '골드 스탠더드(gold standard)'로 체질량지수(BMI, Body Mass Index)를 많이 사용한다. 
+체중을 신장의 제곱으로 나눈값으로 BMI를 계산한다.
+
+$$\text{체질량 지수} = \frac{체중}{신장^2}$$
+
+대한민국 남성 평균키와 평균체중은 얼마나 될까 이를 파이썬 프로그램으로 작성하여 계산해 보자.
+2015년 8월 뉴스원 기사에 따르면 170.5cm, 70.9㎏가 2013년 기준 평균이다. 약 24 정도 나온다. 
+아래 BMI 참조표를 보면 표준체형에서 비만으로 넘어가기 직전 모습이 된다.
+
+- BMI < 18.5: "마른 체형"
+- 18.5 <= BMI < 25: "표준 체형"
+- 25 <= BMI < 30: "비만"
+- BMI >= 30: "고도비만"
+
+이를 바탕으로 BMI를 R로 먼저 계산해보자
+
+```{r bmi-korean}
+`키` <- 170.5 * 0.01 
+`몸무게` <- 70.9
+bmi <-  `몸무게` / `키`**2
+cat("대한민국 남성 BMI (2013년): ", bmi)
+```
+
+`reticulate` 팩키지 `source_python()` 함수를 사용해서 BMI를 계산하는 파이썬 코드를 실행시킬 수 있다.
+
+`bmi.py` 파일에 BMI를 계산하는 파이썬 코드를 작성한다.
+
+```{r bmi-python-code, eval=FALSE}
+## bmi.py
+# BMI 계산
+height = 170.5 * 0.01 
+weight = 70.9
+bmi = weight / height ** 2
+print("BMI:", bmi)
+```
+
+```{r bmi-python-call, eval=FALSE}
+reticulate::source_python("code/bmi_function.py")
+```
+
+
+두번째는 `calc_bmi()` 함수를 작성하여 신장과 몸무게를 넣어 BMI를 계산하도록 파이썬 코드를 수정한다.
+
+```{r bmi-python-code-function, eval=FALSE}
+## bmi_function.py
+# BMI 계산
+def calc_bmi(height = 170.5, weight=70.9):
+    height = height * 0.01 
+    weight = weight
+    bmi = weight / height ** 2
+    print("BMI:", bmi)
+
+# calc_bmi(height = 170.5, weight=70.9)
+```
+
+동일한 방식으로 `source_python()` 실행을 하지만 `calc_bmi()` 함수를 R 환경에서 불러 작업할 수 있는 장점이 있다.
+
+```{r bmi-python-funciton-run, eval=FALSE}
+reticulate::source_python("code/bmi_function.py")
+calc_bmi(height = 170.5, weight=70.9)
+```
+
+

@@ -396,10 +396,51 @@ div.tocify {
 <p><code>reticulate::repl_python()</code> 명령어를 R 콘솔에서 타이핑하게 되면 <code>&gt;</code> 프롬프트가 <code>&gt;&gt;&gt;</code>으로 변경되어 파이썬 코드를 <strong>컨트롤+엔터(CTRL+Enter)키</strong>를 입력하게 되면 RStudio IDE에서 파이썬 코드 개발작업을 수행할 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reticulate<span class="op">::</span><span class="kw">repl_python</span>()</code></pre></div>
 </div>
+<div id="rmarkdown-python-file" class="section level1">
+<h1><span class="header-section-number">4</span> 파이썬 파일 실행 <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></h1>
+<p>비만 기준 ’골드 스탠더드(gold standard)’로 체질량지수(BMI, Body Mass Index)를 많이 사용한다. 체중을 신장의 제곱으로 나눈값으로 BMI를 계산한다.</p>
+<p><span class="math display">\[\text{체질량 지수} = \frac{체중}{신장^2}\]</span></p>
+<p>대한민국 남성 평균키와 평균체중은 얼마나 될까 이를 파이썬 프로그램으로 작성하여 계산해 보자. 2015년 8월 뉴스원 기사에 따르면 170.5cm, 70.9㎏가 2013년 기준 평균이다. 약 24 정도 나온다. 아래 BMI 참조표를 보면 표준체형에서 비만으로 넘어가기 직전 모습이 된다.</p>
+<ul>
+<li>BMI &lt; 18.5: “마른 체형”</li>
+<li>18.5 &lt;= BMI &lt; 25: “표준 체형”</li>
+<li>25 &lt;= BMI &lt; 30: “비만”</li>
+<li>BMI &gt;= 30: “고도비만”</li>
+</ul>
+<p>이를 바탕으로 BMI를 R로 먼저 계산해보자</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="st">`</span><span class="dt">키</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="fl">170.5</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.01</span> 
+<span class="st">`</span><span class="dt">몸무게</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="fl">70.9</span>
+bmi &lt;-<span class="st">  `</span><span class="dt">몸무게</span><span class="st">`</span> <span class="op">/</span><span class="st"> `</span><span class="dt">키</span><span class="st">`</span><span class="op">**</span><span class="dv">2</span>
+<span class="kw">cat</span>(<span class="st">&quot;대한민국 남성 BMI (2013년): &quot;</span>, bmi)</code></pre></div>
+<pre><code>대한민국 남성 BMI (2013년):  24.3892</code></pre>
+<p><code>reticulate</code> 팩키지 <code>source_python()</code> 함수를 사용해서 BMI를 계산하는 파이썬 코드를 실행시킬 수 있다.</p>
+<p><code>bmi.py</code> 파일에 BMI를 계산하는 파이썬 코드를 작성한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## bmi.py
+<span class="co"># BMI 계산</span>
+height =<span class="st"> </span><span class="fl">170.5</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.01</span> 
+weight =<span class="st"> </span><span class="fl">70.9</span>
+bmi =<span class="st"> </span>weight <span class="op">/</span><span class="st"> </span>height <span class="op">**</span><span class="st"> </span><span class="dv">2</span>
+<span class="kw">print</span>(<span class="st">&quot;BMI:&quot;</span>, bmi)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reticulate<span class="op">::</span><span class="kw">source_python</span>(<span class="st">&quot;code/bmi_function.py&quot;</span>)</code></pre></div>
+<p>두번째는 <code>calc_bmi()</code> 함수를 작성하여 신장과 몸무게를 넣어 BMI를 계산하도록 파이썬 코드를 수정한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## bmi_function.py
+<span class="co"># BMI 계산</span>
+def <span class="kw">calc_bmi</span>(<span class="dt">height =</span> <span class="fl">170.5</span>, <span class="dt">weight=</span><span class="fl">70.9</span>)<span class="op">:</span>
+<span class="st">    </span>height =<span class="st"> </span>height <span class="op">*</span><span class="st"> </span><span class="fl">0.01</span> 
+    weight =<span class="st"> </span>weight
+    bmi =<span class="st"> </span>weight <span class="op">/</span><span class="st"> </span>height <span class="op">**</span><span class="st"> </span><span class="dv">2</span>
+    <span class="kw">print</span>(<span class="st">&quot;BMI:&quot;</span>, bmi)
+
+<span class="co"># calc_bmi(height = 170.5, weight=70.9)</span></code></pre></div>
+<p>동일한 방식으로 <code>source_python()</code> 실행을 하지만 <code>calc_bmi()</code> 함수를 R 환경에서 불러 작업할 수 있는 장점이 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reticulate<span class="op">::</span><span class="kw">source_python</span>(<span class="st">&quot;code/bmi_function.py&quot;</span>)
+<span class="kw">calc_bmi</span>(<span class="dt">height =</span> <span class="fl">170.5</span>, <span class="dt">weight=</span><span class="fl">70.9</span>)</code></pre></div>
+</div>
 <div class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p><span class="citation">[Pablo Franco, @jpablofranco(15 June, 2018), &quot;Mix’n Mingling R and Python with Reticulate&quot;]</span>(<a href="https://rpubs.com/jpfranco123/reticulate" class="uri">https://rpubs.com/jpfranco123/reticulate</a>)<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p><a href="http://www.foodsafetykorea.go.kr/portal/healthyfoodlife/bmiCalcurator.do?menu_no=3071&amp;menu_grp=MENU_NEW03">식품안전나라, BMI계산기</a><a href="#fnref2">↩</a></p></li>
 </ol>
 </div>
 
