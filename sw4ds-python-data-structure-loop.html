@@ -466,13 +466,13 @@ north_set <span class="op">=</span> <span class="bu">set</span>(north_korea)
 <p>집합원소 추가, 삭제, 갱신을 할 경우 <code>.update()</code>, <code>.add()</code>, <code>.discard()</code> 메쏘드를 사용한다.</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">south_set.add(<span class="st">&quot;한라산&quot;</span>)
 <span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</code></pre></div>
-<pre><code>대한민국: {'한국어', '자본주의', '한라산', '한반도', '민주주의', '수정자본주의'}</code></pre>
+<pre><code>대한민국: {'자본주의', '한반도', '민주주의', '수정자본주의', '한라산', '한국어'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">south_set.discard(<span class="st">&quot;수정자본주의&quot;</span>)
 <span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</code></pre></div>
-<pre><code>대한민국: {'한국어', '자본주의', '한라산', '한반도', '민주주의'}</code></pre>
+<pre><code>대한민국: {'자본주의', '한반도', '민주주의', '한라산', '한국어'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">south_set.update([<span class="st">&quot;민주주의&quot;</span>, <span class="st">&quot;설악산&quot;</span>, <span class="st">&quot;서울&quot;</span>])
 <span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</code></pre></div>
-<pre><code>대한민국: {'한국어', '자본주의', '한라산', '서울', '한반도', '설악산', '민주주의'}</code></pre>
+<pre><code>대한민국: {'자본주의', '설악산', '한반도', '민주주의', '서울', '한라산', '한국어'}</code></pre>
 <div id="python-set-operator" class="section level2">
 <h2><span class="header-section-number">4.1</span> 집합 연산</h2>
 <p>집합 자료구조를 갖추게 되면 백미는 친숙한 집합 연산 작업을 수행함에 있다.</p>
@@ -482,13 +482,13 @@ north_set <span class="op">=</span> <span class="bu">set</span>(north_korea)
 <li><code>.diff()</code> 메쏘드: 차집합, <span class="math inline">\(\setminus\)</span></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="ss">f'통일한국 합집합: </span><span class="sc">{</span>south_set<span class="sc">.</span>union(north_set)<span class="sc">}</span><span class="ss">'</span>)</code></pre></div>
-<pre><code>통일한국 합집합: {'한국어', '전체주의', '한라산', '서울', '공산주의', '사회주의', '한반도', '민주주의', '설악산', '자본주의'}</code></pre>
+<pre><code>통일한국 합집합: {'공산주의', '자본주의', '설악산', '한반도', '전체주의', '민주주의', '서울', '한라산', '한국어', '사회주의'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="ss">f'통일한국 교집합: </span><span class="sc">{</span>south_set<span class="sc">.</span>intersection(north_set)<span class="sc">}</span><span class="ss">'</span>)</code></pre></div>
 <pre><code>통일한국 교집합: {'한국어', '한반도'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="ss">f'통일한국 차집합 A: </span><span class="sc">{</span>south_set<span class="sc">.</span>difference(north_set)<span class="sc">}</span><span class="ss">'</span>)</code></pre></div>
-<pre><code>통일한국 차집합 A: {'한라산', '서울', '민주주의', '설악산', '자본주의'}</code></pre>
+<pre><code>통일한국 차집합 A: {'자본주의', '설악산', '민주주의', '서울', '한라산'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="ss">f'통일한국 차집합 B: </span><span class="sc">{</span>north_set<span class="sc">.</span>difference(south_set)<span class="sc">}</span><span class="ss">'</span>)</code></pre></div>
-<pre><code>통일한국 차집합 B: {'전체주의', '공산주의', '사회주의'}</code></pre>
+<pre><code>통일한국 차집합 B: {'공산주의', '사회주의', '전체주의'}</code></pre>
 </div>
 </div>
 <div id="python-data-structure-dict" class="section level1">
@@ -579,6 +579,47 @@ OrderedDict([('name', 'C'), ('miles', ' 4'), ('country', '  IT')])
 OrderedDict([('name', 'A'), ('miles', ' 20'), ('country', ' UK')])
 OrderedDict([('name', 'B'), ('miles', ' 10'), ('country', ' USA')])</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">csv_file.close()</code></pre></div>
+</div>
+</div>
+<div id="python-counter" class="section level1">
+<h1><span class="header-section-number">6</span> <code>Counter</code> 빈도수 세기</h1>
+<p><code>collections</code> 모듈에는 흔히 사용되는 기능 중 하나인 <code>Counter</code> 도구가 포함되어 있다. 예를 들어, 리스트에 들어있는 단어 중 가장 빈도가 많은 것은 무엇인지 <code>Counter()</code> 객체를 생성한 후에 <code>for</code> 루프를 돌려 간단하게 계산해 낼 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> collections <span class="im">import</span> Counter
+
+cnt <span class="op">=</span> Counter()
+
+words <span class="op">=</span> [<span class="st">'red'</span>, <span class="st">'blue'</span>, <span class="st">'red'</span>, <span class="st">'green'</span>, <span class="st">'blue'</span>, <span class="st">'blue'</span>]
+
+<span class="cf">for</span> word <span class="kw">in</span> words:
+    cnt[word] <span class="op">+=</span> <span class="dv">1</span>
+    
+cnt</code></pre></div>
+<pre><code>Counter({'blue': 3, 'red': 2, 'green': 1})</code></pre>
+<p><code>.most_common()</code> 메쏘드를 사용하게 되면 가장 빈번한 단어를 내림차순으로 찾아낼 수도 있다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">cnt.most_common(<span class="dv">1</span>)</code></pre></div>
+<pre><code>[('blue', 3)]</code></pre>
+<div id="python-counter-novel" class="section level2">
+<h2><span class="header-section-number">6.1</span> 소설 단어 빈도수</h2>
+<p>윈도우 시작버튼을 누르고 <code>Anaconda3 (64-Bit)</code> 아래 <code>Anacoda Prompt</code> 터미널을 열고 <code>python</code>을 실행한 후에 <code>import nltk</code>를 입력한 후에 순차적으로 <code>nltk.download('gutenberg')</code> 명령어를 실행시켜 구텐베르그 프로젝트에 등록된 문학작품을 다운로드 받는다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(base) C<span class="op">:</span>\Users\사용자명<span class="op">&gt;</span><span class="st"> </span>python
+Python <span class="fl">3.7</span>.<span class="dv">1</span> (default, Dec <span class="dv">10</span> <span class="dv">2018</span>, <span class="dv">22</span><span class="op">:</span><span class="dv">54</span><span class="op">:</span><span class="dv">23</span>) [MSC v.<span class="dv">1915</span> <span class="dv">64</span> <span class="kw">bit</span> (AMD64)] <span class="op">::</span><span class="st"> </span>Anaconda, Inc. on win32
+Type <span class="st">&quot;help&quot;</span>, <span class="st">&quot;copyright&quot;</span>, <span class="st">&quot;credits&quot;</span> or <span class="st">&quot;license&quot;</span> <span class="cf">for</span> more information.
+<span class="op">&gt;</span><span class="er">&gt;&gt;</span><span class="st"> </span>import nltk
+<span class="op">&gt;</span><span class="er">&gt;&gt;</span><span class="st"> </span><span class="kw">nltk.download</span>(<span class="st">'gutenberg'</span>)
+[nltk_data] Downloading package gutenberg to
+[nltk_data]     C<span class="op">:</span>\Users\statkclee\AppData\Roaming\nltk_data...
+[nltk_data]   Unzipping corpora\gutenberg.zip.
+True</code></pre></div>
+<p><a href="http://www.gutenberg.org/">Free eBooks - Project Gutenberg</a> 웹사이트에서 모비딕(<code>melville-moby_dick.txt</code>) 소설책을 다운로드 받는다. 그리고 나서 <code>re.findall()</code> 메쏘드를 사용해서 단어를 추출한다. <code>Counter(words)</code>를 호출해서 가장 빈도수가 높은 단어 10개를 추출해낸다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> nltk.corpus <span class="im">import</span> gutenberg
+gutenberg.fileids()</code></pre></div>
+<pre><code>['austen-emma.txt', 'austen-persuasion.txt', 'austen-sense.txt', 'bible-kjv.txt', 'blake-poems.txt', 'bryant-stories.txt', 'burgess-busterbrown.txt', 'carroll-alice.txt', 'chesterton-ball.txt', 'chesterton-brown.txt', 'chesterton-thursday.txt', 'edgeworth-parents.txt', 'melville-moby_dick.txt', 'milton-paradise.txt', 'shakespeare-caesar.txt', 'shakespeare-hamlet.txt', 'shakespeare-macbeth.txt', 'whitman-leaves.txt']</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">moby_dick <span class="op">=</span> gutenberg.<span class="bu">open</span>(<span class="st">'melville-moby_dick.txt'</span>).read()
+
+<span class="im">import</span> re
+words <span class="op">=</span> re.findall(<span class="st">'\w+'</span>, moby_dick.lower())
+Counter(words).most_common(<span class="dv">10</span>)</code></pre></div>
+<pre><code>[('the', 14431), ('of', 6609), ('and', 6430), ('a', 4736), ('to', 4625), ('in', 4172), ('that', 3085), ('his', 2530), ('it', 2522), ('i', 2127)]</code></pre>
 </div>
 </div>
 <div class="footnotes">
