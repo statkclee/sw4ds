@@ -28,9 +28,13 @@ use_condaenv("anaconda3")
 
 # 데이터 사이언스 자료형 {#python-data-structure}
 
-파이썬에는 값을 담아두는 컨테이너(Container) 자료형이 다수 존재한다.
+파이썬을 설치하게 되면 [The Python Standard Library](https://docs.python.org/3.6/library/index.html)에 표준 내장 자료형과 표준내장 함수, 표준내장 모듈이 있다.
 
-크게 보면 값을 변경시킬 수 있는 리스트(`list`)와 집합(`set`)이 있고 값을 변경시킬 수 없는 튜플(`tuple`)로 나눌 수 있다.
+- 표준 내장 자료형: `list`, `dict`, `tuple`, `set` 등
+- 표준 내장 함수: `print()`, `len()`, `range()`, `enumerate()`, `map()`, `zip()` 등
+- 표준 내장 모듈: `os`, `sys`, `itertools`, `collections`, `math` 등
+
+파이썬에는 값을 담아두는 컨테이너(Container) 자료형이 다수 존재한다. 크게 보면 값을 변경시킬 수 있는 리스트(`list`)와 집합(`set`)이 있고 값을 변경시킬 수 없는 튜플(`tuple`)로 나눌 수 있다.
 
 # 리스트(`list`) {#python-data-structure-list}
 

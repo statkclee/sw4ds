@@ -366,8 +366,13 @@ div.tocify {
 
 <div id="python-data-structure" class="section level1">
 <h1><span class="header-section-number">1</span> 데이터 사이언스 자료형</h1>
-<p>파이썬에는 값을 담아두는 컨테이너(Container) 자료형이 다수 존재한다.</p>
-<p>크게 보면 값을 변경시킬 수 있는 리스트(<code>list</code>)와 집합(<code>set</code>)이 있고 값을 변경시킬 수 없는 튜플(<code>tuple</code>)로 나눌 수 있다.</p>
+<p>파이썬을 설치하게 되면 <a href="https://docs.python.org/3.6/library/index.html">The Python Standard Library</a>에 표준 내장 자료형과 표준내장 함수, 표준내장 모듈이 있다.</p>
+<ul>
+<li>표준 내장 자료형: <code>list</code>, <code>dict</code>, <code>tuple</code>, <code>set</code> 등</li>
+<li>표준 내장 함수: <code>print()</code>, <code>len()</code>, <code>range()</code>, <code>enumerate()</code>, <code>map()</code>, <code>zip()</code> 등</li>
+<li>표준 내장 모듈: <code>os</code>, <code>sys</code>, <code>itertools</code>, <code>collections</code>, <code>math</code> 등</li>
+</ul>
+<p>파이썬에는 값을 담아두는 컨테이너(Container) 자료형이 다수 존재한다. 크게 보면 값을 변경시킬 수 있는 리스트(<code>list</code>)와 집합(<code>set</code>)이 있고 값을 변경시킬 수 없는 튜플(<code>tuple</code>)로 나눌 수 있다.</p>
 </div>
 <div id="python-data-structure-list" class="section level1">
 <h1><span class="header-section-number">2</span> 리스트(<code>list</code>)</h1>
@@ -466,13 +471,13 @@ north_set <span class="op">=</span> <span class="bu">set</span>(north_korea)
 <p>집합원소 추가, 삭제, 갱신을 할 경우 <code>.update()</code>, <code>.add()</code>, <code>.discard()</code> 메쏘드를 사용한다.</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">south_set.add(<span class="st">&quot;한라산&quot;</span>)
 <span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</code></pre></div>
-<pre><code>대한민국: {'자본주의', '한반도', '민주주의', '수정자본주의', '한라산', '한국어'}</code></pre>
+<pre><code>대한민국: {'한반도', '민주주의', '한라산', '자본주의', '한국어', '수정자본주의'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">south_set.discard(<span class="st">&quot;수정자본주의&quot;</span>)
 <span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</code></pre></div>
-<pre><code>대한민국: {'자본주의', '한반도', '민주주의', '한라산', '한국어'}</code></pre>
+<pre><code>대한민국: {'한반도', '민주주의', '한라산', '자본주의', '한국어'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">south_set.update([<span class="st">&quot;민주주의&quot;</span>, <span class="st">&quot;설악산&quot;</span>, <span class="st">&quot;서울&quot;</span>])
 <span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</code></pre></div>
-<pre><code>대한민국: {'자본주의', '설악산', '한반도', '민주주의', '서울', '한라산', '한국어'}</code></pre>
+<pre><code>대한민국: {'한반도', '민주주의', '한라산', '설악산', '자본주의', '한국어', '서울'}</code></pre>
 <div id="python-set-operator" class="section level2">
 <h2><span class="header-section-number">4.1</span> 집합 연산</h2>
 <p>집합 자료구조를 갖추게 되면 백미는 친숙한 집합 연산 작업을 수행함에 있다.</p>
@@ -482,11 +487,11 @@ north_set <span class="op">=</span> <span class="bu">set</span>(north_korea)
 <li><code>.diff()</code> 메쏘드: 차집합, <span class="math inline">\(\setminus\)</span></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="ss">f'통일한국 합집합: </span><span class="sc">{</span>south_set<span class="sc">.</span>union(north_set)<span class="sc">}</span><span class="ss">'</span>)</code></pre></div>
-<pre><code>통일한국 합집합: {'공산주의', '자본주의', '설악산', '한반도', '전체주의', '민주주의', '서울', '한라산', '한국어', '사회주의'}</code></pre>
+<pre><code>통일한국 합집합: {'공산주의', '한반도', '민주주의', '설악산', '자본주의', '전체주의', '한국어', '한라산', '서울', '사회주의'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="ss">f'통일한국 교집합: </span><span class="sc">{</span>south_set<span class="sc">.</span>intersection(north_set)<span class="sc">}</span><span class="ss">'</span>)</code></pre></div>
 <pre><code>통일한국 교집합: {'한국어', '한반도'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="ss">f'통일한국 차집합 A: </span><span class="sc">{</span>south_set<span class="sc">.</span>difference(north_set)<span class="sc">}</span><span class="ss">'</span>)</code></pre></div>
-<pre><code>통일한국 차집합 A: {'자본주의', '설악산', '민주주의', '서울', '한라산'}</code></pre>
+<pre><code>통일한국 차집합 A: {'민주주의', '설악산', '자본주의', '한라산', '서울'}</code></pre>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="ss">f'통일한국 차집합 B: </span><span class="sc">{</span>north_set<span class="sc">.</span>difference(south_set)<span class="sc">}</span><span class="ss">'</span>)</code></pre></div>
 <pre><code>통일한국 차집합 B: {'공산주의', '사회주의', '전체주의'}</code></pre>
 </div>
