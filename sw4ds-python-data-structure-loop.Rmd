@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "객체지향 프로그래밍"
-subtitle: "데이터 사이언스 파이썬 OOP"
+title: "데이터 사이언스 - 파이썬"
+subtitle: "함수와 반복자"
 author:
     name: xwMOOC
 date: "`r Sys.Date()`"
@@ -26,4 +26,13 @@ use_condaenv("anaconda3")
 # reticulate::repl_python()
 ```
 
-# OOP {#python-oop} 
+# 데이터 사이언스 자료형 {#python-data-structure}
+
+## 튜플(tuple) {#python-data-structure-tuple}
+
+**튜플(tuple)**은 리스트와 마찬가지로 값(value)을 다수 저장시킬 수 있지만 한번 생성된 튜플 내부 원소값은 변경시킬 수가 없다. 즉, 변경시킬 수 없는 `immutable` 자료구조로 `()`으로 생성시킨다.
+
+```{python python-tuple, eval=FALSE}
+
+```
+

@@ -104,3 +104,15 @@ solution = zip(languages, models)
 
 print(*solution)
 
+# list comprehension
+
+## 들어가며
+
+numbers = [1,2,3,4,5]
+
+res_number = []
+
+for number in numbers:
+  res_number.append(number * 2)
+
+print(res_number)
