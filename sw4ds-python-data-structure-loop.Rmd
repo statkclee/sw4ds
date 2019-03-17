@@ -28,11 +28,235 @@ use_condaenv("anaconda3")
 
 # 데이터 사이언스 자료형 {#python-data-structure}
 
-## 튜플(tuple) {#python-data-structure-tuple}
+파이썬에는 값을 담아두는 컨테이너(Container) 자료형이 다수 존재한다.
 
-**튜플(tuple)**은 리스트와 마찬가지로 값(value)을 다수 저장시킬 수 있지만 한번 생성된 튜플 내부 원소값은 변경시킬 수가 없다. 즉, 변경시킬 수 없는 `immutable` 자료구조로 `()`으로 생성시킨다.
+크게 보면 값을 변경시킬 수 있는 리스트(`list`)와 집합(`set`)이 있고 값을 변경시킬 수 없는 튜플(`tuple`)로 나눌 수 있다.
 
-```{python python-tuple, eval=FALSE}
+# 리스트(`list`) {#python-data-structure-list}
+
+**리스트(`list`)**는 다음과 같은 특징이 있다.
+
+1. 리스트에 원소가 추가되는 순서대로 값들이 저장된다.
+1. 리스트 원소는 변경가능(`mutable`)하다.
+1. 색인(`index`)가 있다.
+
+`[`, `]`을 꺾쇠기호로 열고 닫아 리스트 객체를 생성시킨다.
+생성된 리스트 객체에 `.append()` 메쏘드를 사용해서 추가로 리스트 객체를 추가한다.
+
+```{python python-list}
+features = ["데이터 조작", "시각화", "모형"]
+print(f"데이터 사이언스 기능: {features}")
+
+features.append("커뮤니케이션")
+print(f"데이터 사이언스 기능: {features}")
+```
+
+리스트 객체 두개 `features`와 `biz_features`를 결합시켜 새로운 리스트 객체를 생성시킬 경우 `+` 연산자를 사용하면 된다.
+
+```{python python-list-combine}
+biz_features = ["문제정의", "운영", "사업모형"]
+
+data_science = features + biz_features
+print(f"데이터 사이언스: {data_science}")
+```
+
+리스트 `data_science` 객체의 원소값에 접근하고자 할 경우 `index()` 메쏘드를 사용하여 숫자 위치를 파악한다.
+`len()` 함수를 사용해서 리스트 전체 크기를 파악할 수 있고, 0부터 시작되는 파이썬 색인 규칙에 따라 `data_science.index('사업모형')`을 통해 6번째 위치 즉 마지막에 위치함도 쉽게 파악하게 된다.
+
+```{python python-list-combine-index}
+print(f"리스트 전체길이: {len(data_science)}, 사업모형 위치: {data_science.index('사업모형')}")
+```
+
+`for` 함수를 사용해서 리스트(`features`) 각 원소를 하나씩 뽑아낼 수도 있다.
+
+```{python python-list-combine-index-extract}
+for feature in features:
+  print(feature)
+```
+
+# 튜플(tuple) {#python-data-structure-tuple}
+
+**튜플(tuple)**은 리스트와 마찬가지로 값(value)을 다수 저장시킬 수 있지만 한번 생성된 튜플 내부 원소값은 변경시킬 수가 없다. 즉, 변경시킬 수 없는 `immutable` 자료구조로 `()`으로 생성시킨다. 튜플의 특징을 다음과 같이 요약할 수도 있다.
+
+1. 순서대로 원소값을 저장시킨다.
+1. `index` 색인이 있다.
+1. 원소값은 변경할 수 없다(`immutable`). 
+1. 짝을 이뤄 `pair`형태로 되어 있다.
+1. 풀어낼 수가 없다.
+
+`features` 리스트와 `packages` 리스트 두개를 하나로 묶어 `zip()` 함수를 사용하게 되면 튜플 `tuple`객체 `toolchain`이 생성된다.
+
+
+```{python python-tuple}
+packages = ["dplyr", "ggplot", "broom"]
+features = ["데이터 조작", "시각화", "모형"]
+
+toolchain = zip(packages, features)
+
+print(f"데이터 사이언스 툴체이: {list(toolchain)}")
+```
+
+`('ggplot', '시각화')` 튜플의 두 값을 꺼네는데 먼저 `zip`으로 압축된 것을 `list()`를 씌워서 리스트로 빼내고 색인 `[1]`을 걸어 두 변수에 각각 할당시킨다.
+
+```{python python-tuple-unpack}
+toolchain = zip(packages, features)
+package, feature = list(toolchain)[1]
+
+print(f"팩키지: {package}, 기능: {feature}")
+```
+
+## 튜플 - `enumerator` {#python-data-structure-tuple-enumerator}
+
+`for` 루프를 사용해서 전체 튜플 리스트를 뽑아내서 출력해보자.
+
+```{python python-tuple-unpack-for}
+toolchain = zip(packages, features)
+for package, feature in toolchain:
+    print(f"팩키지: {package}, --> {feature}")
+```
+
+
+`for` 루프를 사용해서 전체 튜플 리스트를 뽑아낼 때 조금 아쉬운 점은 위치 `index`에 대한 것도 함께 알았으면 좋겠다는 생각이 들 것이다. 이런 부족한 점을 충족시켜 주는 것이 `enumerate` 가 짜짠... 역할을 수행하게 된다.
+`enumerate` 함수는 순서가 있는 자료형(리스트, 튜플, 문자열)을 입력받아 색인 `index`을 해당 원소값에 포함시키는 역할을 수행한다.
+
+먼저 `enumerate()` 함수로 객체를 생성하고 `index`와 `item`을 추출하고 튜플 `item`에서 각 튜플 원소를 `package`와 `feature`로 추출시킨다. 이를 통해서 `index`, `package`, `feature`를 튜플에서 `enumerate`를 통해서 뽑아낼 수 있게 된다.
+
+```{python python-tuple-unpack-for-enumerate}
+toolchain = zip(packages, features)
+for index, item in enumerate(toolchain):
+    package, feature = item
+    print(f"순서 {index}:, 팩키지 {package}, --> {feature}")
+```
+
+
+# 집합(`set`) {#python-data-structure-set}
+
+집합(`set`)은 수학의 집합이론을 파이썬으로 구현한 것이다. 
+파이썬 집합 자료구조는 다음 특징을 갖추고 있다.
+
+1. 순서가 없다.
+1. 집합 원소는 유일무이하다.
+1. 원소값을 변경할 수 있다(`mutable`). 
+
+```{python python-set-define}
+south_korea = ["한국어", "민주주의", "자본주의", "한반도", "한반도", "수정자본주의"]
+north_korea = ["한국어", "전체주의", "공산주의", "한반도", "사회주의", "한국어", "공산주의"]
+
+south_set = set(south_korea)
+north_set = set(north_korea)
+
+print(f"대한민국 --> 리스트 크기: {len(south_korea)}, 집합 크기: {len(south_set)}")
+print(f"북한     --> 리스트 크기: {len(north_korea)}, 집합 크기: {len(north_set)}")
+```
+
+집합원소 추가, 삭제, 갱신을 할 경우 `.update()`, `.add()`, `.discard()` 메쏘드를 사용한다.
+
+```{python python-set}
+south_set.add("한라산")
+print(f"대한민국: {south_set}")
+
+south_set.discard("수정자본주의")
+print(f"대한민국: {south_set}")
+
+south_set.update(["민주주의", "설악산", "서울"])
+print(f"대한민국: {south_set}")
+```
+
+## 집합 연산 {#python-set-operator}
+
+집합 자료구조를 갖추게 되면 백미는 친숙한 집합 연산 작업을 수행함에 있다.
+
+- `.ution()` 메쏘드: 합집합, $\cup$
+- `.intersectin()` 메쏘드: 교집합, $\cap$
+- `.diff()` 메쏘드: 차집합, $\setminus$
+
+```{python python-set-operator}
+print(f'통일한국 합집합: {south_set.union(north_set)}')
+print(f'통일한국 교집합: {south_set.intersection(north_set)}')
+print(f'통일한국 차집합 A: {south_set.difference(north_set)}')
+print(f'통일한국 차집합 B: {north_set.difference(south_set)}')
+```
+
+
+# 딕셔너리 (`dictionary`) {#python-data-structure-dict}
+
+파이썬의 뿌리는 딕셔너리 (`dictionary`)라고 해도 과언은 아니다.
+딕셔너리 (`dictionary`) 자료구조는 다음 특징을 갖추고 있다.
+
+1. 키값(key-value)로 짝을 이뤄 데이터가 저장되어 있다.
+1. 딕셔너리를 중합(nestable)할 수 있다.
+1. `iterable` 반복자를 갖는 대표적인 자료구조다.
+1. `dict()` 혹은 `{}`을 사용해서 생성함.
+
+먼저 `{}` 으로 `ds_dict` 텅빈 딕셔너리 객체를 하나 생성시킨다.
+그리고 키로 `packages`, 값으로 `features`를 염두에 두고 `ds_dict[feature] = package` 명령어로 딕셔너리를 `for` 루프를 돌려 생성시킨다. 그리고 나서 `ds_dict` 딕셔너리에서 `feature`를 출력시킨다.
+
+| 키(key) | 값(value) |
+|---------|-----------|
+| dplyr   | "데이터 조작" |
+| ggplot  | "시각화"  |
+| broom   | "모형"    |
+
+```{python python-dict}
+ds_dict = {}
+
+packages = ["dplyr", "ggplot", "broom"]
+features = ["데이터 조작", "시각화", "모형"]
+
+ds_tuple = zip(packages, features)
+
+for package, feature in ds_tuple:
+    ds_dict[package] = feature
+    print(f"{package}, {feature}")
+
+for package, feature in ds_dict.items():
+    print(f"키: {package}, 값:{feature}")
+```
+
+`.get()` 메쏘드를 통해서 키('ggplot')로 '시각화'를 찾아내고,
+`.keys()` 메쏘드로 딕셔너리 전체 키와 `.values()` 메쏘드로 딕셔너리 전체 값을 찾아낼 수 있다.
+
+```{python python-dict-key}
+ds_dict.get('시각화')
+ds_dict.get('ggplot')
+
+ds_dict.keys()
+ds_dict.values()
+```
+
+## 딕셔너리 활용 {#python-data-structure-dict-operate}
+
+앞서 보왔듯이 딕셔너리에 `.items()` 메쏘드를 사용해서 키, 값을 뽑아낼 수 있다.
+
+```{python python-dict-key-loop}
+for package, feature in ds_dict.items():
+    print(f"키: {package}, 값:{feature}")
+```
+
+조건문(`conditional`)과 결합하여 `ds_dict` 딕셔너리에 특정값이 존재하는지도 확인할 수 있다.
+
+```{python python-dict-key-conditional}
+if 'ggplot' in ds_dict:
+    print(f" ggplot 기능: %s" % ds_dict['ggplot'])
+else:
+    print(f"시각화 기능이 없네요!!!")
 
 ```
 
+## `.csv` 파일 불러읽기 [^csv-dict] {#python-data-structure-dict-read}
+
+[^csv-dict]: [stackoverflow, "reading csv file in Python and creating dictionary"](https://stackoverflow.com/questions/15400165/reading-csv-file-in-python-and-creating-dictionary)
+
+`csv.reader()`로 `.csv` 파일을 불러오게 되면 튜플로 불러오게 되는데
+딕셔너리로 불러오고자 하는 경우 `csv.DictReader()` 메쏘드를 사용한다.
+
+```{python python-dict-key-csv}
+import csv
+
+csv_file = open('data/csv_sample.csv', 'r')
+
+for row in csv.DictReader(csv_file, ['name', 'miles', 'country']):
+    print(row)
+
+csv_file.close()
+```
