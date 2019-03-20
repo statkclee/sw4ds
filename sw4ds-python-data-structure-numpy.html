@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2019-03-17" />
+<meta name="date" content="2019-03-20" />
 
 <title>데이터 사이언스 - 파이썬</title>
 
@@ -27,6 +27,80 @@
 <script src="data:application/x-javascript;base64,CndpbmRvdy5pbml0aWFsaXplQ29kZUZvbGRpbmcgPSBmdW5jdGlvbihzaG93KSB7CgogIC8vIGhhbmRsZXJzIGZvciBzaG93LWFsbCBhbmQgaGlkZSBhbGwKICAkKCIjcm1kLXNob3ctYWxsLWNvZGUiKS5jbGljayhmdW5jdGlvbigpIHsKICAgICQoJ2Rpdi5yLWNvZGUtY29sbGFwc2UnKS5lYWNoKGZ1bmN0aW9uKCkgewogICAgICAkKHRoaXMpLmNvbGxhcHNlKCdzaG93Jyk7CiAgICB9KTsKICB9KTsKICAkKCIjcm1kLWhpZGUtYWxsLWNvZGUiKS5jbGljayhmdW5jdGlvbigpIHsKICAgICQoJ2Rpdi5yLWNvZGUtY29sbGFwc2UnKS5lYWNoKGZ1bmN0aW9uKCkgewogICAgICAkKHRoaXMpLmNvbGxhcHNlKCdoaWRlJyk7CiAgICB9KTsKICB9KTsKCiAgLy8gaW5kZXggZm9yIHVuaXF1ZSBjb2RlIGVsZW1lbnQgaWRzCiAgdmFyIGN1cnJlbnRJbmRleCA9IDE7CgogIC8vIHNlbGVjdCBhbGwgUiBjb2RlIGJsb2NrcwogIHZhciByQ29kZUJsb2NrcyA9ICQoJ3ByZS5yLCBwcmUucHl0aG9uLCBwcmUuYmFzaCwgcHJlLnNxbCwgcHJlLmNwcCwgcHJlLnN0YW4nKTsKICByQ29kZUJsb2Nrcy5lYWNoKGZ1bmN0aW9uKCkgewoKICAgIC8vIGNyZWF0ZSBhIGNvbGxhcHNhYmxlIGRpdiB0byB3cmFwIHRoZSBjb2RlIGluCiAgICB2YXIgZGl2ID0gJCgnPGRpdiBjbGFzcz0iY29sbGFwc2Ugci1jb2RlLWNvbGxhcHNlIj48L2Rpdj4nKTsKICAgIGlmIChzaG93KQogICAgICBkaXYuYWRkQ2xhc3MoJ2luJyk7CiAgICB2YXIgaWQgPSAncmNvZGUtNjQzRTBGMzYnICsgY3VycmVudEluZGV4Kys7CiAgICBkaXYuYXR0cignaWQnLCBpZCk7CiAgICAkKHRoaXMpLmJlZm9yZShkaXYpOwogICAgJCh0aGlzKS5kZXRhY2goKS5hcHBlbmRUbyhkaXYpOwoKICAgIC8vIGFkZCBhIHNob3cgY29kZSBidXR0b24gcmlnaHQgYWJvdmUKICAgIHZhciBzaG93Q29kZVRleHQgPSAkKCc8c3Bhbj4nICsgKHNob3cgPyAnSGlkZScgOiAnQ29kZScpICsgJzwvc3Bhbj4nKTsKICAgIHZhciBzaG93Q29kZUJ1dHRvbiA9ICQoJzxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1kZWZhdWx0IGJ0bi14cyBjb2RlLWZvbGRpbmctYnRuIHB1bGwtcmlnaHQiPjwvYnV0dG9uPicpOwogICAgc2hvd0NvZGVCdXR0b24uYXBwZW5kKHNob3dDb2RlVGV4dCk7CiAgICBzaG93Q29kZUJ1dHRvbgogICAgICAgIC5hdHRyKCdkYXRhLXRvZ2dsZScsICdjb2xsYXBzZScpCiAgICAgICAgLmF0dHIoJ2RhdGEtdGFyZ2V0JywgJyMnICsgaWQpCiAgICAgICAgLmF0dHIoJ2FyaWEtZXhwYW5kZWQnLCBzaG93KQogICAgICAgIC5hdHRyKCdhcmlhLWNvbnRyb2xzJywgaWQpOwoKICAgIHZhciBidXR0b25Sb3cgPSAkKCc8ZGl2IGNsYXNzPSJyb3ciPjwvZGl2PicpOwogICAgdmFyIGJ1dHRvbkNvbCA9ICQoJzxkaXYgY2xhc3M9ImNvbC1tZC0xMiI+PC9kaXY+Jyk7CgogICAgYnV0dG9uQ29sLmFwcGVuZChzaG93Q29kZUJ1dHRvbik7CiAgICBidXR0b25Sb3cuYXBwZW5kKGJ1dHRvbkNvbCk7CgogICAgZGl2LmJlZm9yZShidXR0b25Sb3cpOwoKICAgIC8vIHVwZGF0ZSBzdGF0ZSBvZiBidXR0b24gb24gc2hvdy9oaWRlCiAgICBkaXYub24oJ2hpZGRlbi5icy5jb2xsYXBzZScsIGZ1bmN0aW9uICgpIHsKICAgICAgc2hvd0NvZGVUZXh0LnRleHQoJ0NvZGUnKTsKICAgIH0pOwogICAgZGl2Lm9uKCdzaG93LmJzLmNvbGxhcHNlJywgZnVuY3Rpb24gKCkgewogICAgICBzaG93Q29kZVRleHQudGV4dCgnSGlkZScpOwogICAgfSk7CiAgfSk7Cgp9Cg=="></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -285,13 +359,124 @@ div.tocify {
 <h1 class="title toc-ignore">데이터 사이언스 - 파이썬</h1>
 <h3 class="subtitle"><em>자료구조 - 리스트, 튜플, 딕셔너리</em></h3>
 <h4 class="author"><em>xwMOOC</em></h4>
-<h4 class="date"><em>2019-03-17</em></h4>
+<h4 class="date"><em>2019-03-20</em></h4>
 
 </div>
 
 
 <div id="python-data-structure-numpy" class="section level1">
 <h1><span class="header-section-number">1</span> 넘파이(<code>numpy</code>)</h1>
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 10px;}
+</style>
+<div class="blue">
+<p><strong>R마크다운에서 <code>matplotlib</code> 오류</strong> <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<blockquote>
+<p>This application failed to start because it could not find or load the Qt platform plugin “windows” Reinstalling the application may fix this problem.</p>
+</blockquote>
+<p><img src="data:image/png;base64,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" alt="QT 오류" width="50%" /></p>
+<p>결국, <code>제어판\시스템 및 보안\시스템 &amp;rarr; Advanced System Settings &amp;rarr; Environment Variables</code>으로 가서 <code>C:\Users\사용자명\Anaconda3\Library\plugins</code> 환경변수 설정을 <code>QT_PLUGIN_PATH</code>으로 등록시킨다.</p>
+</div>
+</div>
+<div id="python-pandas-iterators" class="section level1">
+<h1><span class="header-section-number">2</span> 판다스 반복자</h1>
+<p><strong>판다스(pandas)</strong>는 넘파이(numpy)를 기반으로 데이터프레임을 파이썬에 구현한 자료구조다.</p>
+<p><a href="http://taas.koroad.or.kr/web/shp/sbm/initUnityAnalsSys.do?menuId=WEB_KMP_OVT_UAS">교통사고분석시스템 - 교통사고상세통계</a> 웹사이트에서 <strong>경찰DB(국가공식통계)</strong>를 통해 <strong>OECD국가 교통사고 통계</strong> 엑세파일을 대상으로 작업을 수행한다.</p>
+<p><code>traffic_df.columns</code>, <code>traffic_df.head()</code> 명령어로 데이터프레임과 친숙해진다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> pandas <span class="im">as</span> pd
+
+traffic_df <span class="op">=</span> pd.read_excel(<span class="st">&quot;data/oecd_traffic_data.xlsx&quot;</span>)
+
+traffic_df.columns</code></pre></div>
+<pre><code>Index(['국가', '인구수(천명)', '자동차등록대수(천대)', '발생건수(건)', '사망자수(명)', '인구10만명당사망자수',
+       '자동차1만대당사망자수', '자동차1만대당사망자순위'],
+      dtype='object')</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">traffic_df.head()</code></pre></div>
+<pre><code>      국가    인구수(천명)     ...      자동차1만대당사망자수 자동차1만대당사망자순위
+0     호주  23786.123     ...              0.7           14
+1     독일  81197.537     ...              0.6           16
+2    그리스  10858.018     ...              0.8           10
+3    헝가리   9855.571     ...              1.7            2
+4  아이슬란드    329.100     ...              0.6           20
+
+[5 rows x 8 columns]</code></pre>
+<div id="python-pandas-iterators-function" class="section level2">
+<h2><span class="header-section-number">2.1</span> 함수 사용 - <code>range</code></h2>
+<p><code>calc_death_percentage(사망자수, 인구수_천명)</code> 함수를 정의해서 소수점 아래 1자리로 인구 천명당 사망자수를 산출한다. 예를 들어, 2015년 독일 인구 81,197,537에 대한 사망자수는 3,459명으로 천명당 4.3명이 나온다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
+
+<span class="kw">def</span> calc_death_percentage(death, population):
+    death_perc <span class="op">=</span> death <span class="op">/</span> population <span class="op">*</span> <span class="dv">100</span>
+    <span class="cf">return</span> np.<span class="bu">round</span>(death_perc, <span class="dv">1</span>)
+
+calc_death_percentage(<span class="dv">3459</span>, <span class="fl">81197.537</span>)</code></pre></div>
+<pre><code>4.3</code></pre>
+<p>OECD 전체 국가에 대해서 천명당 사망자수를 계산해보자. 이를 위해서 별도 리스트(<code>death_perc_list</code>)를 <code>for</code> 루프 외곽에 준비하고 <code>iloc</code> 메쏘드를 통해 행을 하나 뽑아내고 각 행별로 뽑아 <code>calc_death_percentage(death, population)</code> 연산작업을 수행한다. 그렇게 채워진 <code>death_perc_list</code> 리스트를 데이터프레임에 결합시킨다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">death_perc_list <span class="op">=</span> []
+
+<span class="cf">for</span> row <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(traffic_df)):
+    record <span class="op">=</span> traffic_df.iloc[row]
+    death <span class="op">=</span> record[<span class="st">'사망자수(명)'</span>]
+    population <span class="op">=</span> record[<span class="st">'인구수(천명)'</span>]
+    death_perc <span class="op">=</span> calc_death_percentage(death, population)
+    death_perc_list.append(death_perc)
+    
+traffic_df[<span class="st">'사망자_비율(천명)'</span>] <span class="op">=</span> death_perc_list
+
+traffic_df[[<span class="st">'국가'</span>, <span class="st">'사망자수(명)'</span>, <span class="st">'인구수(천명)'</span>, <span class="st">'사망자_비율(천명)'</span>]].head()</code></pre></div>
+<pre><code>      국가  사망자수(명)    인구수(천명)  사망자_비율(천명)
+0     호주     1205  23786.123         5.1
+1     독일     3459  81197.537         4.3
+2    그리스      793  10858.018         7.3
+3    헝가리      644   9855.571         6.5
+4  아이슬란드       16    329.100         4.9</code></pre>
+</div>
+<div id="python-pandas-iterators-function-iterrows" class="section level2">
+<h2><span class="header-section-number">2.2</span> 함수 사용 - <code>iterrows()</code></h2>
+<p>앞선 코드와 동일하지만, 데이터프레임 <code>iterrows()</code> 메쏘드를 사용할 경우 속도가 두배이상 빠르게 실행된다. <code>record = traffic_df.iloc[row]</code> 행의 <code>.iloc</code>를 제거할 수 있어 코드도 간결해진다. <code>.itertuples()</code>는 동일한 기능을 구현하지만, 다소 속도가 빠르다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">death_perc_list <span class="op">=</span> []
+
+<span class="cf">for</span> row <span class="kw">in</span> traffic_df.iterrows():
+
+    death <span class="op">=</span> record[<span class="st">'사망자수(명)'</span>]
+    population <span class="op">=</span> record[<span class="st">'인구수(천명)'</span>]
+    
+    death_perc <span class="op">=</span> calc_death_percentage(death, population)
+    death_perc_list.append(death_perc)
+    
+traffic_df[<span class="st">'사망자_비율(천명)'</span>] <span class="op">=</span> death_perc_list
+
+traffic_df[[<span class="st">'국가'</span>, <span class="st">'사망자수(명)'</span>, <span class="st">'인구수(천명)'</span>, <span class="st">'사망자_비율(천명)'</span>]].head()</code></pre></div>
+<pre><code>      국가  사망자수(명)    인구수(천명)  사망자_비율(천명)
+0     호주     1205  23786.123         5.4
+1     독일     3459  81197.537         5.4
+2    그리스      793  10858.018         5.4
+3    헝가리      644   9855.571         5.4
+4  아이슬란드       16    329.100         5.4</code></pre>
+</div>
+<div id="python-pandas-iterators-function-apply" class="section level2">
+<h2><span class="header-section-number">2.3</span> <code>.apply()</code> 메쏘드</h2>
+<p>동일한 작업을 <code>.apply()</code> 메쏘드를 사용하게 되면 한결 간결하게 코드를 작성할 수 있고, 속도도 더 빠르다.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">death_perc_apply <span class="op">=</span> traffic_df.<span class="bu">apply</span>(<span class="kw">lambda</span> row: 
+                                    calc_death_percentage(row[<span class="st">'사망자수(명)'</span>], row[<span class="st">'인구수(천명)'</span>]),
+                                    axis<span class="op">=</span><span class="dv">1</span>)
+
+traffic_df[<span class="st">'사망자_비율(천명)'</span>] <span class="op">=</span> death_perc_list
+
+traffic_df[[<span class="st">'국가'</span>, <span class="st">'사망자수(명)'</span>, <span class="st">'인구수(천명)'</span>, <span class="st">'사망자_비율(천명)'</span>]].head()</code></pre></div>
+<pre><code>      국가  사망자수(명)    인구수(천명)  사망자_비율(천명)
+0     호주     1205  23786.123         5.4
+1     독일     3459  81197.537         5.4
+2    그리스      793  10858.018         5.4
+3    헝가리      644   9855.571         5.4
+4  아이슬란드       16    329.100         5.4</code></pre>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="https://stackoverflow.com/questions/41994485/error-could-not-find-or-load-the-qt-platform-plugin-windows-while-using-matplo">Error “could not find or load the Qt platform plugin windows” while using matplotlib in pycharm</a><a href="#fnref1">↩</a></p></li>
+</ol>
 </div>
 
 

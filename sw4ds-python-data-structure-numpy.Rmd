@@ -28,3 +28,116 @@ use_condaenv("anaconda3")
 
 # 넘파이(`numpy`) {#python-data-structure-numpy}
 
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 10px;}
+</style>
+<div class = "blue">
+
+**R마크다운에서 `matplotlib` 오류** [^matplotlib-error]
+
+[^matplotlib-error]: [Error “could not find or load the Qt platform plugin windows” while using matplotlib in pycharm](https://stackoverflow.com/questions/41994485/error-could-not-find-or-load-the-qt-platform-plugin-windows-while-using-matplo)
+
+> This application failed to start because it could not find or load the Qt platform plugin "windows"
+> Reinstalling the application may fix this problem.
+
+<img src="fig/Qt-error.png" alt="QT 오류" width="50%" />
+
+결국, `제어판\시스템 및 보안\시스템 &rarr; Advanced System Settings &rarr; Environment Variables`으로 가서 
+`C:\Users\사용자명\Anaconda3\Library\plugins` 환경변수 설정을 `QT_PLUGIN_PATH`으로 등록시킨다.
+
+</div>
+
+
+# 판다스 반복자 {#python-pandas-iterators}
+
+**판다스(pandas)**는 넘파이(numpy)를 기반으로 데이터프레임을 파이썬에 구현한 자료구조다.
+
+[교통사고분석시스템 - 교통사고상세통계](http://taas.koroad.or.kr/web/shp/sbm/initUnityAnalsSys.do?menuId=WEB_KMP_OVT_UAS) 웹사이트에서 **경찰DB(국가공식통계)**를 통해 **OECD국가 교통사고 통계** 엑세파일을 대상으로 작업을 수행한다.
+
+`traffic_df.columns`, `traffic_df.head()` 명령어로 데이터프레임과 친숙해진다.
+
+```{python pandas-iterator}
+import pandas as pd
+
+traffic_df = pd.read_excel("data/oecd_traffic_data.xlsx")
+
+traffic_df.columns
+
+traffic_df.head()
+```
+
+
+## 함수 사용 - `range` {#python-pandas-iterators-function}
+
+`calc_death_percentage(사망자수, 인구수_천명)` 함수를 정의해서 소수점 아래 1자리로 인구 천명당 사망자수를 산출한다.
+예를 들어, 2015년 독일 인구 81,197,537에 대한 사망자수는 3,459명으로 천명당 4.3명이 나온다.
+
+```{python pandas-iterator-function}
+import numpy as np
+
+def calc_death_percentage(death, population):
+    death_perc = death / population * 100
+    return np.round(death_perc, 1)
+
+calc_death_percentage(3459, 81197.537)
+```
+
+OECD 전체 국가에 대해서 천명당 사망자수를 계산해보자.
+이를 위해서 별도 리스트(`death_perc_list`)를 `for` 루프 외곽에 준비하고 
+`iloc` 메쏘드를 통해 행을 하나 뽑아내고 각 행별로 뽑아 `calc_death_percentage(death, population)` 연산작업을 수행한다. 그렇게 채워진 `death_perc_list` 리스트를 데이터프레임에 결합시킨다.
+
+```{python pandas-iterator-function-oecd}
+death_perc_list = []
+
+for row in range(len(traffic_df)):
+    record = traffic_df.iloc[row]
+    death = record['사망자수(명)']
+    population = record['인구수(천명)']
+    death_perc = calc_death_percentage(death, population)
+    death_perc_list.append(death_perc)
+    
+traffic_df['사망자_비율(천명)'] = death_perc_list
+
+traffic_df[['국가', '사망자수(명)', '인구수(천명)', '사망자_비율(천명)']].head()
+```
+
+
+## 함수 사용 - `iterrows()` {#python-pandas-iterators-function-iterrows}
+
+앞선 코드와 동일하지만, 데이터프레임  `iterrows()` 메쏘드를 사용할 경우 속도가 두배이상 빠르게 실행된다.
+`record = traffic_df.iloc[row]` 행의 `.iloc`를 제거할 수 있어 코드도 간결해진다.
+`.itertuples()`는 동일한 기능을 구현하지만, 다소 속도가 빠르다.
+
+```{python pandas-iterator-function-oecd-iterrows}
+death_perc_list = []
+
+for row in traffic_df.iterrows():
+
+    death = record['사망자수(명)']
+    population = record['인구수(천명)']
+    
+    death_perc = calc_death_percentage(death, population)
+    death_perc_list.append(death_perc)
+    
+traffic_df['사망자_비율(천명)'] = death_perc_list
+
+traffic_df[['국가', '사망자수(명)', '인구수(천명)', '사망자_비율(천명)']].head()
+```
+
+
+## `.apply()` 메쏘드 {#python-pandas-iterators-function-apply}
+
+동일한 작업을 `.apply()` 메쏘드를 사용하게 되면 한결 간결하게 코드를 작성할 수 있고, 속도도 더 빠르다.
+
+```{python pandas-iterator-function-oecd-apply}
+death_perc_apply = traffic_df.apply(lambda row: 
+                                    calc_death_percentage(row['사망자수(명)'], row['인구수(천명)']),
+                                    axis=1)
+
+traffic_df['사망자_비율(천명)'] = death_perc_list
+
+traffic_df[['국가', '사망자수(명)', '인구수(천명)', '사망자_비율(천명)']].head()
+```
+
+
+
