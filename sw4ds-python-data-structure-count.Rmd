@@ -92,3 +92,27 @@ words = re.findall('\w+', moby_dick.lower())
 Counter(words).most_common(10)
 ```
 
+
+# `itertools` 모듈 {#python-itertools}
+
+`itertools` 모듈도 파이썬 표준 라이브러리의 한축을 이루고 있으며 반복자(iterator)를 생성하고 사용하는데 큰 도움이 된다.
+
+
+- 조합 생성자: `product`, `permutations`, `combinations`
+- 유한 반복자: `accumulate`, `chain`, `zip_longest`
+- 무한 반복자: `count`, `cycle`, `repeat`
+
+```{python, itertools-combination}
+from itertools import combinations
+
+dataframe_types = ['Integer', 'Numeric', 'Character', 'Factor']
+
+dataframe_combo = combinations(dataframe_types, 2)
+
+dataframe_combos = [*dataframe_combo]
+print(dataframe_combos)
+
+```
+
+
+

@@ -416,6 +416,24 @@ Counter(words).most_common(<span class="dv">10</span>)</code></pre></div>
 <pre><code>[('the', 14431), ('of', 6609), ('and', 6430), ('a', 4736), ('to', 4625), ('in', 4172), ('that', 3085), ('his', 2530), ('it', 2522), ('i', 2127)]</code></pre>
 </div>
 </div>
+<div id="python-itertools" class="section level1">
+<h1><span class="header-section-number">3</span> <code>itertools</code> 모듈</h1>
+<p><code>itertools</code> 모듈도 파이썬 표준 라이브러리의 한축을 이루고 있으며 반복자(iterator)를 생성하고 사용하는데 큰 도움이 된다.</p>
+<ul>
+<li>조합 생성자: <code>product</code>, <code>permutations</code>, <code>combinations</code></li>
+<li>유한 반복자: <code>accumulate</code>, <code>chain</code>, <code>zip_longest</code></li>
+<li>무한 반복자: <code>count</code>, <code>cycle</code>, <code>repeat</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> itertools <span class="im">import</span> combinations
+
+dataframe_types <span class="op">=</span> [<span class="st">'Integer'</span>, <span class="st">'Numeric'</span>, <span class="st">'Character'</span>, <span class="st">'Factor'</span>]
+
+dataframe_combo <span class="op">=</span> combinations(dataframe_types, <span class="dv">2</span>)
+
+dataframe_combos <span class="op">=</span> [<span class="op">*</span>dataframe_combo]
+<span class="bu">print</span>(dataframe_combos)</code></pre></div>
+<pre><code>[('Integer', 'Numeric'), ('Integer', 'Character'), ('Integer', 'Factor'), ('Numeric', 'Character'), ('Numeric', 'Factor'), ('Character', 'Factor')]</code></pre>
+</div>
 
 
 
