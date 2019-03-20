@@ -10,4 +10,5 @@ title: 데이터 사이언스를 위한 소프트웨어 공학
     - [자료구조 - 넘파이, 판다스](sw4ds-python-data-structure-numpy.html)
     - [자료구조 - Count](sw4ds-python-data-structure-count.html)
     - [객체지향 프로그래밍](sw4ds-oop-python.html)
-- [고성능 R코드 작성과 성능비교](perf-writing-efficient-code.html)
+- [효율적인 데이터 사이언스 코드](sw4ds-efficient-code.html)
+    - [고성능 R코드 작성과 성능비교](perf-writing-efficient-code.html)
