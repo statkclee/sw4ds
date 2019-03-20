@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "객체지향 프로그래밍"
-subtitle: "데이터 사이언스 파이썬 OOP"
+title: "데이터 사이언스 - 파이썬"
+subtitle: "자료구조 - 리스트, 튜플, 딕셔너리"
 author:
     name: xwMOOC
 date: "`r Sys.Date()`"
@@ -26,4 +26,5 @@ use_condaenv("anaconda3")
 # reticulate::repl_python()
 ```
 
-# OOP {#python-oop} 
+# 넘파이(`numpy`) {#python-data-structure-numpy}
+
