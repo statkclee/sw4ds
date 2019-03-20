@@ -26,6 +26,17 @@ use_condaenv("anaconda3")
 # reticulate::repl_python()
 ```
 
+# `collection` 모듈 {#python-counter-collection}
+
+파이썬 표준 라이브러리에 `collection` 모듈이 내장(built-in)되어 있다.
+[자료구조 - 리스트, 튜플, 딕셔너리](sw4ds-python-data-structure.html)가 범용 데이터 사이언스 자료구조라면 다음 `collection` 모듈에 포함되어 있는 몇몇 자료구조는 익히게 되면 도움이 될 수 있다.
+
+- `Counter`: 해쉬객체를 개수하는 딕셔너리
+- `defaultdict`: 딕셔너리로 팩토리 함수를 호출할 수 있음.
+- `deque`
+- `namedtuple`
+- `OrderedDict`
+
 # `Counter` 빈도수 세기 {#python-counter}
 
 `collections` 모듈에는 흔히 사용되는 기능 중 하나인 `Counter` 도구가 포함되어 있다.
@@ -62,7 +73,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> import nltk
 >>> nltk.download('gutenberg')
 [nltk_data] Downloading package gutenberg to
-[nltk_data]     C:\Users\statkclee\AppData\Roaming\nltk_data...
+[nltk_data]     C:\Users\사용자\AppData\Roaming\nltk_data...
 [nltk_data]   Unzipping corpora\gutenberg.zip.
 True
 ```

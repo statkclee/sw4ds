@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2019-03-17" />
+<meta name="date" content="2019-03-20" />
 
 <title>데이터 사이언스 - 파이썬</title>
 
@@ -359,13 +359,24 @@ div.tocify {
 <h1 class="title toc-ignore">데이터 사이언스 - 파이썬</h1>
 <h3 class="subtitle"><em>자료구조 - Count</em></h3>
 <h4 class="author"><em>xwMOOC</em></h4>
-<h4 class="date"><em>2019-03-17</em></h4>
+<h4 class="date"><em>2019-03-20</em></h4>
 
 </div>
 
 
+<div id="python-counter-collection" class="section level1">
+<h1><span class="header-section-number">1</span> <code>collection</code> 모듈</h1>
+<p>파이썬 표준 라이브러리에 <code>collection</code> 모듈이 내장(built-in)되어 있다. <a href="sw4ds-python-data-structure.html">자료구조 - 리스트, 튜플, 딕셔너리</a>가 범용 데이터 사이언스 자료구조라면 다음 <code>collection</code> 모듈에 포함되어 있는 몇몇 자료구조는 익히게 되면 도움이 될 수 있다.</p>
+<ul>
+<li><code>Counter</code>: 해쉬객체를 개수하는 딕셔너리</li>
+<li><code>defaultdict</code>: 딕셔너리로 팩토리 함수를 호출할 수 있음.</li>
+<li><code>deque</code></li>
+<li><code>namedtuple</code></li>
+<li><code>OrderedDict</code></li>
+</ul>
+</div>
 <div id="python-counter" class="section level1">
-<h1><span class="header-section-number">1</span> <code>Counter</code> 빈도수 세기</h1>
+<h1><span class="header-section-number">2</span> <code>Counter</code> 빈도수 세기</h1>
 <p><code>collections</code> 모듈에는 흔히 사용되는 기능 중 하나인 <code>Counter</code> 도구가 포함되어 있다. 예를 들어, 리스트에 들어있는 단어 중 가장 빈도가 많은 것은 무엇인지 <code>Counter()</code> 객체를 생성한 후에 <code>for</code> 루프를 돌려 간단하게 계산해 낼 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> collections <span class="im">import</span> Counter
 
@@ -382,7 +393,7 @@ cnt</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">cnt.most_common(<span class="dv">1</span>)</code></pre></div>
 <pre><code>[('blue', 3)]</code></pre>
 <div id="python-counter-novel" class="section level2">
-<h2><span class="header-section-number">1.1</span> 소설 단어 빈도수</h2>
+<h2><span class="header-section-number">2.1</span> 소설 단어 빈도수</h2>
 <p>윈도우 시작버튼을 누르고 <code>Anaconda3 (64-Bit)</code> 아래 <code>Anacoda Prompt</code> 터미널을 열고 <code>python</code>을 실행한 후에 <code>import nltk</code>를 입력한 후에 순차적으로 <code>nltk.download('gutenberg')</code> 명령어를 실행시켜 구텐베르그 프로젝트에 등록된 문학작품을 다운로드 받는다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(base) C<span class="op">:</span>\Users\사용자명<span class="op">&gt;</span><span class="st"> </span>python
 Python <span class="fl">3.7</span>.<span class="dv">1</span> (default, Dec <span class="dv">10</span> <span class="dv">2018</span>, <span class="dv">22</span><span class="op">:</span><span class="dv">54</span><span class="op">:</span><span class="dv">23</span>) [MSC v.<span class="dv">1915</span> <span class="dv">64</span> <span class="kw">bit</span> (AMD64)] <span class="op">::</span><span class="st"> </span>Anaconda, Inc. on win32
@@ -390,7 +401,7 @@ Type <span class="st">&quot;help&quot;</span>, <span class="st">&quot;copyright&
 <span class="op">&gt;</span><span class="er">&gt;&gt;</span><span class="st"> </span>import nltk
 <span class="op">&gt;</span><span class="er">&gt;&gt;</span><span class="st"> </span><span class="kw">nltk.download</span>(<span class="st">'gutenberg'</span>)
 [nltk_data] Downloading package gutenberg to
-[nltk_data]     C<span class="op">:</span>\Users\statkclee\AppData\Roaming\nltk_data...
+[nltk_data]     C<span class="op">:</span>\Users\사용자\AppData\Roaming\nltk_data...
 [nltk_data]   Unzipping corpora\gutenberg.zip.
 True</code></pre></div>
 <p><a href="http://www.gutenberg.org/">Free eBooks - Project Gutenberg</a> 웹사이트에서 모비딕(<code>melville-moby_dick.txt</code>) 소설책을 다운로드 받는다. 그리고 나서 <code>re.findall()</code> 메쏘드를 사용해서 단어를 추출한다. <code>Counter(words)</code>를 호출해서 가장 빈도수가 높은 단어 10개를 추출해낸다.</p>
