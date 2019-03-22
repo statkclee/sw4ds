@@ -1,0 +1,256 @@
+---
+layout: page
+title: "데이터 사이언스를 위한 소프트웨어 공학"
+subtitle: "API 프로그래밍을 위한 열쇠 관리"
+author:
+    name: xwMOOC
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: yes
+    toc_float: true
+    highlight: tango
+    code_folding: show
+    number_section: true
+    self_contained: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
+                      comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
+
+library(reticulate)
+use_condaenv("anaconda3")
+# reticulate::repl_python()
+```
+
+# 데이터 과학자 보안 {#r-security}
+
+데이터를 다루는 데이터 과학자와 분석나는 사내외 내밀한 정보를 다루는 경우가 많다.
+하지만, 데이터 분석가 본인 자신은 보안관리에 취약한 경우도 많다. 
+R 개발자가 직면하는 보안관련된 현황과 함께 이를 체계적으로 회피하는 방법을 살펴보자.
+
+## R 개발자는 왜 보안을 이해해야 하는가? {#why-security}
+
+데이터가 적을 때야 데이터가 귀하기 때문에 그 자체로 보안이 유지되었다.
+반도체나 금보다도 비싼 것이 데이터이기 때문에 그런데 지금은 상황이 많이 다르다.
+데이터는 데이터베이스에 저장된 경우가 있는데 데이터베이스는 한 사람만 사용하는 것이 아니라
+여러 사람이 사용하기 때문에 **연결(connenction)**을 맺어 1:1 보다는 1:N 의 관계로 활용이 된다.
+
+이런 경우 데이터베이스에 접근을 아무나 허가하면 되지 않기 때문에 허가 받은 특정인만 접근할 수 있도록 
+권한을 부여하여 접근한다. 마찬가지로 빅데이터를 열어보고 분석을 수행하려면 
+대규모 컴퓨터 자원에 대한 허가가 필요한데 이에 대해서도 보안 인증키가 필요하다.
+아마존에 EC2 인스턴스로 분석 환경을 설정한 경우 이에 대한 인증접근을 IAM 서비스를 통하는 것도 이에 해당된다.
+뿐만 아니라 다양한 API를 통해 데이터 및 서비스에 대한 인증을 지원한다. 
+경우에 따라서는 API 사용량에 따라 과금을 하기도 한다. 
+GitHub의 협업과 Travis 서비스를 통한 CI 를 떠올리기만 해도 얼마나 많은 데이터 과학과 직간접으로 연결되어 있는지 
+쉽게 확인될 수 있다.
+
+## 보안 인증키 보관방식 {#r-secure-ways}
+
+R을 데이터분석 기본 언어로 사용하는 데이터 과학자의 경우, 
+일반 텍스트(Plain Text) 방식을 활용하여 인증키를 파일에 저장시켜 놓거나,
+전자우편으로 통해 인증키 정보를 전달하거나, `.History`, `.Rdata`, `.Renviron` 등을 활용하여 저장하기도 한다.
+차이점이 있다면 분석하는 데이터 프로젝트와 이를 통합시키거나, 분리시키거나 하는 차이가 있다.
+경우에 따라서는 암호화(Encrypted)하기도 한다.
+
+<img src="fig/r-security-workflow.png" alt="R 보안 작업흐름도" width="57%" />
+
+# R 진영의 대응 [^secret-package] {#r-countermeasure}
+
+[^secret-package]: [useR!2017: Can you keep a secret?](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/Can-you-keep-a-secret)
+
+이러한 문제를 R 뿐만 아니라 다른 언어로 데이터 분석 및 모형 개발을 진행하는 
+개발자 모두 공통으로 겪는 문제다. 이에 대한 대응으로 R에서 다양한 팩키지가 개발되었는데,
+하나의 팩키지 혹은 팩키지 다수를 결합해서 사용하는 것이 일반적이다. 자세한 사항은 
+RStudio [Securing Credentials](https://db.rstudio.com/managing-credentials/)를 참조한다.
+
+- `keyring`
+- `config`
+- `usethis` &rarr; `.Renviron`
+- `options()`
+- `secret`
+
+다양한 보안 관련 팩키지를 살펴보는 것과는 별도로 R이 실행되면서 관련 환경변수를 설정하는 과정에 관련된 파일이 다음 그림에 잘 정리되어 있다.
+
+<img src="fig/R_STARTUP.jpeg" alt="R 시작 작업흐름도" width="77%" />
+
+
+``` {r api-keys-setup}
+library(DBI)
+library(tidyverse)
+```
+
+## `Rprofile.site` 파일 [^r-startup] [^jenny-solution] {#r-Renviron}
+
+[^r-startup]: [R for Enterprise: Understanding R’s Startup, 2017-04-19, by Sean Lopp](https://rviews.rstudio.com/2017/04/19/r-for-enterprise-understanding-r-s-startup/)
+[^jenny-solution]: [How to store and use webservice keys and authentication details with R](http://blog.revolutionanalytics.com/2015/11/how-to-store-and-use-authentication-details-with-r.html)
+
+[Initialization at Start of an R Session](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html) 웹페이지에 R 시작과정이 잘 정리되어 있다. 이를 활용하여 데이터베이스 접속에 필요한 비밀번호나 API 키값을 안전하게 보관할 수 있다. 윈도우, 유닉스냐에 따라 설정파일 명칭이 다소 차이가 날 수 있다.
+
+즉, `R.home()`을 통해 R이 설치된 디렉토리 아래 `etc` 디렉토리의 `Rprofile.site` (없는 경우 생성)하여 
+유저ID와 비밀번호를 저장해 놓고 `Sys.getenv()` 함수로 저장된 값을 불러온다.
+예를 들어, `C:\Program Files\R\R-3.5.2\etc` 디렉토리 밑에 `Rprofile.site`을 편집한다.
+
+> **`C:\Program Files\R\R-3.5.2\etc\Rprofile.site` 파일**
+> 
+> ``` {r Rprofile-site-file, eval=FALSE}
+>
+> uid <- "root"
+> pwd <- "1234"
+> ``` 
+
+``` {r Renviron-site-setup}
+R.home()
+
+# 1. 데이터베이스 연결 ------------
+
+con <- DBI::dbConnect(RMySQL::MySQL(), 
+                      host = "localhost",
+                      dbname = "employees",
+                      user = uid,
+                      password = pwd)
+
+dbListTables(con)
+
+# 2. 데이터베이스 연결해제 ------------
+dbDisconnect(con)
+```
+
+
+## `.Rprofile` 파일 {#r-options}
+
+`options()`를 활용하여 설정하고 나서, `getOption()` 명령어를 통해 불러오는 것도 또다른 대안으로 경우에 따라 잘 활용할 수도 있다.
+대표적으로 현재 작업하고 있는 데이터와 코드가 담긴 R 프로젝트 디렉토리 `.Rprofile`에 `options()`내용을 저장시켜 놓고 이를 분석하고 있는 데이터에 활용한다.
+
+예를 들어, 데이터베이스 접속관련된 정보를 사용자계정 `.Rprofile` 파일에 저장시킬 수도 있고, 프로젝트 `.Rprofile`에 저장시킬 수도 있다.
+
+- `file.edit(file.path("~", ".Rprofile"))`
+- `file.edit(".Rprofile")`
+
+> **`~\.Rprofile` 파일** 
+> 
+> ``` {r Rprofile-file, eval=FALSE}
+>
+> options(db_userid = "root")
+> options(db_password = "1234")
+> ``` 
+
+
+``` {r options-setup}
+# 1. 데이터베이스 연결 ------------
+
+con <- DBI::dbConnect(RMySQL::MySQL(), 
+                      host = "localhost",
+                      dbname = "employees",
+                      user = getOption("db_userid"),
+                      password = getOption("db_password"))
+
+dbListTables(con)
+
+# 2. 데이터베이스 연결해제 ------------
+dbDisconnect(con)
+```
+
+
+## `config.yml` 파일, `config`팩키지 {#r-config-yaml}
+
+`install.packages("config")` 명령어로 `config` 팩키지를 설치하게 되면 
+`config.yml` 파일 내부에 환경설정에 필요한 정보를 담을 수가 있다.
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 10px;}
+</style>
+<div class = "blue">
+
+> **`config.yml` 파일** 
+> 
+> ``` {r config-yaml-file, eval=FALSE}
+>
+> default:
+>  employees:
+>    driver: 'MySQL' 
+>    server: 'localhost'
+>    uid: 'root'
+>    pwd: '1234'  
+>    port: 3306
+>    database: 'employees'
+> ``` 
+
+</div>
+
+
+config::get() 명령어를 통해 설정된 내용을 받아와서 이를 활용해서 데이터베이스에 접속하여 
+데이터를 가져온다.
+
+``` {r config-mariadb-connection}
+# 0. 환경설정 ------------
+library(config)
+
+# 1. 데이터베이스 연결 ------------
+
+(dw <- config::get("employees"))
+
+con <- DBI::dbConnect(RMySQL::MySQL(), 
+                      user = dw$uid,
+                      password = dw$pwd,
+                      host = dw$server,
+                      port = dw$port,
+                      dbname = dw$database)
+
+dbListTables(con)
+
+# 2. 데이터베이스 연결해제 ------------
+dbDisconnect(con)
+```
+
+
+
+## `usethis` 팩키지 `.Rprofile` 파일 {#r-options-usethis}
+
+`usethis` 팩키지를 사용해서 `usethis::edit_r_environ()` 함수를 사용하게 되면 `.Renviron` 파일에 데이터베이스 접속관련 사항을 저장시키게 되면 보안을 강화할 수 있다.
+
+
+```{r r-profile-usethis, eval=FALSE}
+> usethis::edit_r_environ()
+● Modify 'C:/Users/사용자명/Documents/.Renviron'
+● Restart R for changes to take effect`
+```
+
+`usethis::edit_r_environ()` 명령어를 실행시켜 `.Renviron` 파일에 데이터베이스 접속 사용자계정과 비번을 기록한다.
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 10px;}
+</style>
+<div class = "blue">
+
+> **`.Renviron` 파일** 
+> 
+> ``` {r Renviron-file, eval=FALSE}
+>
+> usethis_id="root"
+> usethis_pw="1234"
+> 
+> ``` 
+
+</div>
+
+
+`.Renviron` 파일에 저장된 데이터베이스 접속 계정명과 비밀번호는 `Sys.getenv("USETHIS_ID")` 이런 명령어를 통해 가져온다.
+
+
+``` {r usethis-connection}
+# 1. 데이터베이스 연결 ------------
+con <- DBI::dbConnect(RMySQL::MySQL(), 
+                      host = "localhost",
+                      dbname = "employees",
+                      user = Sys.getenv("USETHIS_ID"),
+                      password = Sys.getenv("USETHIS_PW"))
+
+dbListTables(con)
+
+# 2. 데이터베이스 연결해제 ------------
+dbDisconnect(con)
+```
