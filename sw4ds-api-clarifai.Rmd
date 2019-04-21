@@ -1,0 +1,132 @@
+---
+layout: page
+title: "데이터 사이언스를 위한 소프트웨어 공학"
+subtitle: "이미지 - `clarifai`"
+author:
+    name: xwMOOC
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: yes
+    toc_float: true
+    highlight: tango
+    code_folding: show
+    number_section: true
+    self_contained: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
+                      comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
+
+library(reticulate)
+use_condaenv("anaconda3")
+# reticulate::repl_python()
+```
+
+#  `clarifai` API 서비스 {#api-clarifai-api}
+
+[clarifai](https://clarifai.com/)는 이미지 특화된 서비스를 API 형태로 제공하고 있다.
+가격은 월마다 5,000번 작업에 대해서는 무료 그외 `Essential`, `Business`, `Enterprise`, `Public Sector`에 대해서 
+별도 가격정책을 집행하고 있다. 전자우편을 인증하지 않을 경우 100번 작업으로 호출건수가 제약된다.
+
+#  `clarifai` APIKEY 발급 [^clarifai-pablobarbera] {#api-clarifai-api-key}
+
+[^clarifai-pablobarbera]: [Pablo Barbera(August 1, 2018), "Working with the Clarifai API"](http://pablobarbera.com/ECPR-SC104/code/08-clarifai-api.html)
+
+가장 먼저, [https://clarifai.com/](https://clarifai.com/) 웹사이트를 방문하여 회원가입하고 앱을 하나 만들고 인증키를 "GET API KEY"를 통해서 받아낸다.
+
+`usethis::edit_r_environ()` 명령어로 `CLARIFAI_API_KEY`값을 설정하고. 그리고 주석을 달아 다른 API KEY와 혼동되지 않도록 한다. API KEY 설정 결과값은 .Renviron 파일에 저장된다.
+
+# 이미지 URL 객체 인식 {#api-clarifai-url}
+
+가장 먼저 [http://i.imgur.com/XmAr3jV.jpg](http://i.imgur.com/XmAr3jV.jpg) 사진 속 강아지를 인식하도록 한다. 이를 위해서 이미지 요청 URL을 JSON 형태로 다음과 같이 준비한다. 그리고 `POST()`로 던져 결과값을 반환받는다.
+
+```{r clarifai-url}
+library(tidyverse)
+library(httr)
+library(rjson)
+
+# usethis::edit_r_environ()
+
+base_url <- "https://api.clarifai.com/v2/models/aaa03c23b3724a16a56b629203edc62c/outputs"
+
+requests <- '
+  {
+    "inputs": [
+      {
+        "data": {
+          "image": {
+            "url": "http://i.imgur.com/XmAr3jV.jpg"
+          }
+        }
+      }
+    ]
+  }'
+
+clarifai_res <- POST(base_url, 
+    add_headers(
+        "Authorization" = paste0("Key ", Sys.getenv("CLARIFAI_API_KEY")),
+        "Content-Type" = "application/json"),
+    body = requests)
+
+clarifai_res
+```
+
+`for`문을 돌려도 되고 `purrr` 팩키지를 사용해서 결과값을 추출해도 된다.
+
+```{r clarifai-url-image-dt}
+clarifai_res_parsed <- content(clarifai_res, "parsed")
+
+# for (result in clarifai_res_parsed$outputs[[1]]$data$concepts){
+#     message('object: ', result$name, ' -- probability: ', result$value)
+# }
+
+clarifai_res_df <- clarifai_res_parsed$outputs[[1]]$data$concepts %>% 
+  enframe() %>% 
+  mutate(id = map_chr(value, ~.$id),
+         name = map_chr(value, ~.$name),
+         value = map_dbl(value, ~.$value))
+
+clarifai_res_df %>% 
+  DT::datatable()
+```
+
+
+# 로컬 컴퓨터 저장된 이미지 [^clarifai-via-R] {#api-clarifai-local}
+
+[^clarifai-via-R]: [clarifai (2017-03-03) "Access to the new pre-trained models via R"](https://community.clarifai.com/t/access-to-the-new-pre-trained-models-via-r/577)
+
+로컬 컴퓨터에 저장된 이미지를 식별하는데는 다소 다른 방식이 필요하다.
+`RCurl` 팩키지 `base64Encode` 함수를 사용해서 base64로 인코딩하여 이미지를 불러읽어 처리한다.
+
+<img src="fig/suji.jpg" alt="수지 이미지" width="50%" />
+
+```{r clarifai-url-image}
+library(RCurl)
+
+suji_res <- POST(base_url,
+                body = sprintf('{ "inputs": [{"data": {"image": {"base64": "%s"}}}]}',
+                base64Encode(readBin("fig/suji.jpg", "raw", file.info("fig/suji.jpg")[1, "size"])), "txt"),
+                add_headers("Authorization" = paste0("Key ", Sys.getenv("CLARIFAI_API_KEY")),
+                            "Content-Type" = "application/json"))
+suji_res
+```
+
+로컬 컴퓨터에 저장된 `fig/suji.jpg` 파일을 clarifai 이미지 API에 전송하여 처리한 결과를 다음과 같이 깔금하게 정리한다.
+
+```{r clarifai-url-image-suji}
+suji_res_parsed <- content(suji_res, "parsed")
+
+suji_res_df <- suji_res_parsed$outputs[[1]]$data$concepts %>% 
+  enframe() %>% 
+  mutate(id = map_chr(value, ~.$id),
+         name = map_chr(value, ~.$name),
+         value = map_dbl(value, ~.$value))
+
+suji_res_df %>% 
+  DT::datatable()
+```
+
