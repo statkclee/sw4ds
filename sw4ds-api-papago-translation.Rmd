@@ -1,0 +1,94 @@
+---
+layout: page
+title: "데이터 사이언스를 위한 소프트웨어 공학"
+subtitle: "파파고 API - 한영번역"
+author:
+    name: xwMOOC
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: yes
+    toc_float: true
+    highlight: tango
+    code_folding: show
+    number_section: true
+    self_contained: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
+                      comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
+
+library(reticulate)
+use_condaenv("anaconda3")
+# reticulate::repl_python()
+```
+
+# 파파고 API [^papago-api] {#r-api-papago}
+
+[^papago-api]: [Kevin Seongho Na, "Naver Papago Api를 활용한 Nmt 번역"](https://mrkevinna.github.io/Naver-Papago-API%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-NMT-%EB%B2%88%EC%97%AD/)
+
+파파고 API는 네이버에서 개발하고 있는 인공지능 API로 번역을 포함한 다양한 인공지는 API를 제공하고 있다. 
+
+# 네이버 개발자 센터 {#r-api-papago-dev-center}
+
+먼저, [네이버 개발자센터](https://developers.naver.com/main/)로 가서 네이버 계정으로 로그인을 한다. 그리고 나서 상단 "Application" &rarr; "내 어플리케이션"에서 신규 어플리케이션을 생성한다. 
+"API 설정"에서 필요한 서비스를 지정한다. 여기서는 "사용 API"에서 "Papago NMT 번역"을 선택한다. 그러면 다음과 같이 쉘에서 실행할 수 있는 이니셜 스크립트가 생성된다. `Naver-Client-Id`와 `Naver-Client-Secret`은 중요한 정보라 `curl` 명령어로 테스트가 끝나면 바꿔서 추후 유추되더라도 문제가 없도록 별도 조치를 취한다. 
+
+"만나서 반갑습니다." 한글 문장이 "Nice to meet you." 영문으로 정확하게 변환된 것이 확인된다. 일일 10,000 호출까지 무료라서... 개발 목적으로는 다소 부족한 감이 있지만 테스트하는데는 충분한 듯 하기도 싶다.
+
+```{r papago-dry-run, engine = 'bash', eval = TRUE}
+curl "https://openapi.naver.com/v1/papago/n2mt" \
+-H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
+-H "X-Naver-Client-Id: zRsZRLqoDEYE1AufliHS" \
+-H "X-Naver-Client-Secret: i5n4wY0ZLi" \
+-d "source=ko&target=en&text=만나서 반갑습니다." -v
+```
+
+# R 코드 번역 {#r-api-papago-R-setting}
+
+`usethis::edit_r_environ()` 명령어로 `Naver-Client-Id`와 `Naver-Client-Secret`에서 설정한 것과 동일하게 설정하여 혼동을 최소화한다. 그리고 주석을 달아 다른 비번과 혼동되지 않도록 한다.
+비번 설정 결과값은 `.Renviron` 파일에 저장된다.
+
+`curl`과 동일하게 `POST`문을 작성한다. 즉, 한글 "만나서 반갑습니다" 문장을 영어로 번역하여 "Nice to meet you."를 제작하는 것이다.
+
+나성호님이 작성한 `POST`문 코드를 그대로 사용하여 결과값을 받아내고 이를 `listviewer` 팩키지로 네이버에서 한글을 받아 영어로 번역한 결과를 그대로 출력한다. 그리고 추후 재사용을 위해서 `translatedText`를 화면에 출력해 본다.
+
+```{r papago-setup-r}
+# 환경변수 확인
+Sys.getenv('Naver-Client-Id')
+Sys.getenv('Naver-Client-Secret')
+
+library(tidyverse)
+library(httr)
+
+# 번역할 문장
+sample_sentence <- '만나서 반갑습니다.'
+
+# curl과 같은 내용을 POST R코드로 작성
+res <- POST(url = 'https://openapi.naver.com/v1/papago/n2mt',
+            encode = 'json',
+            body = list(source = 'ko',
+                        target = 'en',
+                        text = sample_sentence), 
+            config = add_headers('X-Naver-Client-Id' = Sys.getenv('Naver-Client-Id'),
+                                 'X-Naver-Client-Secret' = Sys.getenv('Naver-Client-Secret')
+                                 )
+            )
+
+print(x = res)
+
+# JSON 타입의 데이터를 추출합니다. 
+res_json <- content(x = res)
+
+listviewer::jsonedit(res_json)
+```
+
+`listviewer` 팩키지로 살펴보니 출력결과는 `$message$result$translatedText`에 나타난다.
+
+```{r papago-setup-r-print}
+res_json$message$result$translatedText
+```
+
