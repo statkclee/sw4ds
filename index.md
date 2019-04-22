@@ -20,6 +20,7 @@ title: 데이터 사이언스를 위한 소프트웨어 공학
         - [파파고 API - 한영번역](sw4ds-api-papago-translation.html)
     - **이미지(Image)**
         - [이미지 - `clarifai`](sw4ds-api-clarifai.html)   
+        - [AI 기술을 활용한 이미지 분석 - 카카오](sw4ds-api-kakao.html)   
 
 
 

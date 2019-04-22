@@ -1,0 +1,81 @@
+---
+layout: page
+title: "데이터 사이언스를 위한 소프트웨어 공학"
+subtitle: "AI 기술을 활용한 이미지 분석 - 카카오"
+author:
+    name: xwMOOC
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: yes
+    toc_float: true
+    highlight: tango
+    code_folding: show
+    number_section: true
+    self_contained: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
+                      comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
+
+library(reticulate)
+use_condaenv("anaconda3")
+# reticulate::repl_python()
+```
+
+# 카카오 API - Vision API {#api-kakao-vision}
+
+[카카오 API - Vision API](http://vision-api.kakao.com/)를 활용하면 현재 "얼굴검출", "상품검출", "썸네일" "멀티태그 생성" "성인이미지 판별" 작업을 수행할 수 있다.
+
+이미 친숙한 [How-Old.net](https://www.how-old.net/) 서비스나, 마이크로소프트 애져 [Cognitive Services - Face](https://azure.microsoft.com/ko-kr/services/cognitive-services/face/)와 유사하다.
+
+
+# 카카오 API KEY {#api-kakao-apikey}
+
+가장 먼저 카카오 API KEY를 받아야 사진 정보를 카카오 API에 던졌을 때 얼굴검출을 사진속에서 할 수 있다.
+
+1. 카카오 개발자 센터에 회원 가입한다. [Kakao Developers](https://developers.kakao.com/)
+1. "내 애플리케이션"에서 "앱 만들기"를 클릭하여 입을 생성한다.
+1. 생성한 앱에서 "앱정보" &rarr; "앱키" &rarr; "REST API키"를 복사하여 활용한다. 
+
+생성된 REST API키를 `usethis::edit_r_environ()` 명령어를 사용해서 `.Renviron`에 키-값 짝으로 저장시켜 추후 재사용한다.
+
+```{r kakao-api}
+# usethis::edit_r_environ()
+```
+
+# 얼굴인식 API 헬로월드 {#api-kakao-face-hello-world}
+
+`curl` 명령어를 사용해서 앞서 준비한 API KEY를 사용해서 정상적으로 사진 속 이미지를 인식하는지 확인한다.
+
+```{r kakao-api-bash, engine="bash", eval=TRUE}
+curl -v -X POST "https://kapi.kakao.com/v1/vision/face/detect" \
+-d "image_url=https://t1.daumcdn.net/alvolo/_vision/openapi/r2/images/01.jpg" \
+-H "Authorization: KakaoAK 335a10636ee663383134e1560da1faad"
+```
+
+# 사진 URL - R 스크립트 [^curl-converter] {#api-kakao-face-rscript}
+
+[^curl-converter]: [Convert curl syntax to Python, Node.js, R, PHP, Strest, Go, JSON, Rust](https://curl.trillworks.com/)
+
+`curl` 명령어를 통해서 정상적인 동작이 됨을 확인했으면 이를 `httr` 팩키지 `POST` 함수를 사용해서 R스크립트로 작성한다.
+
+```{r kakao-api-url-rscript}
+library(tidyverse)
+library(httr)
+
+kakao_face_url <- "https://kapi.kakao.com/v1/vision/face/detect"
+
+headers <- c( "Authorization" = paste0("KakaoAK ", Sys.getenv("KAKAO_API_KEY")),
+  `Content-Type` = 'application/json',
+  `Referer` = 'https://developers.kakao.com/docs/restapi/tool')
+
+data <- list(  "image_url" = 'https://t1.daumcdn.net/alvolo/_vision/openapi/r2/images/01.jpg')
+
+kakao_face_res <- httr::POST(url = kakao_face_url, httr::add_headers(.headers=headers), body = data)
+
+content(kakao_face_res)
+```
