@@ -24,11 +24,35 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
                       comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
 ```
 
-# 사전 학습된 모형 [^pre-trained-model] [^rstudio-cats-vs-dogs] {#transfer-learning}
+# 사전 학습된 모형 [^pre-trained-model] [^rstudio-cats-vs-dogs] [^transfer-learning-poissonifish] {#transfer-learning}
 
 [^pre-trained-model]: [Pedro Marcelino (Oct 23, 2018), "Transfer learning from pre-trained models"](https://towardsdatascience.com/transfer-learning-from-pre-trained-models-f2393f124751)
 
 [^rstudio-cats-vs-dogs]: [TensorFlow for R Blog (2017-12-14), "Image Classification on Small Datasets with Keras"](https://blogs.rstudio.com/tensorflow/posts/2017-12-14-image-classification-on-small-datasets/)
 
-[]: [Poissonisfish (2018-07-08), "Convolutional Neural Networks in R"](https://poissonisfish.wordpress.com/2018/07/08/convolutional-neural-networks-in-r/)
+[^transfer-learning-poissonifish]: [Poissonisfish (2018-07-08), "Convolutional Neural Networks in R"](https://poissonisfish.wordpress.com/2018/07/08/convolutional-neural-networks-in-r/)
+
+이미지 분류에서 전이학습(Transfer Learning)은 사전 학습된 모형(Pre-trained model)을 사용해서 정확도가 높은 이미지 분류 모형을 짧은 시간내에 구축하는 일반화된 방법이다.
+
+전이학습으로 많이 사용되는 사전 학습 모형을 CNN(Convolutional neural networks)을 사용하는데 CNN은 두개 부분으로 나눠져 있다.
+**Convolutional base**와 분류기 **Classifier**로 나눠진다. **Convolutional base**는 Convolution과 Pooling 계측으로 구정되고 주된 목적은 이미지로부터 Feature를 생성시키는 역할을 담당한다. **Classifier**는 fully connected 계층으로 구성되고 주된 목적은 탐지된 feature를 바탕으로 이미지를 분류시키는 분류기 역할을 수행한다.
+
+
+# 사전 훈련된 모형 용도 변경 {#transfer-learning-repurposing}
+
+사전 훈련된 모형을 용도 변경하는 경우, 
+우선 분류기 **classifier**를 제거시키고 나서 용도에 맞는 신규 분류기를 추가시키고 
+다음과 같은 3가지 전략에 따라 분류기를 다르게 훈련하여 모형을 개발시킨다.
+
+1. 전체 모형 훈련: 아무것도 없는 상태에서 모형을 개발하는 것이기 때문에 대량의 데이터가 필요하고 따라서 엄청난 양의 컴퓨팅 자원도 소요된다.
+1. 나머지 계층은 변경없이, 일부 계층만 훈련: 문제와 독립적인 일반 Feature는 그대로 두고, 문제에 종속되는 특수 Feature만 변경시켜 학습시킨다. 이런 경우 데이터가 작은 경우 과적합이 될 수 있어 이를 피하고자 모수(parameter)를 데이터에 맞춰 적게 가져가야되고, 데이터가 많은 경우 과적합을 피할 수 있어 좀더 예측력이 좋은 모형으로 개발하는 것도 가능하다.
+1. **convolutional base** 동결: 훈련/동결(freeze) 상충관계 모형으로도 극단적인 형태에 속한다. **convolutional base**는 그대로 둔 상태로 **classifier**에 그대로 연결시키 사용하는 경우로, 데이터가 작은데 컴퓨팅 자원도 넉넉하지 못한 상태에서 사전 예측모형과 유사한 문제를 해결하려고 하는 상태에 적합하다.
+
+한가지 유의할 점은 학습율(learning rate)를 작게 유지하는 것이 좋다. 이유는 높은 학습율을 초모수(hyper parameter)로 설정할 경우 기존 사전학습된 모형도 망가질 수 있는 위험도 커지기 때문이다.
+
+
+
+
+
+
 

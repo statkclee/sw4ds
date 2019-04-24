@@ -1593,14 +1593,26 @@ Tidyverse Korea<br><h4 class="date">2019-04-24</h4>
 
 
 <div id="transfer-learning" class="section level1">
-<h1><span class="header-section-number">1</span> 사전 학습된 모형 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h1>
-<p>[]: <a href="https://poissonisfish.wordpress.com/2018/07/08/convolutional-neural-networks-in-r/">Poissonisfish (2018-07-08), “Convolutional Neural Networks in R”</a></p>
+<h1><span class="header-section-number">1</span> 사전 학습된 모형 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></h1>
+<p>이미지 분류에서 전이학습(Transfer Learning)은 사전 학습된 모형(Pre-trained model)을 사용해서 정확도가 높은 이미지 분류 모형을 짧은 시간내에 구축하는 일반화된 방법이다.</p>
+<p>전이학습으로 많이 사용되는 사전 학습 모형을 CNN(Convolutional neural networks)을 사용하는데 CNN은 두개 부분으로 나눠져 있다. <strong>Convolutional base</strong>와 분류기 <strong>Classifier</strong>로 나눠진다. <strong>Convolutional base</strong>는 Convolution과 Pooling 계측으로 구정되고 주된 목적은 이미지로부터 Feature를 생성시키는 역할을 담당한다. <strong>Classifier</strong>는 fully connected 계층으로 구성되고 주된 목적은 탐지된 feature를 바탕으로 이미지를 분류시키는 분류기 역할을 수행한다.</p>
+</div>
+<div id="transfer-learning-repurposing" class="section level1">
+<h1><span class="header-section-number">2</span> 사전 훈련된 모형 용도 변경</h1>
+<p>사전 훈련된 모형을 용도 변경하는 경우, 우선 분류기 <strong>classifier</strong>를 제거시키고 나서 용도에 맞는 신규 분류기를 추가시키고 다음과 같은 3가지 전략에 따라 분류기를 다르게 훈련하여 모형을 개발시킨다.</p>
+<ol style="list-style-type: decimal">
+<li>전체 모형 훈련: 아무것도 없는 상태에서 모형을 개발하는 것이기 때문에 대량의 데이터가 필요하고 따라서 엄청난 양의 컴퓨팅 자원도 소요된다.</li>
+<li>나머지 계층은 변경없이, 일부 계층만 훈련: 문제와 독립적인 일반 Feature는 그대로 두고, 문제에 종속되는 특수 Feature만 변경시켜 학습시킨다. 이런 경우 데이터가 작은 경우 과적합이 될 수 있어 이를 피하고자 모수(parameter)를 데이터에 맞춰 적게 가져가야되고, 데이터가 많은 경우 과적합을 피할 수 있어 좀더 예측력이 좋은 모형으로 개발하는 것도 가능하다.</li>
+<li><strong>convolutional base</strong> 동결: 훈련/동결(freeze) 상충관계 모형으로도 극단적인 형태에 속한다. <strong>convolutional base</strong>는 그대로 둔 상태로 <strong>classifier</strong>에 그대로 연결시키 사용하는 경우로, 데이터가 작은데 컴퓨팅 자원도 넉넉하지 못한 상태에서 사전 예측모형과 유사한 문제를 해결하려고 하는 상태에 적합하다.</li>
+</ol>
+<p>한가지 유의할 점은 학습율(learning rate)를 작게 유지하는 것이 좋다. 이유는 높은 학습율을 초모수(hyper parameter)로 설정할 경우 기존 사전학습된 모형도 망가질 수 있는 위험도 커지기 때문이다.</p>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p><a href="https://towardsdatascience.com/transfer-learning-from-pre-trained-models-f2393f124751">Pedro Marcelino (Oct 23, 2018), “Transfer learning from pre-trained models”</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
 <li id="fn2"><p><a href="https://blogs.rstudio.com/tensorflow/posts/2017-12-14-image-classification-on-small-datasets/">TensorFlow for R Blog (2017-12-14), “Image Classification on Small Datasets with Keras”</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p><a href="https://poissonisfish.wordpress.com/2018/07/08/convolutional-neural-networks-in-r/">Poissonisfish (2018-07-08), “Convolutional Neural Networks in R”</a><a href="#fnref3" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 
