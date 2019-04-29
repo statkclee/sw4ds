@@ -22,5 +22,6 @@ title: 데이터 사이언스를 위한 소프트웨어 공학
         - [이미지 - `clarifai`](sw4ds-api-clarifai.html)   
         - [AI 기술을 활용한 이미지 분석 - 카카오](sw4ds-api-kakao.html)   
 - [전이학습(Transfer Learning)](sw4ds-transfer-learning.html)
+    - [사진 속 객체 인식 - `keras`](sw4ds-keras-image-object.html)
 
 
