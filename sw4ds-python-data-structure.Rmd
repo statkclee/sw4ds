@@ -64,13 +64,6 @@ data_science = features + biz_features
 print(f"데이터 사이언스: {data_science}")
 ```
 
-리스트 `data_science` 객체의 원소값에 접근하고자 할 경우 `index()` 메쏘드를 사용하여 숫자 위치를 파악한다.
-`len()` 함수를 사용해서 리스트 전체 크기를 파악할 수 있고, 0부터 시작되는 파이썬 색인 규칙에 따라 `data_science.index('사업모형')`을 통해 6번째 위치 즉 마지막에 위치함도 쉽게 파악하게 된다.
-
-```{python python-list-combine-index}
-print(f"리스트 전체길이: {len(data_science)}, 사업모형 위치: {data_science.index('사업모형')}")
-```
-
 `for` 함수를 사용해서 리스트(`features`) 각 원소를 하나씩 뽑아낼 수도 있다.
 
 ```{python python-list-combine-index-extract}
@@ -78,9 +71,48 @@ for feature in features:
   print(feature)
 ```
 
+앞서 언급한 것처럼 리스트의 원소는 변경이 가능하다.
+
+```{python python-list-substitute}
+features[1] = "Visualization"
+for feature in features:
+  print(feature)
+```
+
+## 리스트 메쏘드 {#list-methods}
+
+리스트 `data_science` 객체의 원소값에 접근하고자 할 경우 `index()` 메쏘드를 사용하여 숫자 위치를 파악한다.
+`len()` 함수를 사용해서 리스트 전체 크기를 파악할 수 있고, 0부터 시작되는 파이썬 색인 규칙에 따라 `data_science.index('사업모형')`을 통해 6번째 위치 즉 마지막에 위치함도 쉽게 파악하게 된다.
+
+```{python python-list-combine-index}
+print(f"리스트 전체길이: {len(data_science)}, 사업모형 위치: {data_science.index('사업모형')}")
+```
+
+더불어 `.append()`와 `.remove()` 메쏘드를 사용해서 리스트에 원소를 추가하고 삭제하는 것도 가능하다.
+
+```{python python-list-append-remove}
+features.append("R")
+print(f'리스트 원소 추가: {features}')
+
+features.remove("데이터 조작")
+print(f'리스트 원소 제거: {features}')
+```
+
+`.pop()` 메쏘드를 사용하게 되면 리스트 원소를 뽑아낼 수 있고, `.count()` 메쏘드를 통해 원소 갯수도 셀수 있다.
+
+```{python python-list-pop}
+features.pop()
+print(f'리스트 잔존 원소: {features}')
+
+features.append("모형")
+features.count("모형")
+```
+
+
+
 # 튜플(tuple) {#python-data-structure-tuple}
 
-**튜플(tuple)**은 리스트와 마찬가지로 값(value)을 다수 저장시킬 수 있지만 한번 생성된 튜플 내부 원소값은 변경시킬 수가 없다. 즉, 변경시킬 수 없는 `immutable` 자료구조로 `()`으로 생성시킨다. 튜플의 특징을 다음과 같이 요약할 수도 있다.
+**튜플(tuple)**은 리스트와 마찬가지로 값(value)을 다수 저장시킬 수 있지만 한번 생성된 튜플 내부 원소값은 변경시킬 수가 없다. 즉, 변경시킬 수 없는 `immutable` 자료구조로 `()`으로 생성시키는데 순서가 있다. 튜플의 특징을 다음과 같이 요약할 수도 있다.
 
 1. 순서대로 원소값을 저장시킨다.
 1. `index` 색인이 있다.
@@ -88,7 +120,17 @@ for feature in features:
 1. 짝을 이뤄 `pair`형태로 되어 있다.
 1. 풀어낼 수가 없다.
 
-`features` 리스트와 `packages` 리스트 두개를 하나로 묶어 `zip()` 함수를 사용하게 되면 튜플 `tuple`객체 `toolchain`이 생성된다.
+## 튜플 생성 {#tuple-create}
+
+가장 단순하게 튜플을 생성시키는 방법은 괄호 `(`, `)`를 사용하여 문자열과 숫자를 순서대로 넣는 방식이다.
+
+```{python python-tuple-create}
+tuple_ex = (1, 'ggplot', 2, 'dplyr', 3, 'caret')
+
+print(f'{tuple_ex}, 원소추출: {tuple_ex[1:3]}')
+```
+
+`features` 리스트와 `packages` 리스트 두개를 하나로 묶어 `zip()` 함수를 사용하게 되면 튜플 `tuple`객체 `toolchain`이 생성된다. 
 
 
 ```{python python-tuple}
@@ -97,7 +139,7 @@ features = ["데이터 조작", "시각화", "모형"]
 
 toolchain = zip(packages, features)
 
-print(f"데이터 사이언스 툴체이: {list(toolchain)}")
+print(f"데이터 사이언스 툴체인: {list(toolchain)}")
 ```
 
 `('ggplot', '시각화')` 튜플의 두 값을 꺼네는데 먼저 `zip`으로 압축된 것을 `list()`를 씌워서 리스트로 빼내고 색인 `[1]`을 걸어 두 변수에 각각 할당시킨다.
@@ -109,34 +151,17 @@ package, feature = list(toolchain)[1]
 print(f"팩키지: {package}, 기능: {feature}")
 ```
 
-## 튜플 - `enumerator` {#python-data-structure-tuple-enumerator}
+하지만 튜플 원소는 변경할 수 없기 때문에 값을 변경시키게 되면 오류가 생성된다.
 
-`for` 루프를 사용해서 전체 튜플 리스트를 뽑아내서 출력해보자.
-
-```{python python-tuple-unpack-for}
-toolchain = zip(packages, features)
-for package, feature in toolchain:
-    print(f"팩키지: {package}, --> {feature}")
+```{python python-tuple-error, error=TRUE}
+tuple_ex[1] = 'parsnip'
 ```
 
-
-`for` 루프를 사용해서 전체 튜플 리스트를 뽑아낼 때 조금 아쉬운 점은 위치 `index`에 대한 것도 함께 알았으면 좋겠다는 생각이 들 것이다. 이런 부족한 점을 충족시켜 주는 것이 `enumerate` 가 짜짠... 역할을 수행하게 된다.
-`enumerate` 함수는 순서가 있는 자료형(리스트, 튜플, 문자열)을 입력받아 색인 `index`을 해당 원소값에 포함시키는 역할을 수행한다.
-
-먼저 `enumerate()` 함수로 객체를 생성하고 `index`와 `item`을 추출하고 튜플 `item`에서 각 튜플 원소를 `package`와 `feature`로 추출시킨다. 이를 통해서 `index`, `package`, `feature`를 튜플에서 `enumerate`를 통해서 뽑아낼 수 있게 된다.
-
-```{python python-tuple-unpack-for-enumerate}
-toolchain = zip(packages, features)
-for index, item in enumerate(toolchain):
-    package, feature = item
-    print(f"순서 {index}:, 팩키지 {package}, --> {feature}")
-```
 
 
 # 집합(`set`) {#python-data-structure-set}
 
-집합(`set`)은 수학의 집합이론을 파이썬으로 구현한 것이다. 
-파이썬 집합 자료구조는 다음 특징을 갖추고 있다.
+집합(`set`)은 수학의 집합이론을 파이썬으로 구현한 것이다. 즉, 집합 자료구조는 중복된 값이 없는 유일무이한 순서없는 원소로 구성된 집합체다. 파이썬 집합 자료구조는 다음 특징을 갖추고 있다.
 
 1. 순서가 없다.
 1. 집합 원소는 유일무이하다.
@@ -185,6 +210,7 @@ print(f'통일한국 차집합 B: {north_set.difference(south_set)}')
 # 딕셔너리 (`dictionary`) {#python-data-structure-dict}
 
 파이썬의 뿌리는 딕셔너리 (`dictionary`)라고 해도 과언은 아니다.
+딕셔너리 키는 유일무이하며 변경될 수 없는 제약조건을 충족해야 된다.
 딕셔너리 (`dictionary`) 자료구조는 다음 특징을 갖추고 있다.
 
 1. 키값(key-value)로 짝을 이뤄 데이터가 저장되어 있다.
@@ -265,4 +291,50 @@ for row in csv.DictReader(csv_file, ['name', 'miles', 'country']):
 csv_file.close()
 ```
 
+# 자료구조간 변환 {#python-data-structure-conversion}
 
+자료구조간 변환은 다음과 같다.
+
+## 두 리스트 &rarr; 딕셔너리 [^convert-lists] {#two-lists-dictionary}
+
+[^convert-lists]: [Python : How to convert a list to dictionary?](https://thispointer.com/python-how-to-convert-a-list-to-dictionary/)
+
+리스트 두개 즉, 문자열 키(key)와 숫자 값(value)을 갖는 리스트를 딕셔너리로 변환시키려면 `zip()`으로 묶고 `dict()`으로 변환시켜야 된다. 
+
+```{python python-two-lists-dictionary}
+# 이름 문자열 리스트
+name_list = ["김현수", "박상용" , "이정훈" , "최학수" , "최병규"]
+    
+# 정수 나이 리스트
+age_list = [56, 23, 43, 97, 43]
+
+demo_dict = dict(zip(name_list, age_list))
+
+print(demo_dict)
+```
+
+
+## 튜플 리스트 &rarr; 딕셔너리 {#two-tuple-lists-dictionary}
+
+두개의 튜플 리스트를 딕셔너리로 변환시키는 방법은 `dict()` 함수를 사용하면 된다.
+
+```{python python-two-tuple-lists-dictionary}
+demo_list_tup = [('김현수', 56), ('박상용', 23), ('이정훈', 43), ('최학수', 97), ('최병규', 43)]
+
+demo_dict = dict(demo_list_tup)
+
+print(demo_dict)
+```
+
+## 딕셔너리 &rarr; 리스트 {#dictionary-list}
+
+딕셔너리를 리스트로 변환시키려면 전체를 리스트로 변환시키려면 `.items()` 메쏘드를 사용하고 키만 추출하여 리스트로 변환시키려면 `.keys()`, 값만 추출하여 리스트로 반환시키려면 `.values()` 메쏘드를 사용한다.
+
+```{python python-dictionary-list}
+
+print(f'튜플 리스트: {demo_dict.items()}')
+
+print(f'키(key) 리스트: {demo_dict.keys()}')
+
+print(f'값(value) 리스트: {demo_dict.values()}')
+```

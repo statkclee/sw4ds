@@ -1683,301 +1683,96 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">데이터 사이언스 - 파이썬</h1>
-<h3 class="subtitle">자료구조 - 리스트, 튜플, 딕셔너리</h3>
+<h3 class="subtitle">반복자(iterator)</h3>
 <h4 class="author">xwMOOC</h4>
 <h4 class="date">2019-06-25</h4>
 
 </div>
 
 
-<div id="python-data-structure" class="section level1">
-<h1><span class="header-section-number">1</span> 데이터 사이언스 자료형</h1>
-<p>파이썬을 설치하게 되면 <a href="https://docs.python.org/3.6/library/index.html">The Python Standard Library</a>에 표준 내장 자료형과 표준내장 함수, 표준내장 모듈이 있다.</p>
-<ul>
-<li>표준 내장 자료형: <code>list</code>, <code>dict</code>, <code>tuple</code>, <code>set</code> 등</li>
-<li>표준 내장 함수: <code>print()</code>, <code>len()</code>, <code>range()</code>, <code>enumerate()</code>, <code>map()</code>, <code>zip()</code> 등</li>
-<li>표준 내장 모듈: <code>os</code>, <code>sys</code>, <code>itertools</code>, <code>collections</code>, <code>math</code> 등</li>
-</ul>
-<p>파이썬에는 값을 담아두는 컨테이너(Container) 자료형이 다수 존재한다. 크게 보면 값을 변경시킬 수 있는 리스트(<code>list</code>)와 집합(<code>set</code>)이 있고 값을 변경시킬 수 없는 튜플(<code>tuple</code>)로 나눌 수 있다.</p>
+<div id="python-iterators" class="section level1">
+<h1><span class="header-section-number">1</span> 파이썬 반복자(iterators)</h1>
+<div id="python-iterators-for-loop" class="section level2">
+<h2><span class="header-section-number">1.1</span> <code>for</code> 루프 반복자 - 리스트</h2>
+<p>파이썬에서 가장 일반적인 자료구조인 리스트(<code>list</code>)에 대한 반복자(<code>iterator</code>)로 <code>for</code> 루프를 사용해보자. <code>iterable</code>에는 리스트(list), 문자열(string), 딕셔너리(dictionary) 등이 포함되고 <code>iter()</code>를 적용시커 반복자(<code>iterator</code>)를 생성시킨다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1">languages <span class="op">=</span> [<span class="st">&quot;R&quot;</span>, <span class="st">&quot;파이썬&quot;</span>, <span class="st">&quot;C/C++&quot;</span>]</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="cf">for</span> language <span class="kw">in</span> languages:</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="bu">print</span>(<span class="ss">f&quot;데이터 사이언스 언어: </span><span class="sc">{</span>language<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
+<pre><code>데이터 사이언스 언어: R
+데이터 사이언스 언어: 파이썬
+데이터 사이언스 언어: C/C++</code></pre>
 </div>
-<div id="python-data-structure-list" class="section level1">
-<h1><span class="header-section-number">2</span> 리스트(<code>list</code>)</h1>
-<p><strong>리스트(<code>list</code>)</strong>는 다음과 같은 특징이 있다.</p>
-<ol style="list-style-type: decimal">
-<li>리스트에 원소가 추가되는 순서대로 값들이 저장된다.</li>
-<li>리스트 원소는 변경가능(<code>mutable</code>)하다.</li>
-<li>색인(<code>index</code>)가 있다.</li>
-</ol>
-<p><code>[</code>, <code>]</code>을 꺾쇠기호로 열고 닫아 리스트 객체를 생성시킨다. 생성된 리스트 객체에 <code>.append()</code> 메쏘드를 사용해서 추가로 리스트 객체를 추가한다.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1">features <span class="op">=</span> [<span class="st">&quot;데이터 조작&quot;</span>, <span class="st">&quot;시각화&quot;</span>, <span class="st">&quot;모형&quot;</span>]</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f&quot;데이터 사이언스 기능: </span><span class="sc">{</span>features<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>데이터 사이언스 기능: ['데이터 조작', '시각화', '모형']</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1">features.append(<span class="st">&quot;커뮤니케이션&quot;</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f&quot;데이터 사이언스 기능: </span><span class="sc">{</span>features<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>데이터 사이언스 기능: ['데이터 조작', '시각화', '모형', '커뮤니케이션']</code></pre>
-<p>리스트 객체 두개 <code>features</code>와 <code>biz_features</code>를 결합시켜 새로운 리스트 객체를 생성시킬 경우 <code>+</code> 연산자를 사용하면 된다.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" data-line-number="1">biz_features <span class="op">=</span> [<span class="st">&quot;문제정의&quot;</span>, <span class="st">&quot;운영&quot;</span>, <span class="st">&quot;사업모형&quot;</span>]</a>
+<div id="python-iterators-for-loop-dictionary" class="section level2">
+<h2><span class="header-section-number">1.2</span> <code>for</code> 루프 반복자 - 딕셔너리</h2>
+<p>딕셔너리(dictionary)는 키-값(key-value)를 갖는 자료형이다. 딕셔너리에 <code>.items()</code>를 <code>for</code>문과 결합하여 사용한다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1">data_science <span class="op">=</span> {<span class="st">&quot;R&quot;</span>: <span class="st">&quot;젠틀맨, 이하카&quot;</span>,</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">            <span class="st">&quot;파이썬&quot;</span>: <span class="st">&quot;귀도 반 로섬&quot;</span>,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">            <span class="st">&quot;C/C++&quot;</span>: <span class="st">&quot;톰슨, 리치&quot;</span>}</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">            </a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="cf">for</span> language, creator <span class="kw">in</span> data_science.items():</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="bu">print</span>(<span class="ss">f&quot;- 데이터 사이언스 언어: </span><span class="sc">{</span>language<span class="sc">}</span><span class="ss">, </span><span class="ch">\n</span><span class="ss"> ㄴ 창시자: </span><span class="sc">{</span>creator<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
+<pre><code>- 데이터 사이언스 언어: R, 
+ ㄴ 창시자: 젠틀맨, 이하카
+- 데이터 사이언스 언어: 파이썬, 
+ ㄴ 창시자: 귀도 반 로섬
+- 데이터 사이언스 언어: C/C++, 
+ ㄴ 창시자: 톰슨, 리치</code></pre>
+</div>
+<div id="python-iterators-for-loop-enumerate" class="section level2">
+<h2><span class="header-section-number">1.3</span> <code>for</code> 루프 반복자 - <code>enumerate</code></h2>
+<p><code>enumerate()</code>를 사용하게 되면 <code>index</code>를 얻게 되어 앞서 <code>for</code>문에 리스트를 사용할 때에 비해 도움이 되는 경우가 많다. <code>print(list(enumerate(models)))</code>을 출력시켜 보면 기존 리스트(<code>models</code>)에 <code>index</code>가 붙은 튜플 리스트를 확인할 수 있다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" data-line-number="1">models <span class="op">=</span> [<span class="st">&quot;회귀분석&quot;</span>, <span class="st">&quot;기계학습&quot;</span>, <span class="st">&quot;딥러닝&quot;</span>]</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">data_science <span class="op">=</span> features <span class="op">+</span> biz_features</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="bu">print</span>(<span class="ss">f&quot;데이터 사이언스: </span><span class="sc">{</span>data_science<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>데이터 사이언스: ['데이터 조작', '시각화', '모형', '커뮤니케이션', '문제정의', '운영', '사업모형']</code></pre>
-<p><code>for</code> 함수를 사용해서 리스트(<code>features</code>) 각 원소를 하나씩 뽑아낼 수도 있다.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="cf">for</span> feature <span class="kw">in</span> features:</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="bu">print</span>(feature)</a></code></pre></div>
-<pre><code>데이터 조작
-시각화
-모형
-커뮤니케이션</code></pre>
-<p>앞서 언급한 것처럼 리스트의 원소는 변경이 가능하다.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" data-line-number="1">features[<span class="dv">1</span>] <span class="op">=</span> <span class="st">&quot;Visualization&quot;</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="cf">for</span> feature <span class="kw">in</span> features:</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="bu">print</span>(feature)</a></code></pre></div>
-<pre><code>데이터 조작
-Visualization
-모형
-커뮤니케이션</code></pre>
-<div id="list-methods" class="section level2">
-<h2><span class="header-section-number">2.1</span> 리스트 메쏘드</h2>
-<p>리스트 <code>data_science</code> 객체의 원소값에 접근하고자 할 경우 <code>index()</code> 메쏘드를 사용하여 숫자 위치를 파악한다. <code>len()</code> 함수를 사용해서 리스트 전체 크기를 파악할 수 있고, 0부터 시작되는 파이썬 색인 규칙에 따라 <code>data_science.index('사업모형')</code>을 통해 6번째 위치 즉 마지막에 위치함도 쉽게 파악하게 된다.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f&quot;리스트 전체길이: </span><span class="sc">{</span><span class="bu">len</span>(data_science)<span class="sc">}</span><span class="ss">, 사업모형 위치: </span><span class="sc">{</span>data_science<span class="sc">.</span>index(<span class="st">'사업모형'</span>)<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>리스트 전체길이: 7, 사업모형 위치: 6</code></pre>
-<p>더불어 <code>.append()</code>와 <code>.remove()</code> 메쏘드를 사용해서 리스트에 원소를 추가하고 삭제하는 것도 가능하다.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" data-line-number="1">features.append(<span class="st">&quot;R&quot;</span>)</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f'리스트 원소 추가: </span><span class="sc">{</span>features<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>리스트 원소 추가: ['데이터 조작', 'Visualization', '모형', '커뮤니케이션', 'R']</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" data-line-number="1">features.remove(<span class="st">&quot;데이터 조작&quot;</span>)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f'리스트 원소 제거: </span><span class="sc">{</span>features<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>리스트 원소 제거: ['Visualization', '모형', '커뮤니케이션', 'R']</code></pre>
-<p><code>.pop()</code> 메쏘드를 사용하게 되면 리스트 원소를 뽑아낼 수 있고, <code>.count()</code> 메쏘드를 통해 원소 갯수도 셀수 있다.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" data-line-number="1">features.pop()</a></code></pre></div>
-<pre><code>'R'</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'리스트 잔존 원소: </span><span class="sc">{</span>features<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>리스트 잔존 원소: ['Visualization', '모형', '커뮤니케이션']</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb21-1" data-line-number="1">features.append(<span class="st">&quot;모형&quot;</span>)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">features.count(<span class="st">&quot;모형&quot;</span>)</a></code></pre></div>
-<pre><code>2</code></pre>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="bu">print</span>(<span class="bu">list</span>(<span class="bu">enumerate</span>(models)))</a></code></pre></div>
+<pre><code>[(0, '회귀분석'), (1, '기계학습'), (2, '딥러닝')]</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="cf">for</span> index, model <span class="kw">in</span> <span class="bu">enumerate</span>(models, start<span class="op">=</span><span class="dv">1</span>):</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="bu">print</span>(<span class="ss">f&quot;- 데이터 사이언스 모형 </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>model<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
+<pre><code>- 데이터 사이언스 모형 1: 회귀분석
+- 데이터 사이언스 모형 2: 기계학습
+- 데이터 사이언스 모형 3: 딥러닝</code></pre>
 </div>
+<div id="python-iterators-for-loop-zip" class="section level2">
+<h2><span class="header-section-number">1.4</span> <code>for</code> 루프 반복자 - <code>zip</code></h2>
+<p><code>zip()</code>을 사용하게 되면 리스트와 리스트를 결합할 때 유용하다.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" data-line-number="1">languages <span class="op">=</span> [<span class="st">&quot;R&quot;</span>, <span class="st">&quot;파이썬&quot;</span>, <span class="st">&quot;텐서플로우&quot;</span>]</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">models   <span class="op">=</span> [<span class="st">&quot;회귀분석&quot;</span>, <span class="st">&quot;기계학습&quot;</span>, <span class="st">&quot;딥러닝&quot;</span>]</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="cf">for</span> language, model <span class="kw">in</span> <span class="bu">zip</span>(languages, models):</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">  <span class="bu">print</span>(<span class="ss">f&quot;데이터 사이언스 언어: </span><span class="sc">{</span>language<span class="sc">}</span><span class="ss">, 모형: </span><span class="sc">{</span>model<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
+<pre><code>데이터 사이언스 언어: R, 모형: 회귀분석
+데이터 사이언스 언어: 파이썬, 모형: 기계학습
+데이터 사이언스 언어: 텐서플로우, 모형: 딥러닝</code></pre>
+<p>특히 <code>*</code>을 사용하면 압축(<code>zip</code>)한 것을 <code>unzip</code>하여 풀 수 있다.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" data-line-number="1">solution <span class="op">=</span> <span class="bu">zip</span>(languages, models)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="bu">print</span>(<span class="op">*</span>solution)</a></code></pre></div>
+<pre><code>('R', '회귀분석') ('파이썬', '기계학습') ('텐서플로우', '딥러닝')</code></pre>
 </div>
-<div id="python-data-structure-tuple" class="section level1">
-<h1><span class="header-section-number">3</span> 튜플(tuple)</h1>
-<p><strong>튜플(tuple)</strong>은 리스트와 마찬가지로 값(value)을 다수 저장시킬 수 있지만 한번 생성된 튜플 내부 원소값은 변경시킬 수가 없다. 즉, 변경시킬 수 없는 <code>immutable</code> 자료구조로 <code>()</code>으로 생성시키는데 순서가 있다. 튜플의 특징을 다음과 같이 요약할 수도 있다.</p>
-<ol style="list-style-type: decimal">
-<li>순서대로 원소값을 저장시킨다.</li>
-<li><code>index</code> 색인이 있다.</li>
-<li>원소값은 변경할 수 없다(<code>immutable</code>).</li>
-<li>짝을 이뤄 <code>pair</code>형태로 되어 있다.</li>
-<li>풀어낼 수가 없다.</li>
-</ol>
-<div id="tuple-create" class="section level2">
-<h2><span class="header-section-number">3.1</span> 튜플 생성</h2>
-<p>가장 단순하게 튜플을 생성시키는 방법은 괄호 <code>(</code>, <code>)</code>를 사용하여 문자열과 숫자를 순서대로 넣는 방식이다.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb23-1" data-line-number="1">tuple_ex <span class="op">=</span> (<span class="dv">1</span>, <span class="st">'ggplot'</span>, <span class="dv">2</span>, <span class="st">'dplyr'</span>, <span class="dv">3</span>, <span class="st">'caret'</span>)</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>tuple_ex<span class="sc">}</span><span class="ss">, 원소추출: </span><span class="sc">{</span>tuple_ex[<span class="dv">1</span>:<span class="dv">3</span>]<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>(1, 'ggplot', 2, 'dplyr', 3, 'caret'), 원소추출: ('ggplot', 2)</code></pre>
-<p><code>features</code> 리스트와 <code>packages</code> 리스트 두개를 하나로 묶어 <code>zip()</code> 함수를 사용하게 되면 튜플 <code>tuple</code>객체 <code>toolchain</code>이 생성된다.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb25-1" data-line-number="1">packages <span class="op">=</span> [<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot&quot;</span>, <span class="st">&quot;broom&quot;</span>]</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">features <span class="op">=</span> [<span class="st">&quot;데이터 조작&quot;</span>, <span class="st">&quot;시각화&quot;</span>, <span class="st">&quot;모형&quot;</span>]</a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4">toolchain <span class="op">=</span> <span class="bu">zip</span>(packages, features)</a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="bu">print</span>(<span class="ss">f&quot;데이터 사이언스 툴체인: </span><span class="sc">{</span><span class="bu">list</span>(toolchain)<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>데이터 사이언스 툴체인: [('dplyr', '데이터 조작'), ('ggplot', '시각화'), ('broom', '모형')]</code></pre>
-<p><code>('ggplot', '시각화')</code> 튜플의 두 값을 꺼네는데 먼저 <code>zip</code>으로 압축된 것을 <code>list()</code>를 씌워서 리스트로 빼내고 색인 <code>[1]</code>을 걸어 두 변수에 각각 할당시킨다.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb27-1" data-line-number="1">toolchain <span class="op">=</span> <span class="bu">zip</span>(packages, features)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">package, feature <span class="op">=</span> <span class="bu">list</span>(toolchain)[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="bu">print</span>(<span class="ss">f&quot;팩키지: </span><span class="sc">{</span>package<span class="sc">}</span><span class="ss">, 기능: </span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>팩키지: ggplot, 기능: 시각화</code></pre>
-<p>하지만 튜플 원소는 변경할 수 없기 때문에 값을 변경시키게 되면 오류가 생성된다.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb29-1" data-line-number="1">tuple_ex[<span class="dv">1</span>] <span class="op">=</span> <span class="st">'parsnip'</span></a></code></pre></div>
-<pre><code>Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: 'tuple' object does not support item assignment
-
-Detailed traceback: 
-  File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</code></pre>
+<div id="python-data-structure-tuple-enumerator" class="section level2">
+<h2><span class="header-section-number">1.5</span> 튜플 - <code>enumerator</code></h2>
+<p><code>for</code> 루프를 사용해서 전체 튜플 리스트를 뽑아내서 출력해보자.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">packages <span class="op">=</span> [<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot&quot;</span>, <span class="st">&quot;broom&quot;</span>]</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">features <span class="op">=</span> [<span class="st">&quot;데이터 조작&quot;</span>, <span class="st">&quot;시각화&quot;</span>, <span class="st">&quot;모형&quot;</span>]</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">toolchain <span class="op">=</span> <span class="bu">zip</span>(packages, features)</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="cf">for</span> package, feature <span class="kw">in</span> toolchain:</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">    <span class="bu">print</span>(<span class="ss">f&quot;팩키지: </span><span class="sc">{</span>package<span class="sc">}</span><span class="ss">, --&gt; </span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
+<pre><code>팩키지: dplyr, --&gt; 데이터 조작
+팩키지: ggplot, --&gt; 시각화
+팩키지: broom, --&gt; 모형</code></pre>
+<p><code>for</code> 루프를 사용해서 전체 튜플 리스트를 뽑아낼 때 조금 아쉬운 점은 위치 <code>index</code>에 대한 것도 함께 알았으면 좋겠다는 생각이 들 것이다. 이런 부족한 점을 충족시켜 주는 것이 <code>enumerate</code> 가 짜짠… 역할을 수행하게 된다. <code>enumerate</code> 함수는 순서가 있는 자료형(리스트, 튜플, 문자열)을 입력받아 색인 <code>index</code>을 해당 원소값에 포함시키는 역할을 수행한다.</p>
+<p>먼저 <code>enumerate()</code> 함수로 객체를 생성하고 <code>index</code>와 <code>item</code>을 추출하고 튜플 <code>item</code>에서 각 튜플 원소를 <code>package</code>와 <code>feature</code>로 추출시킨다. 이를 통해서 <code>index</code>, <code>package</code>, <code>feature</code>를 튜플에서 <code>enumerate</code>를 통해서 뽑아낼 수 있게 된다.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" data-line-number="1">toolchain <span class="op">=</span> <span class="bu">zip</span>(packages, features)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="cf">for</span> index, item <span class="kw">in</span> <span class="bu">enumerate</span>(toolchain):</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">    package, feature <span class="op">=</span> item</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">    <span class="bu">print</span>(<span class="ss">f&quot;순서 </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss">:, 팩키지 </span><span class="sc">{</span>package<span class="sc">}</span><span class="ss">, --&gt; </span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
+<pre><code>순서 0:, 팩키지 dplyr, --&gt; 데이터 조작
+순서 1:, 팩키지 ggplot, --&gt; 시각화
+순서 2:, 팩키지 broom, --&gt; 모형</code></pre>
 </div>
-</div>
-<div id="python-data-structure-set" class="section level1">
-<h1><span class="header-section-number">4</span> 집합(<code>set</code>)</h1>
-<p>집합(<code>set</code>)은 수학의 집합이론을 파이썬으로 구현한 것이다. 즉, 집합 자료구조는 중복된 값이 없는 유일무이한 순서없는 원소로 구성된 집합체다. 파이썬 집합 자료구조는 다음 특징을 갖추고 있다.</p>
-<ol style="list-style-type: decimal">
-<li>순서가 없다.</li>
-<li>집합 원소는 유일무이하다.</li>
-<li>원소값을 변경할 수 있다(<code>mutable</code>).</li>
-</ol>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb31-1" data-line-number="1">south_korea <span class="op">=</span> [<span class="st">&quot;한국어&quot;</span>, <span class="st">&quot;민주주의&quot;</span>, <span class="st">&quot;자본주의&quot;</span>, <span class="st">&quot;한반도&quot;</span>, <span class="st">&quot;한반도&quot;</span>, <span class="st">&quot;수정자본주의&quot;</span>]</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2">north_korea <span class="op">=</span> [<span class="st">&quot;한국어&quot;</span>, <span class="st">&quot;전체주의&quot;</span>, <span class="st">&quot;공산주의&quot;</span>, <span class="st">&quot;한반도&quot;</span>, <span class="st">&quot;사회주의&quot;</span>, <span class="st">&quot;한국어&quot;</span>, <span class="st">&quot;공산주의&quot;</span>]</a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4">south_set <span class="op">=</span> <span class="bu">set</span>(south_korea)</a>
-<a class="sourceLine" id="cb31-5" data-line-number="5">north_set <span class="op">=</span> <span class="bu">set</span>(north_korea)</a>
-<a class="sourceLine" id="cb31-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="bu">print</span>(<span class="ss">f&quot;대한민국 --&gt; 리스트 크기: </span><span class="sc">{</span><span class="bu">len</span>(south_korea)<span class="sc">}</span><span class="ss">, 집합 크기: </span><span class="sc">{</span><span class="bu">len</span>(south_set)<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>대한민국 --&gt; 리스트 크기: 6, 집합 크기: 5</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f&quot;북한     --&gt; 리스트 크기: </span><span class="sc">{</span><span class="bu">len</span>(north_korea)<span class="sc">}</span><span class="ss">, 집합 크기: </span><span class="sc">{</span><span class="bu">len</span>(north_set)<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>북한     --&gt; 리스트 크기: 7, 집합 크기: 5</code></pre>
-<p>집합원소 추가, 삭제, 갱신을 할 경우 <code>.update()</code>, <code>.add()</code>, <code>.discard()</code> 메쏘드를 사용한다.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb35-1" data-line-number="1">south_set.add(<span class="st">&quot;한라산&quot;</span>)</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>대한민국: {'민주주의', '수정자본주의', '자본주의', '한라산', '한반도', '한국어'}</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb37-1" data-line-number="1">south_set.discard(<span class="st">&quot;수정자본주의&quot;</span>)</a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>대한민국: {'민주주의', '자본주의', '한라산', '한반도', '한국어'}</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb39-1" data-line-number="1">south_set.update([<span class="st">&quot;민주주의&quot;</span>, <span class="st">&quot;설악산&quot;</span>, <span class="st">&quot;서울&quot;</span>])</a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>대한민국: {'설악산', '민주주의', '자본주의', '한라산', '서울', '한반도', '한국어'}</code></pre>
-<div id="python-set-operator" class="section level2">
-<h2><span class="header-section-number">4.1</span> 집합 연산</h2>
-<p>집합 자료구조를 갖추게 되면 백미는 친숙한 집합 연산 작업을 수행함에 있다.</p>
-<ul>
-<li><code>.ution()</code> 메쏘드: 합집합, <span class="math inline">\(\cup\)</span></li>
-<li><code>.intersectin()</code> 메쏘드: 교집합, <span class="math inline">\(\cap\)</span></li>
-<li><code>.diff()</code> 메쏘드: 차집합, <span class="math inline">\(\setminus\)</span></li>
-</ul>
-<div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'통일한국 합집합: </span><span class="sc">{</span>south_set<span class="sc">.</span>union(north_set)<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>통일한국 합집합: {'전체주의', '설악산', '사회주의', '민주주의', '자본주의', '한라산', '서울', '한반도', '한국어', '공산주의'}</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'통일한국 교집합: </span><span class="sc">{</span>south_set<span class="sc">.</span>intersection(north_set)<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>통일한국 교집합: {'한국어', '한반도'}</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'통일한국 차집합 A: </span><span class="sc">{</span>south_set<span class="sc">.</span>difference(north_set)<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>통일한국 차집합 A: {'설악산', '민주주의', '자본주의', '한라산', '서울'}</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'통일한국 차집합 B: </span><span class="sc">{</span>north_set<span class="sc">.</span>difference(south_set)<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>통일한국 차집합 B: {'전체주의', '공산주의', '사회주의'}</code></pre>
-</div>
-</div>
-<div id="python-data-structure-dict" class="section level1">
-<h1><span class="header-section-number">5</span> 딕셔너리 (<code>dictionary</code>)</h1>
-<p>파이썬의 뿌리는 딕셔너리 (<code>dictionary</code>)라고 해도 과언은 아니다. 딕셔너리 키는 유일무이하며 변경될 수 없는 제약조건을 충족해야 된다. 딕셔너리 (<code>dictionary</code>) 자료구조는 다음 특징을 갖추고 있다.</p>
-<ol style="list-style-type: decimal">
-<li>키값(key-value)로 짝을 이뤄 데이터가 저장되어 있다.</li>
-<li>딕셔너리를 중합(nestable)할 수 있다.</li>
-<li><code>iterable</code> 반복자를 갖는 대표적인 자료구조다.</li>
-<li><code>dict()</code> 혹은 <code>{}</code>을 사용해서 생성함.</li>
-</ol>
-<p>먼저 <code>{}</code> 으로 <code>ds_dict</code> 텅빈 딕셔너리 객체를 하나 생성시킨다. 그리고 키로 <code>packages</code>, 값으로 <code>features</code>를 염두에 두고 <code>ds_dict[feature] = package</code> 명령어로 딕셔너리를 <code>for</code> 루프를 돌려 생성시킨다. 그리고 나서 <code>ds_dict</code> 딕셔너리에서 <code>feature</code>를 출력시킨다.</p>
-<table>
-<thead>
-<tr class="header">
-<th>키(key)</th>
-<th>값(value)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>dplyr</td>
-<td>“데이터 조작”</td>
-</tr>
-<tr class="even">
-<td>ggplot</td>
-<td>“시각화”</td>
-</tr>
-<tr class="odd">
-<td>broom</td>
-<td>“모형”</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb49-1" data-line-number="1">ds_dict <span class="op">=</span> {}</a>
-<a class="sourceLine" id="cb49-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb49-3" data-line-number="3">packages <span class="op">=</span> [<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot&quot;</span>, <span class="st">&quot;broom&quot;</span>]</a>
-<a class="sourceLine" id="cb49-4" data-line-number="4">features <span class="op">=</span> [<span class="st">&quot;데이터 조작&quot;</span>, <span class="st">&quot;시각화&quot;</span>, <span class="st">&quot;모형&quot;</span>]</a>
-<a class="sourceLine" id="cb49-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb49-6" data-line-number="6">ds_tuple <span class="op">=</span> <span class="bu">zip</span>(packages, features)</a>
-<a class="sourceLine" id="cb49-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb49-8" data-line-number="8"><span class="cf">for</span> package, feature <span class="kw">in</span> ds_tuple:</a>
-<a class="sourceLine" id="cb49-9" data-line-number="9">    ds_dict[package] <span class="op">=</span> feature</a>
-<a class="sourceLine" id="cb49-10" data-line-number="10">    <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>package<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>dplyr, 데이터 조작
-ggplot, 시각화
-broom, 모형</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="cf">for</span> package, feature <span class="kw">in</span> ds_dict.items():</a>
-<a class="sourceLine" id="cb51-2" data-line-number="2">    <span class="bu">print</span>(<span class="ss">f&quot;키: </span><span class="sc">{</span>package<span class="sc">}</span><span class="ss">, 값:</span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>키: dplyr, 값:데이터 조작
-키: ggplot, 값:시각화
-키: broom, 값:모형</code></pre>
-<p><code>.get()</code> 메쏘드를 통해서 키(‘ggplot’)로 ’시각화’를 찾아내고, <code>.keys()</code> 메쏘드로 딕셔너리 전체 키와 <code>.values()</code> 메쏘드로 딕셔너리 전체 값을 찾아낼 수 있다.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb53-1" data-line-number="1">ds_dict.get(<span class="st">'시각화'</span>)</a>
-<a class="sourceLine" id="cb53-2" data-line-number="2">ds_dict.get(<span class="st">'ggplot'</span>)</a></code></pre></div>
-<pre><code>'시각화'</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb55-1" data-line-number="1">ds_dict.keys()</a></code></pre></div>
-<pre><code>dict_keys(['dplyr', 'ggplot', 'broom'])</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb57-1" data-line-number="1">ds_dict.values()</a></code></pre></div>
-<pre><code>dict_values(['데이터 조작', '시각화', '모형'])</code></pre>
-<div id="python-data-structure-dict-operate" class="section level2">
-<h2><span class="header-section-number">5.1</span> 딕셔너리 활용</h2>
-<p>앞서 보왔듯이 딕셔너리에 <code>.items()</code> 메쏘드를 사용해서 키, 값을 뽑아낼 수 있다.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="cf">for</span> package, feature <span class="kw">in</span> ds_dict.items():</a>
-<a class="sourceLine" id="cb59-2" data-line-number="2">    <span class="bu">print</span>(<span class="ss">f&quot;키: </span><span class="sc">{</span>package<span class="sc">}</span><span class="ss">, 값:</span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>키: dplyr, 값:데이터 조작
-키: ggplot, 값:시각화
-키: broom, 값:모형</code></pre>
-<p>조건문(<code>conditional</code>)과 결합하여 <code>ds_dict</code> 딕셔너리에 특정값이 존재하는지도 확인할 수 있다.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="cf">if</span> <span class="st">'ggplot'</span> <span class="kw">in</span> ds_dict:</a>
-<a class="sourceLine" id="cb61-2" data-line-number="2">    <span class="bu">print</span>(<span class="ss">f&quot; ggplot 기능: %s&quot;</span> <span class="op">%</span> ds_dict[<span class="st">'ggplot'</span>])</a>
-<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="cf">else</span>:</a>
-<a class="sourceLine" id="cb61-4" data-line-number="4">    <span class="bu">print</span>(<span class="ss">f&quot;시각화 기능이 없네요!!!&quot;</span>)</a></code></pre></div>
-<pre><code> ggplot 기능: 시각화</code></pre>
-</div>
-<div id="python-data-structure-dict-read" class="section level2">
-<h2><span class="header-section-number">5.2</span> <code>.csv</code> 파일 불러읽기 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></h2>
-<p><code>csv.reader()</code>로 <code>.csv</code> 파일을 불러오게 되면 튜플로 불러오게 되는데 딕셔너리로 불러오고자 하는 경우 <code>csv.DictReader()</code> 메쏘드를 사용한다.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="im">import</span> csv</a>
-<a class="sourceLine" id="cb63-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb63-3" data-line-number="3">csv_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'data/csv_sample.csv'</span>, <span class="st">'r'</span>)</a>
-<a class="sourceLine" id="cb63-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb63-5" data-line-number="5"><span class="cf">for</span> row <span class="kw">in</span> csv.DictReader(csv_file, [<span class="st">'name'</span>, <span class="st">'miles'</span>, <span class="st">'country'</span>]):</a>
-<a class="sourceLine" id="cb63-6" data-line-number="6">    <span class="bu">print</span>(row)</a></code></pre></div>
-<pre><code>OrderedDict([('name', 'A'), ('miles', ' 10'), ('country', ' USA')])
-OrderedDict([('name', 'B'), ('miles', ' 30'), ('country', ' UK')])
-OrderedDict([('name', 'C'), ('miles', ' 4'), ('country', '  IT')])
-OrderedDict([('name', 'A'), ('miles', ' 20'), ('country', ' UK')])
-OrderedDict([('name', 'B'), ('miles', ' 10'), ('country', ' USA')])</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb65-1" data-line-number="1">csv_file.close()</a></code></pre></div>
-</div>
-</div>
-<div id="python-data-structure-conversion" class="section level1">
-<h1><span class="header-section-number">6</span> 자료구조간 변환</h1>
-<p>자료구조간 변환은 다음과 같다.</p>
-<div id="two-lists-dictionary" class="section level2">
-<h2><span class="header-section-number">6.1</span> 두 리스트 → 딕셔너리 <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h2>
-<p>리스트 두개 즉, 문자열 키(key)와 숫자 값(value)을 갖는 리스트를 딕셔너리로 변환시키려면 <code>zip()</code>으로 묶고 <code>dict()</code>으로 변환시켜야 된다.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="co"># 이름 문자열 리스트</span></a>
-<a class="sourceLine" id="cb66-2" data-line-number="2">name_list <span class="op">=</span> [<span class="st">&quot;김현수&quot;</span>, <span class="st">&quot;박상용&quot;</span> , <span class="st">&quot;이정훈&quot;</span> , <span class="st">&quot;최학수&quot;</span> , <span class="st">&quot;최병규&quot;</span>]</a>
-<a class="sourceLine" id="cb66-3" data-line-number="3">    </a>
-<a class="sourceLine" id="cb66-4" data-line-number="4"><span class="co"># 정수 나이 리스트</span></a>
-<a class="sourceLine" id="cb66-5" data-line-number="5">age_list <span class="op">=</span> [<span class="dv">56</span>, <span class="dv">23</span>, <span class="dv">43</span>, <span class="dv">97</span>, <span class="dv">43</span>]</a>
-<a class="sourceLine" id="cb66-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb66-7" data-line-number="7">demo_dict <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(name_list, age_list))</a>
-<a class="sourceLine" id="cb66-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb66-9" data-line-number="9"><span class="bu">print</span>(demo_dict)</a></code></pre></div>
-<pre><code>{'김현수': 56, '박상용': 23, '이정훈': 43, '최학수': 97, '최병규': 43}</code></pre>
-</div>
-<div id="two-tuple-lists-dictionary" class="section level2">
-<h2><span class="header-section-number">6.2</span> 튜플 리스트 → 딕셔너리</h2>
-<p>두개의 튜플 리스트를 딕셔너리로 변환시키는 방법은 <code>dict()</code> 함수를 사용하면 된다.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb68-1" data-line-number="1">demo_list_tup <span class="op">=</span> [(<span class="st">'김현수'</span>, <span class="dv">56</span>), (<span class="st">'박상용'</span>, <span class="dv">23</span>), (<span class="st">'이정훈'</span>, <span class="dv">43</span>), (<span class="st">'최학수'</span>, <span class="dv">97</span>), (<span class="st">'최병규'</span>, <span class="dv">43</span>)]</a>
-<a class="sourceLine" id="cb68-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb68-3" data-line-number="3">demo_dict <span class="op">=</span> <span class="bu">dict</span>(demo_list_tup)</a>
-<a class="sourceLine" id="cb68-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb68-5" data-line-number="5"><span class="bu">print</span>(demo_dict)</a></code></pre></div>
-<pre><code>{'김현수': 56, '박상용': 23, '이정훈': 43, '최학수': 97, '최병규': 43}</code></pre>
-</div>
-<div id="dictionary-list" class="section level2">
-<h2><span class="header-section-number">6.3</span> 딕셔너리 → 리스트</h2>
-<p>딕셔너리를 리스트로 변환시키려면 전체를 리스트로 변환시키려면 <code>.items()</code> 메쏘드를 사용하고 키만 추출하여 리스트로 변환시키려면 <code>.keys()</code>, 값만 추출하여 리스트로 반환시키려면 <code>.values()</code> 메쏘드를 사용한다.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb70-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb70-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f'튜플 리스트: </span><span class="sc">{</span>demo_dict<span class="sc">.</span>items()<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>튜플 리스트: dict_items([('김현수', 56), ('박상용', 23), ('이정훈', 43), ('최학수', 97), ('최병규', 43)])</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'키(key) 리스트: </span><span class="sc">{</span>demo_dict<span class="sc">.</span>keys()<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>키(key) 리스트: dict_keys(['김현수', '박상용', '이정훈', '최학수', '최병규'])</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'값(value) 리스트: </span><span class="sc">{</span>demo_dict<span class="sc">.</span>values()<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>값(value) 리스트: dict_values([56, 23, 43, 97, 43])</code></pre>
-</div>
-</div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p><a href="https://stackoverflow.com/questions/15400165/reading-csv-file-in-python-and-creating-dictionary">stackoverflow, “reading csv file in Python and creating dictionary”</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p><a href="https://thispointer.com/python-how-to-convert-a-list-to-dictionary/">Python : How to convert a list to dictionary?</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
-</ol>
 </div>
 
 
