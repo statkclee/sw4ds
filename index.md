@@ -5,7 +5,7 @@ title: 데이터 사이언스를 위한 소프트웨어 공학
 
 - [R 마크다운 파이썬(Python) 환경설정](sw4ds-oop-python-rmarkdown.html)
 - **파이썬 자료구조**
-    - [자료구조 - 리스트, 튜플, 딕셔너리](sw4ds-python-data-structure.html)
+    - [자료구조 - 리스트, 튜플, 집합, 딕셔너리](sw4ds-python-data-structure.html)
     - [자료구조 - 넘파이, 판다스](sw4ds-python-data-structure-numpy.html)
     - [자료구조 - Count](sw4ds-python-data-structure-count.html)
 - 파이썬 함수와 연산

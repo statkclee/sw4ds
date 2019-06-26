@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2019-06-25" />
+<meta name="date" content="2019-06-26" />
 
 <title>데이터 사이언스 - 파이썬</title>
 
@@ -1683,9 +1683,9 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">데이터 사이언스 - 파이썬</h1>
-<h3 class="subtitle">자료구조 - 리스트, 튜플, 딕셔너리</h3>
+<h3 class="subtitle">자료구조 - 리스트, 튜플, 집합, 딕셔너리</h3>
 <h4 class="author">xwMOOC</h4>
-<h4 class="date">2019-06-25</h4>
+<h4 class="date">2019-06-26</h4>
 
 </div>
 
@@ -1818,13 +1818,13 @@ Detailed traceback:
 <p>집합원소 추가, 삭제, 갱신을 할 경우 <code>.update()</code>, <code>.add()</code>, <code>.discard()</code> 메쏘드를 사용한다.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb35-1" data-line-number="1">south_set.add(<span class="st">&quot;한라산&quot;</span>)</a>
 <a class="sourceLine" id="cb35-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>대한민국: {'민주주의', '수정자본주의', '자본주의', '한라산', '한반도', '한국어'}</code></pre>
+<pre><code>대한민국: {'한국어', '민주주의', '한반도', '한라산', '자본주의', '수정자본주의'}</code></pre>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb37-1" data-line-number="1">south_set.discard(<span class="st">&quot;수정자본주의&quot;</span>)</a>
 <a class="sourceLine" id="cb37-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>대한민국: {'민주주의', '자본주의', '한라산', '한반도', '한국어'}</code></pre>
+<pre><code>대한민국: {'한국어', '민주주의', '한반도', '한라산', '자본주의'}</code></pre>
 <div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb39-1" data-line-number="1">south_set.update([<span class="st">&quot;민주주의&quot;</span>, <span class="st">&quot;설악산&quot;</span>, <span class="st">&quot;서울&quot;</span>])</a>
 <a class="sourceLine" id="cb39-2" data-line-number="2"><span class="bu">print</span>(<span class="ss">f&quot;대한민국: </span><span class="sc">{</span>south_set<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<pre><code>대한민국: {'설악산', '민주주의', '자본주의', '한라산', '서울', '한반도', '한국어'}</code></pre>
+<pre><code>대한민국: {'한국어', '민주주의', '한반도', '한라산', '자본주의', '설악산', '서울'}</code></pre>
 <div id="python-set-operator" class="section level2">
 <h2><span class="header-section-number">4.1</span> 집합 연산</h2>
 <p>집합 자료구조를 갖추게 되면 백미는 친숙한 집합 연산 작업을 수행함에 있다.</p>
@@ -1834,13 +1834,13 @@ Detailed traceback:
 <li><code>.diff()</code> 메쏘드: 차집합, <span class="math inline">\(\setminus\)</span></li>
 </ul>
 <div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'통일한국 합집합: </span><span class="sc">{</span>south_set<span class="sc">.</span>union(north_set)<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>통일한국 합집합: {'전체주의', '설악산', '사회주의', '민주주의', '자본주의', '한라산', '서울', '한반도', '한국어', '공산주의'}</code></pre>
+<pre><code>통일한국 합집합: {'공산주의', '한국어', '민주주의', '한반도', '사회주의', '한라산', '자본주의', '전체주의', '설악산', '서울'}</code></pre>
 <div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'통일한국 교집합: </span><span class="sc">{</span>south_set<span class="sc">.</span>intersection(north_set)<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>통일한국 교집합: {'한국어', '한반도'}</code></pre>
+<pre><code>통일한국 교집합: {'한반도', '한국어'}</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'통일한국 차집합 A: </span><span class="sc">{</span>south_set<span class="sc">.</span>difference(north_set)<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>통일한국 차집합 A: {'설악산', '민주주의', '자본주의', '한라산', '서울'}</code></pre>
+<pre><code>통일한국 차집합 A: {'민주주의', '한라산', '자본주의', '설악산', '서울'}</code></pre>
 <div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="bu">print</span>(<span class="ss">f'통일한국 차집합 B: </span><span class="sc">{</span>north_set<span class="sc">.</span>difference(south_set)<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
-<pre><code>통일한국 차집합 B: {'전체주의', '공산주의', '사회주의'}</code></pre>
+<pre><code>통일한국 차집합 B: {'전체주의', '사회주의', '공산주의'}</code></pre>
 </div>
 </div>
 <div id="python-data-structure-dict" class="section level1">

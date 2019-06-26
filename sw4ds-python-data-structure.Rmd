@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "데이터 사이언스 - 파이썬"
-subtitle: "자료구조 - 리스트, 튜플, 딕셔너리"
+subtitle: "자료구조 - 리스트, 튜플, 집합, 딕셔너리"
 author:
     name: xwMOOC
 date: "`r Sys.Date()`"
