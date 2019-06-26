@@ -6,12 +6,15 @@ title: 데이터 사이언스를 위한 소프트웨어 공학
 - [R 마크다운 파이썬(Python) 환경설정](sw4ds-oop-python-rmarkdown.html)
 - **파이썬 자료구조**
     - [자료구조 - 리스트, 튜플, 집합, 딕셔너리](sw4ds-python-data-structure.html)
+    - [반복자(iterator) - 원소 훑기](sw4ds-python-iterator.html)
+    - [파이썬 comprehension - 반복자 생성](sw4ds-python-comprehension.html)
+    - [자료구조 - `zip`](sw4ds-python-data-structure-zip.html)
+    - [자료구조 - 생성자(generator)](sw4ds-python-data-structure-generator.html)
     - [자료구조 - 넘파이, 판다스](sw4ds-python-data-structure-numpy.html)
-- 파이썬 연산과 함수
-    - [반복자(iterator) - `for` 루프](sw4ds-python-iterator.html)
-    - [파이썬 comprehension](sw4ds-python-comprehension.html)
-    - [파이썬 함수 - 람다 외](sw4ds-python-base.html)
     - [자료구조 - Count](sw4ds-python-data-structure-count.html)
+    - 텐서플로우(tensorflow)
+- 파이썬 함수
+    - [파이썬 함수 - 람다 외](sw4ds-python-base.html)
 - [효율적인 데이터 사이언스 코드](sw4ds-efficient-code.html)
     - [고성능 R코드 작성과 성능비교](perf-writing-efficient-code.html)
     - [R 객체지향 프로그래밍](sw4ds-oop-in-r.html)

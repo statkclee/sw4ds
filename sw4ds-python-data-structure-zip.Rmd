@@ -1,0 +1,123 @@
+---
+layout: page
+title: "데이터 사이언스 - 파이썬"
+subtitle: "자료구조 - `zip`"
+author:
+    name: xwMOOC
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: yes
+    toc_float: true
+    highlight: tango
+    code_folding: show
+    number_section: true
+    self_contained: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
+                      comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
+
+library(reticulate)
+use_condaenv("anaconda3")
+# reticulate::repl_python()
+```
+
+# 파이썬2 vs 파이썬3 [^zip-python] {#python-data-structure-zip}
+
+[^zip-python]: [Rupesh Mishra (May 6, 2017), "Zip in Python"](https://blog.usejournal.com/zip-in-python-48cb4f70d013)
+
+`zip()`은 반복자(iterator)를 하나로 묶어 하나의 새로운 반복자를 만들어 낸다. 파이썬2에서는 튜플 리스트가 반환되었지만, 파이썬3에서는 `zip` 객체 반복자를 반환시킨다.
+
+```{python zip-list}
+# 파이썬 3 기준
+list_a = [1, 2, 3, 4, 5]
+list_b = ['a', 'b', 'c', 'd', 'e']
+
+list_zip = zip(list_a, list_b)
+
+list_zip
+```
+
+`zip` 객체를 다시 풀려고 하면 `zip()` 내부에 `*`을 `zip`객체 앞에 붙어 문제를 해결한다.
+
+```{python zip-unzip}
+first_list, second_list = zip(*list_zip)
+
+print(first_list, second_list)
+```
+
+# `zip` 객체 다루기 {#python-data-structure-zip-traversing}
+
+## `zip` 객체 생성 {#python-zip-create}
+
+영화제목은 문자열, 등장배우는 리스트, 국가별 매출은 딕셔너리로 모두 반복자(iterator) 자료형이다. 이를 `zip()` 함수를 사용해서 `zip` 객체를 만든다.
+
+```{python zip-traversing}
+movie = "Avengers - Endgame"
+characters = ['ironman', 'captain america', 'spinder man']
+sales = {'Korea': 100, 'Japan': 200,'China': 50}
+
+avengers = zip(movie, characters, sales)
+print(avengers)
+```
+
+
+## `for` 루프로 뽑아내기 {#python-zip-for}
+
+`for` 루프로 `zip` 객체를 뽑아내게 되면 서로 길이가 다른 경우 다음과 같이 내부원소가 추출되는 것이 확인된다.
+
+```{python zip-traversing-for}
+for item in avengers:
+    print(item)
+    
+```
+
+## 리스트 튜플 반환 {#python-zip-list-tuple}
+
+`zip`객체는 expendable 속성을 갖고 있어 다시 `zip` 객체를 생성시켜 주어야 한다. 그리고 나서 `list()` 함수로 감싸게 되면 튜플 리스트가 생성된다.
+
+```{python zip-traversing-list-tuple}
+avengers = zip(movie, characters, sales)
+avengers_list = list(avengers)
+print(avengers_list)
+```
+
+## `zip` 객체 &rarr; 리스트 튜플 {#python-zip-list-tuple-reverse}
+
+`zip` 객체, 튜플 리스트를 `zip(*sales)`와 같이 풀어낼 수 있다.
+
+```{python zip-traversing-list-tuple-reverse}
+sales = [('Korea', 100), ('Japan', 200), ('China', 50)]
+
+country, revenue = zip(*sales)
+print(country, revenue)
+```
+
+
+# `zip` 객체 &rarr; 데이터프레임 {#python-zip-list-tuple-dataframe}
+
+`zip` 객체를 데이터프레임으로 생성하는데 칼럼명과 함께 `dict()` 객체를 `pd.DataFrame()`에 넣어 판다스 데이터프레임으로 변환한다. 데이터프레임은 각 칼럼의 길이가 동일해야 하니 이를 염두에 두고 리스트 객체를 데이터프레임으로 변환시킨다.
+
+- 리스트 &rarr; `zip` 객체 &rarr; 딕셔너리 객체 &rarr; 데이터프레임
+
+```{python zip-traversing-dataframe}
+import pandas as pd
+
+# 튜플 리스트
+sales = [('Korea', 100), ('Japan', 200), ('China', 50)]
+
+# zip 객체 생성
+colnames = ['국가', '매출']
+country, revenue = zip(*sales)
+
+sales_zip = zip(colnames, [country, revenue])
+
+# 데이터프레임 생성
+df = pd.DataFrame(dict(sales_zip))
+
+df
+```
