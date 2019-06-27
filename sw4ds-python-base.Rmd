@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "데이터 사이언스 - 파이썬"
-subtitle: "함수와 반복자"
+subtitle: "파이썬 함수 - 람다 외"
 author:
     name: xwMOOC
 date: "`r Sys.Date()`"
@@ -130,6 +130,39 @@ def basic_operation(first, second):
 
 </div>
 
+## 변동되는 인자수를 갖는 함수 {#python-function-variable-args}
+
+만약, 함수의 위치(positional argument) 혹은 인수명(keyword argument)이 인자값이 고정되지 않는 경우는 어떻게 처리할 것인가? 이런 문제에 도입되는 새로운 문법이 `*`을 함수 인자로 넣는 것이다. 이렇게 정의된 함수는 고정길이를 갖는 인자를 갖지 않더라도 함수 결과를 출력하는 것이 가능하다.
+
+`sum_them_all()` 함수에 콤마로 구분되는 숫자를 인자값으로 차례로 넣게 되면 인자수가 고정되지 않더라도 처리할 수 있다. 
+
+```{python variable-argument-function}
+def sum_them_all(*args):
+    result = 0
+    for arg in args:
+        result += arg
+    return result
+
+sum_them_all(1,2,3,4,5)
+```
+
+두번째로 인수명(keyword argment)를 갖는 경우 `**` 두개를 사용해서 함수를 정의하면 되고, 키값(key-value) 짝을 이루는 것이라 이를 풀어서 함수 몸통에서 처리하여 결과를 도출할 수 있다.
+
+`sales` 딕셔너리를 만들고, 이를 `**kwargs` 인자로 넣어 주면 `sum_up()` 함수는 결과값을 반환시켜준다.
+
+```{python variable-argument-function-kwargs}
+def sum_up(**kwargs):
+    result = 0
+    for (key, value) in kwargs.items():
+        result += value
+    return result
+
+sales = {'김철수': 10, '강병원': 20, '문정훈': 30, '간정연': 10}
+
+sum_up(**sales)
+```
+
+
 # 람다 함수 {#python-lambda}
 
 ## 리스트 원소를 제곱 {#python-lambda-function-basic}
@@ -181,6 +214,103 @@ data_data = map(lambda num: num * num, data)
 print(list(data_data))
 ```
 
+## 람다 함수와 비교 {#python-lambda-comparison}
+
+람다 함수는 꼭 필요한 경우 `for` 루프를 대체하여 사용하는데 대표적인 사용례는 다음과 같다.
+
+- 콜백(callback)
+- 작은 작업을 함수로 구현하여 처리
+
+<div class = "row">
+  <div class = "col-md-6">
+**람다 함수**
+
+```{python callback-lambda-01, eval=FALSE}
+.............. lambda .....
+```
+
+```{python callback-lambda-02, eval=FALSE}
+square_number = lambda .....
+```
+
+```{python callback-lambda-03, eval=FALSE}
+square_number = lambda x
+```
+
+```{python callback-lambda-04, eval=FALSE}
+square_number = lambda x: x * x
+```
+
+```{python callback-lambda-05}
+square_number(7)
+```
+
+
+  </div>
+  <div class = "col-md-6">
+**`def` 함수**
+
+```{python callback-def-01, eval=FALSE}
+def .............
+```
+
+```{python callback-def-02, eval=FALSE}
+def square_numbers
+```
+
+```{python callback-def-03, eval=FALSE}
+def square_numbers(x):
+```
+
+```{python callback-def-04}
+def square_numbers(x):
+    return x * x
+```
+
+```{python callback-def-05}
+square_numbers(7)
+```
+
+
+  </div>
+</div>
+
+
+## 콜백(callback) 함수 {#callback-function}
+
+콜백(callback)함수는 call-after 함수라고 불리기도 하며 여기에 의미하는 바와 같이 함수의 인자로 함께 불려 전달이 되지만 바로 실행되지 않고 실제 수행은 나중에 되는 함수를 의미한다. `caller()` 함수가 함수와 함께 인자를 함께 전달받아 가져가지만 실행은 나중에 된다.
+
+이런 간단한 함수의 경우 람다 함수로 구현하게 되면 코드도 단순해지고 직관적으로 바뀐다.
+
+<div class = "row">
+  <div class = "col-md-6">
+**전통적인 구현방법**
+
+```{python callback-function}
+def square_number(number):
+    """ 콜백함수 """
+    return number * number
+
+def caller(func, number):
+    return func(number)
+
+caller(square_number, 5)
+```
+
+
+  </div>
+  <div class = "col-md-6">
+**람다 함수 구현**
+
+```{python callback-function-lambda}
+caller(lambda x: x**2, 5)
+```
+
+  </div>
+</div>
+
+
+
 # 오류 처리 {#python-error-handling}
 
 함수가 매번 올바르게 처리되는 경우는 없다. 경우에 따라서는 오류가 명백한 경우도 많아 이에 대한 예외처리가 필수적이다. 다음 사례를 살펴보면 `log_number()` 함수는 숫자를 매개변수로 넘겨받아 상용로그로 변환하는 역할  수행하는데 문자열 `Korea`가 넘어오게 되면 처리를 할 수 없는데 상식적으로 `Korea`에 상용로그를 취하게 되는 의미는 무엇을까? 이런 경우 오류가 나오는 것이 당연하다.
@@ -212,168 +342,143 @@ log_number(0)
 log_number('Korea')
 ```
 
+# 사례 연구 {#function-case-study}
 
-# 파이썬 반복자(iterators) {#python-iterators}
+## 자료형별로 정렬 {#sort-by-types}
 
-## `for` 루프 반복자 - 리스트 {#python-iterators-for-loop}
+문자와 숫자가 뒤섞인 입력값을 받아 문자는 문자대로 숫자는 숫자대로 구분하여 출력시키는 함수를 작성한다.
 
-파이썬에서 가장 일반적인 자료구조인 리스트(`list`)에 대한 반복자(`iterator`)로 `for` 루프를 사용해보자.
-`iterable`에는 리스트(list), 문자열(string), 딕셔너리(dictionary) 등이 포함되고 `iter()`를 적용시커 반복자(`iterator`)를 생성시킨다.
+1. 임의 입력값이 들어가기 때문에 `*args` 인자를 함수 인자로 지정한다.
+1. 문자와 숫자 결과를 저장시키는 텅빈 리스트를 각각 생성한다.
+1. 자료형을 확인하는 일반함수 `isinstance()`를 활용하여 문자인지 숫자인지 판정하고 해당 인자를 문자리스트와 숫자리스트에 각각 저장한다.
+1. 튜플로 결과값을 반환시킨다.
 
-```{python python-iterator-for}
-languages = ["R", "파이썬", "C/C++"]
-
-for language in languages:
-  print(f"데이터 사이언스 언어: {language}")
-```
-
-## `for` 루프 반복자 - 딕셔너리 {#python-iterators-for-loop-dictionary}
-
-딕셔너리(dictionary)는 키-값(key-value)를 갖는 자료형이다. 딕셔너리에 `.items()`를 `for`문과 결합하여 사용한다. 
-
-```{python python-iterator-for-dictionary}
-data_science = {"R": "젠틀맨, 이하카",
-            "파이썬": "귀도 반 로섬",
-            "C/C++": "톰슨, 리치"}
+```{python sort-by-types}
+def classify_datatype(*args):
+    int_nums, float_nums, strings = [], [], []    
+    for arg in args:
+        # 정수형이면 정수로 구분
+        if isinstance(arg, int):
+            int_nums.append(arg)
+        # 실수형이면 실수로 구분
+        elif isinstance(arg, float):
+            float_nums.append(arg)
+        # 문자형이면 문자로 구분
+        elif isinstance(arg, str):
+            strings.append(arg)
+    
+    return (int_nums, strings, float_nums)
             
-for language, creator in data_science.items():
-    print(f"- 데이터 사이언스 언어: {language}, \n ㄴ 창시자: {creator}")
-```
-
-## `for` 루프 반복자 - `enumerate` {#python-iterators-for-loop-enumerate}
-
-`enumerate()`를 사용하게 되면 `index`를 얻게 되어 앞서 `for`문에 리스트를 사용할 때에 비해 도움이 되는 경우가 많다. `print(list(enumerate(models)))`을 출력시켜 보면 기존 리스트(`models`)에 `index`가 붙은 튜플 리스트를 확인할 수 있다.
-
-```{python python-iterator-for-enumerate}
-models = ["회귀분석", "기계학습", "딥러닝"]
-
-print(list(enumerate(models)))
-
-for index, model in enumerate(models, start=1):
-  print(f"- 데이터 사이언스 모형 {index}: {model}")
+classify_datatype(100, 2.7, '한국', '독일', 7, 53, '사랑', 0.9, 3.14)
 ```
 
 
-## `for` 루프 반복자 - `zip` {#python-iterators-for-loop-zip}
-
-`zip()`을 사용하게 되면 리스트와 리스트를 결합할 때 유용하다.
+# map, filter, reduce {#map-filter-reduce}
 
 
-```{python python-iterator-for-zip}
-languages = ["R", "파이썬", "텐서플로우"]
-models   = ["회귀분석", "기계학습", "딥러닝"]
+## `map()` 함수 {#map-filter-reduce-map}
 
-for language, model in zip(languages, models):
-  print(f"데이터 사이언스 언어: {language}, 모형: {model}")
+`map()`는 `iterable`에 대해서 함수를 각 원소별로 적용시킨다고 볼 수 있다.
+
+- map: `[1,2,3,4,5]` &rarr; 함수($x^2$) &rarr; [1,4,9,16,25]
+
+`map()` 연산을 취하게 되면 결과값이 `iterable`이라 이를 `list()` 혹은 `for`루프로 풀어줘야 한다.
+
+```{python map-square}
+def square_num(x):
+    return x**2
+
+squared = map(square_num, [1,2,3,4,5])
+
+for item in squared:
+    print(item)
+    
+# list(squared)
 ```
 
-특히 `*`을 사용하면 압축(`zip`)한 것을 `unzip`하여 풀 수 있다.
+이를 확장하여 람다 함수로 `square_num()` 함수를 대체할 수 있다.
 
-```{python python-iterator-for-zip-star}
-solution = zip(languages, models)
+```{python map-sqaured-lambda}
 
-print(*solution)
+list(map(lambda x: x**2, [1,2,3,4,5]))
+
 ```
 
-# `List comprehensions` (리스트 포함) [^list-comprehension] {#python-list-comprehension}
+이를 확장하여 벡터 내적을 구하는 사례를 살펴보자. 먼저 수식으로 나타내면 $\vec{x} = \begin{bmatrix}1&2&3\end{bmatrix}$ 이고 $\vec{y} = \begin{bmatrix}1\\2\\3\end{bmatrix}$으로 둘을 곱하게 되면 다음과 같이 표현할 수 있다.
 
-[^list-comprehension]: [mingrammer's note, '파이썬의 Comprehension 소개'](https://mingrammer.com/introduce-comprehension-of-python/)
+$\vec{x} \cdot \vec{y} = \begin{bmatrix}1&2&3\end{bmatrix} \times \begin{bmatrix}1\\2\\3\end{bmatrix} = \begin{bmatrix}1&4&9\end{bmatrix}$
 
-`List comprehensions`에 대한 적절한 번역은 없는 상황이라 '리스트 축약' 혹은 '리스트 포함'이라고 번역하는 경우가 가끔있고 그냥 영어로 `List comprehensions`을 사용한다.
+이를 `map()` 함수로 두 벡터의 내적을 계산하면 다음과 같이 간결하게 표현할 수 있다. 
 
-`Comprehension`이란 반복가능한(iterable)한 객체를 생성시키는 파이썬에서 자주 사용하는 방법으로 자료형에 따라 다음과 같이 나눠진다.
+```{python map-sqaured-lambda-inner-product}
+x_vec = [1,2,3]
+y_vec = [1,2,3]
 
-- List Comprehension: 리스트
-- Set Comprehension: 집합
-- Dictionary Comprehension: 딕셔너리
-- Generator Expression: 생성자
-
-## 들어가며  {#python-list-comprehension}
-
-리스트로 숫자가 담긴 객체 `numbers`가 있다 모든 숫자에 2를 곱하고자 하는 경우
-다음과 같이 2를 곱한 연산 결과를 담을 리스트 객체 `res_number`를 만들어 생성시킨다.
-그리고 나서 리스트 각 원소를 꺼내 2를 곱한 후에 `.append()` 메쏘드로 각 계산된 값을 채워넣는다.
-
-```{python python-list-comprehension}
-numbers = [1,2,3,4,5]
-
-res_number = []
-
-for number in numbers:
-    res_number.append(number * 2)
-
-print(res_number)
+list(map(lambda x, y: x * y, x_vec, y_vec))
 ```
 
-`for`문장으로 작성한 코드가 `list comprehension`으로 작성하게 되면 2줄이 한 줄로 준 것을 확인할 수 있다.
+## `filter()` 함수 {#map-filter-reduce-map-filter}
 
-```{python python-list-comprehension-do-it}
-lc_number = [number * 2 for number in numbers]
+`map()`와 `iterable`에 대해서 함수를 각 원소별로 적용시킨다는 점에서는 동일하지만 조건에 맞는 것을 추려낸다.
 
-print(lc_number)
+- filter: `[-3,-2,-1,0,1,2,3]` &rarr; 함수(양수) &rarr; [1,2,3]
+
+`map()` 연산과 마찬가지로 결과값이 `iterable`이라 이를 `list()` 혹은 `for`루프로 풀어줘야 한다.
+
+```{python map-filter-positive}
+def get_positive(x):
+   return x > 0
+
+list(filter(get_positive, [-3,-2,-1,0,1,2,3]))
 ```
 
-`list comprehension`은 표현식, 반복변수, 반복자로 구성되어 `for` 루프를 한줄로 간결하게 표현할 수 있도록 도움을 준다.
+이를 람다 함수로 작성하면 다음과 같이 간략히 코드를 작성할 수 있다.
 
-<style>
-div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 10px;}
-</style>
-<div class = "blue">
-
-- **list comprehension 구성요소 **
-    - 표현식: `number * 2`
-    - 반복변수(iterator variable): `number`
-    - 반복자(iterator): 리스트 `numbers`
-
-</div>
-
-## 조건문이 붙은 `list comprehension` {#python-list-comprehension-conditional}
-
-먼저 `list comprehension`을 사용해서 1--10사이 숫자를 리스트에 담아둔다.
-조건문(`conditional`)을 `list comprehension` 뒤에 붙여 1 -- 10까지 숫자 중 짝수와 홀수만 발라낸다.
-`%`는 나머지 연산자를 사용해서 2로 나눠 0과 1을 기준으로 홀수와 짝수로 구분한다.
-
-```{python python-list-comprehension-conditional}
-whole_numbers = [number for number in range(1, 11)]
-print(f"전체 숫자: {whole_numbers}")
-
-even_numbers = [number for number in whole_numbers if number % 2 == 0]
-print(f"짝수: {even_numbers}")
-
-odd_numbers = [number for number in whole_numbers if number % 2 == 1]
-print(f"홀수: {odd_numbers}")
+```{python map-filter-positive-lambda}
+list(filter(lambda x: x > 0, [-3,-2,-1,0,1,2,3]))
 ```
 
-`if` 조건문을 앞으로 가져와서 `if-else`조합을 하게 되면 짝수만 남겨두고 홀수를 0으로 대체하는 것이 가능하다.
 
-```{python python-list-comprehension-conditional2}
-only_even_numbers = [number if number % 2 == 0 else 0 for number in whole_numbers]
-print(f"짝수: {only_even_numbers}")
+## `reduce()` 함수 {#map-filter-reduce-map-reduce}
+
+`map()`, `filter()`와 `iterable`에 대해서 함수를 적용시켜 `iterable`과 동일한 자료형을 갖는 상수를 만들어 낸다.
+유의할 점은 `reduce()`는 뭔가 줄이기 위해서 두개 인자를 필요로 한다는 점에서 차이가 난다.
+
+- reduce: `[-3,-2,-1,0,1,2,3]` &rarr; 함수(최대값) &rarr; 3
+
+```{python map-filter-reduce}
+from functools import reduce
+
+def find_max(x, y):
+    if x > y:
+        return x
+    else:
+        return y
+
+reduce(find_max, [-3,-2,-1,0,1,2,3])
 ```
 
-## `dictionary comprehension` {#python-dictionary-comprehension}
+마찬가지로 람다 함수로 표현하면 다음과 같다.
 
-`dictinary comprehension`은 동일하고 `[` 대신에 `{`을 사용한다는 측면에서 차이가 난다.
-짝수면 2로 나누고 홀수면 -1을 곱하여 음수로 만든 딕셔너리를 만들어낸다.
-
-```{python python-dictionary-comprehension}
-dict_numbers = {number / 2 if number % 2 == 0 else -number for number in whole_numbers}
-print(f"딕셔너리 매직: {dict_numbers}")
+```{python map-filter-reduce-lambda}
+reduce(lambda x, y: x if x > y else y, [-3,-2,-1,0,1,2,3])
 ```
 
-<style>
-div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 10px;}
-</style>
-<div class = "blue">
 
-`리스트(list)`와  `딕셔너리(Dictionary)`를 다음표를 통해서 비교할 수 있다.
+# 재귀(recursion) {#function-recursion}
 
-| 리스트(list) | 딕셔너리(Dictionary) |
-|--------------------------|--------------------------|
-| `[]`을 사용해서 선택, 갱신, 제거 | `[]`을 사용해서 선택, 갱신, 제거 |
-| 숫자 범위를 `index`로 사용 | 유일무이한 키를 `index`로 사용 |
-| 값(value)들을 모아놓은 것, 순서가 있음 | 유일무이한 키를 갖는 lookup 테이블 |
+재귀는 반복(`for`, `while`) 루프를 제거하여 코드를 더 간결하게 작성할 수 있다. 근본적으로 의사결정나무도 내부적으로 보면 재귀 로직을 취하고 있어 이를 이해하는 것은 데이터 사이언스 코딩에 중요한 역할을 한다. 재귀 프로그래밍은 크게 두가지로 나뉜다. 큰 문제를 유사한 작은 문제로 나누는 것과 함께 무한반복을 막아 탈출할 수 있게 되는 기본 사례로 구성된다.
 
-</div>
+`countdown()` 함수 내부에 `for`루프를 돌려 숫자를 내려서 발사시키는 함수 대신 재귀기능을 넣어 직관적으로 코드를 작성할 수 있다.
+
+```{python recursion}
+def countdown(n):
+    if n <= 1:
+        print("발사(Blast off) !!!")
+    else:
+        return countdown(n-1)
+
+countdown(5)
+```
 
 
