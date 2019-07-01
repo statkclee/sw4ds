@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "데이터 사이언스 - 파이썬"
-subtitle: "자료구조 - `zip`"
+subtitle: "`zip`/딕셔너리 &rarr; 데이터프레임"
 author:
     name: xwMOOC
 date: "`r Sys.Date()`"
@@ -26,7 +26,10 @@ use_condaenv("anaconda3")
 # reticulate::repl_python()
 ```
 
-# 파이썬2 vs 파이썬3 [^zip-python] {#python-data-structure-zip}
+
+# `zip` 객체 다루기 {#python-data-structure-zip-traversing}
+
+## 파이썬2 vs 파이썬3 [^zip-python] {#python-data-structure-zip}
 
 [^zip-python]: [Rupesh Mishra (May 6, 2017), "Zip in Python"](https://blog.usejournal.com/zip-in-python-48cb4f70d013)
 
@@ -50,7 +53,6 @@ first_list, second_list = zip(*list_zip)
 print(first_list, second_list)
 ```
 
-# `zip` 객체 다루기 {#python-data-structure-zip-traversing}
 
 ## `zip` 객체 생성 {#python-zip-create}
 
@@ -121,3 +123,67 @@ df = pd.DataFrame(dict(sales_zip))
 
 df
 ```
+
+# 딕셔너리 &rarr; 데이터프레임 {#dictionary-to-dataframe}
+
+딕셔너리를 데이터프레임으로 변경시키는 방법은 몇가지가 있다.
+가장 일반적인 형태를 아래와 같이 `raw_data` 딕셔너리로 구성되어 있는 경우 이를 `pd.DataFrame()` 메쏘드를 사용해서 데이터프레임으로 변경시킨다.
+
+```{python dictionary-to-dataframe-01}
+import pandas as pd
+
+raw_data = {
+    '요일': ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'], 
+    '공휴일': [True, True, True, False, True, True, False],
+    '알바수입': [100000, 150000, 50000, 30000, 200000, 120000, 10000]
+}
+
+raw_df = pd.DataFrame(raw_data)
+
+raw_df
+```
+
+[Using Python Dictionary as a database](https://developer.rhino3d.com/guides/rhinopython/python-dictionary-database/) 블로그에 나온 중첩된 형태의 딕셔너리를 다루기 위해서 우선 딕셔너리 계층구조를 이해한다. `office`가 가장 최상이고 그 아래 `medical`과 `parking`이 위한다. 이중 `datastore['office']['medical']`만 추려 데이터프레임으로 변환시킨다.
+
+```{python nested-dictionary}
+
+datastore = { "office": {
+    "medical": [
+      { "room-number": 100,
+        "use": "reception",
+        "sq-ft": 50,
+        "price": 75
+      },
+      { "room-number": 101,
+        "use": "waiting",
+        "sq-ft": 250,
+        "price": 75
+      },
+      { "room-number": 102,
+        "use": "examination",
+        "sq-ft": 125,
+        "price": 150
+      },
+      { "room-number": 103,
+        "use": "examination",
+        "sq-ft": 125,
+        "price": 150
+      },
+      { "room-number": 104,
+        "use": "office",
+        "sq-ft": 150,
+        "price": 100
+      }
+    ],
+    "parking": {
+      "location": "premium",
+      "style": "covered",
+      "price": 750
+    }
+  }
+}
+
+pd.DataFrame(datastore['office']['medical'])
+
+```
+

@@ -8,7 +8,7 @@ title: 데이터 사이언스를 위한 소프트웨어 공학
     - [자료구조 - 리스트, 튜플, 집합, 딕셔너리](sw4ds-python-data-structure.html)
     - [반복자(iterator) - 원소 훑기](sw4ds-python-iterator.html)
     - [파이썬 comprehension - 반복자 생성](sw4ds-python-comprehension.html)
-    - [자료구조 - `zip`](sw4ds-python-data-structure-zip.html)
+    - [`zip`/딕셔너리 &rarr; 데이터프레임](sw4ds-python-data-structure-zip.html)
     - [자료구조 - 생성자(generator)](sw4ds-python-data-structure-generator.html)
     - [자료구조 - 넘파이, 판다스](sw4ds-python-data-structure-numpy.html)
     - [자료구조 - Count](sw4ds-python-data-structure-count.html)
