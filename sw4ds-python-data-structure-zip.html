@@ -1702,7 +1702,7 @@ div.tocify {
 <a class="sourceLine" id="cb1-5" data-line-number="5">list_zip <span class="op">=</span> <span class="bu">zip</span>(list_a, list_b)</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7">list_zip</a></code></pre></div>
-<pre><code>&lt;zip object at 0x11e87ce88&gt;</code></pre>
+<pre><code>&lt;zip object at 0x11d490e08&gt;</code></pre>
 <p><code>zip</code> 객체를 다시 풀려고 하면 <code>zip()</code> 내부에 <code>*</code>을 <code>zip</code>객체 앞에 붙어 문제를 해결한다.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1">first_list, second_list <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>list_zip)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
@@ -1718,7 +1718,7 @@ div.tocify {
 <a class="sourceLine" id="cb5-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">avengers <span class="op">=</span> <span class="bu">zip</span>(movie, characters, sales)</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="bu">print</span>(avengers)</a></code></pre></div>
-<pre><code>&lt;zip object at 0x11ea88388&gt;</code></pre>
+<pre><code>&lt;zip object at 0x11d5e8088&gt;</code></pre>
 </div>
 <div id="python-zip-for" class="section level2">
 <h2><span class="header-section-number">1.3</span> <code>for</code> 루프로 뽑아내기</h2>
@@ -1842,10 +1842,81 @@ div.tocify {
 3    150          103    125  examination
 4    100          104    150       office</code></pre>
 </div>
+<div id="json-vs-python" class="section level1">
+<h1><span class="header-section-number">4</span> <code>JSON</code> vs 파이썬 <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h1>
+<p>웹크롤링을 통해 데이터를 입수하거나 API를 통해 데이터를 얻게 되면 JSON 형태 데이터를 많이 다루게 된다. 이런 경우 JSON을 적절한 파이썬 자료형태로 변환시켜두는 것이 향후 데이터 분석과 활용에 큰 도움이 되는 경우가 많다. 크게 JSON 객체(object)는 파이썬 딕셔너리로 JSON 배열(array)늘 파이썬 리스트로 변환되는 것을 기억하는 것이 좋겠다.</p>
+<table>
+<thead>
+<tr class="header">
+<th>JSON</th>
+<th>Python</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>object</td>
+<td>dict</td>
+</tr>
+<tr class="even">
+<td>array</td>
+<td>list</td>
+</tr>
+<tr class="odd">
+<td>string</td>
+<td>str</td>
+</tr>
+<tr class="even">
+<td>number(int)</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>number(real)</td>
+<td>float</td>
+</tr>
+<tr class="even">
+<td>true</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td>false</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td>null</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>JSON 배열 데이터를 파이썬으로 넘길 경우 <code>json.load()</code> 메쏘드를 사용해서 키값(key-value) 짝을 맞춰 저장할 수 있다.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="im">import</span> json</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">drink_array <span class="op">=</span> <span class="st">'{&quot;음료&quot;: [&quot;스타벅스&quot;, &quot;커피빈&quot;, &quot;안티구와&quot;, &quot;커피콩&quot;]}'</span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">drink_data <span class="op">=</span> json.loads(drink_array)</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="bu">print</span>(<span class="ss">f'자료형: </span><span class="sc">{</span><span class="bu">type</span>(drink_data)<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
+<pre><code>자료형: &lt;class 'dict'&gt;</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="cf">for</span> item <span class="kw">in</span> drink_data[<span class="st">'음료'</span>]:</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">    <span class="bu">print</span>(<span class="ss">f'음료: </span><span class="sc">{</span>item<span class="sc">}</span><span class="ss">'</span>)</a></code></pre></div>
+<pre><code>음료: 스타벅스
+음료: 커피빈
+음료: 안티구와
+음료: 커피콩</code></pre>
+<p>JSON 객체를 파이썬 딕셔너리로 변환시켜서 이를 <code>for</code> 루프를 사용해서 간략히 출력한다.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb23-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">json_input <span class="op">=</span> <span class="st">'{&quot;persons&quot;: [{&quot;name&quot;: &quot;Brian&quot;, &quot;city&quot;: &quot;Seattle&quot;}, {&quot;name&quot;: &quot;David&quot;, &quot;city&quot;: &quot;Amsterdam&quot;} ] }'</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">person_dict <span class="op">=</span> json.loads(json_input)</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="cf">for</span> item <span class="kw">in</span> person_dict[<span class="st">'persons'</span>]:</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">    <span class="bu">print</span>(item[<span class="st">'name'</span>])</a></code></pre></div>
+<pre><code>Brian
+David</code></pre>
+</div>
 <div class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p><a href="https://blog.usejournal.com/zip-in-python-48cb4f70d013">Rupesh Mishra (May 6, 2017), “Zip in Python”</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a href="https://pythonspot.com/json-encoding-and-decoding-with-python/">Python Tutorials, “JSON encoding and decoding with Python”</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 
