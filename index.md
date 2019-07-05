@@ -10,7 +10,8 @@ title: 데이터 사이언스를 위한 소프트웨어 공학
     - [파이썬 comprehension - 반복자 생성](sw4ds-python-comprehension.html)
     - [`zip`/딕셔너리 &rarr; 데이터프레임](sw4ds-python-data-structure-zip.html)
     - [자료구조 - 생성자(generator)](sw4ds-python-data-structure-generator.html)
-    - [자료구조 - 넘파이, 판다스](sw4ds-python-data-structure-numpy.html)
+    - [자료구조 - 넘파이(numpy)](sw4ds-python-data-structure-numpy.html)
+    - [자료구조 - 판다스(pandas)](sw4ds-python-data-structure-pandas.html)
     - [자료구조 - Count](sw4ds-python-data-structure-count.html)
     - 텐서플로우(tensorflow)
 - 파이썬 함수
