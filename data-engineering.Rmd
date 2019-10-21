@@ -91,4 +91,23 @@ use_condaenv("anaconda3")
 | 마이크로소프트 (Azure)    | 데이터베이스             | SQL Database             |
 | 구글 (GCP)                | 데이터베이스             | Cloud SQl     |
 
+# 데이터 처리 자동화 {#data-science-automation}
 
+## 빅데이터 아닌 경우 {#data-science-auto-small}
+
+리눅스 운영체제에 배쉬쉘을 사용하여 데이터 처리를 자동화할 경우 데이터 가져오는 단계부터 마지막 예측하여 활용하는 단계까지 모듈화시킬 수 있으며 이를 자동화한다. 이를 위해서 각 단계를 `.R`, `.py` 스크립트로 분리시키고 이를 배쉬쉘에서 불러 자동화시켜 처리한다.
+
+- ingest.R 스크립트 (ingest.R)
+- preprocess.R 스크립트 (preprocess.R)
+- eda_report.R 스크립트 (eda_report.R)
+- model.R 스크립트 (model.R)
+- predict.R 스크립트 (predict.R)
+
+![단일 컴퓨터 데이터 처리 자동화](fig/automation-single.png){#id .class width="100%"}
+
+## 빅데이터 경우 {#data-science-auto-big}
+
+빅데이터의 경우 컴퓨터를 클러스터로 묶어 하둡/스파크에서 처리하는 것이 일반적이며 한번 처리하는 것이 아니고 매일 혹은 매주, 특정 시간을 반복적으로 사용하는 경우 [아파치 에어플로어(Apache Airflow)](https://airflow.apache.org/)를 많이 사용한다. 따라서, 빅데이터 처리를 위해서 스파크 하둡 클러스터로 돌려야 하고, 데이터 처리 자동화를 위해서 `cron` 대신에 airbnb에서 개발한 [아파치 에어플로어](https://airflow.apache.org/)를 도입하여 자동화 시킨다.
+
+
+![빅데이터 처리 자동화](fig/automation-airflow.png){#id .class width="100%"}
