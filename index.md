@@ -31,4 +31,5 @@ title: 데이터 사이언스를 위한 소프트웨어 공학
 - [전이학습(Transfer Learning)](sw4ds-transfer-learning.html)
     - [사진 속 객체 인식 - `keras`](sw4ds-keras-image-object.html)
 - [데이터 공학(Data Engineering)](data-engineering.html)
-
+    - [데이터 가져오기 - `ingest.R`](sw4ds-ingest.html)
+    - [자동화 헬로월드 - `wsl` + `crontab`](sw4ds-automation-helloworld.html)
