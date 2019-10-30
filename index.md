@@ -33,3 +33,4 @@ title: 데이터 사이언스를 위한 소프트웨어 공학
 - [데이터 공학(Data Engineering)](data-engineering.html)
     - [데이터 가져오기 - `ingest.R`](sw4ds-ingest.html)
     - [자동화 헬로월드 - `wsl` + `crontab`](sw4ds-automation-helloworld.html)
+    - [지진데이터 `cron` 자동화: 보고서 생성](sw4ds-earthquake-make-report.html)
