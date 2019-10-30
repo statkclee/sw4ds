@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "데이터 사이언스를 위한 소프트웨어 공학"
-subtitle: "지진데이터 `cron` 자동화: 웹사이트 &rarr; SQLite3"
+subtitle: "지진데이터 `cron` 자동화: 보고서 생성"
 author:
     name: xwMOOC
     url: https://www.facebook.com/groups/tidyverse/
