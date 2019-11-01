@@ -24,7 +24,6 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
                       comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
 ```
 
-![자동화 전반적인 개요](fig/automation-overview.png){#id .class width="100%"}
 
 # 지진발생 자동보고서 {#earthquake-crawling-report}
 
@@ -75,30 +74,3 @@ leaflet(data = hour_df) %>%
                    ))) 
 ```
 
-# 보고서 스크립트 생성 {#automate-eq-report}
-
-앞선 [지진발생 자동보고서](#earthquake-crawling-report)를 CLI 배쉬쉘에서 다음 명령어로 생성을 자동화할 수 있다. 
-
-```{r automate-report, eval=FALSE}
-# cron-earthquake-rmd.R
-# 0. 환경설정 ---------------------------------------
-library(tidyverse)
-
-# 1. 보고서 만들기 ---------------------------------------
-
-rmarkdown::render("sw4ds-automation-earthquake-cron-job.Rmd", 
-                output_format="html_document",
-                params = list(province = province),
-output_file = str_c(paste0("earthquake_report_"), Sys.Date(), ".html", sep=""),
-encoding = 'UTF-8', 
-output_dir = "report")
-```
-
-즉, `cron-earthquake-rmd.R`를 `Rscript` 명령어로 실행시키게 되면 강제로 `.html` 보고서를 생성시킬 수 있다.
-
-```{r generte-report, eval=FALSE}
-$ Rscript cron-earthquake-rmd.R 
-```
-
-
-![R 스크립트 사용 HTML 보고서 생성](fig/cron-generate-html.png){#id .class width="57%"}
