@@ -3,7 +3,7 @@ layout: page
 title: "객체지향 프로그래밍"
 subtitle: "R 마크다운 파이썬(Python) 환경설정"
 author:
-    name: xwMOOC
+    name: "[Tidyverse Korea](https://web.facebook.com/groups/tidyverse/)"
 date: "`r Sys.Date()`"
 output:
   html_document: 
@@ -42,6 +42,37 @@ R마크다운으로 파이썬 객체지향 프로그래밍 내용을 정리할 �
 library(reticulate)
 use_condaenv("anaconda3")
 ```
+
+## 아나콘다 설치 확인 {#confirm-anaconda-home}
+
+맥OS를 포함한 유닉스 계열 `which python` 명령어, 윈도우는 `where python` 명령어를 실행시키게 되면 불러다 사용할 `python` 프로그램을 확인할 수 있다. 
+
+```{bash confirm-anaconda}
+which python
+```
+
+## 경로명 추가 {#confirm-anaconda-home-path}
+
+`echo $HOME` 명령어를 사용해서 사용자 홈 위치를 파악한다.
+이것을 파악해야 하는 이유는 `anaconda3` 설치경로를 확정지어야 하기 때문이다.
+
+```{bash confirm-anaconda-path-echo-check, eval = TRUE}
+echo $HOME
+```
+
+이제 `anaconda3`에 설치된 프로그램을 모두 이용하려면 다음과 같이 `.bash_profile`에 경로명을 추가하여 쉘에서 참조하여 사용할 수 있도록 준비한다.
+
+```{r confirm-anaconda-path, eval = FALSE}
+export PATH="$HOME/anaconda3/bin:$PATH"
+```
+
+`pip`와 더불어 대표적인 팩키지 관리자인 `conda`도 확인한다.
+
+```{bash confirm-anaconda-path-conda, eval = FALSE}
+which conda
+/Users/statkclee/anaconda3/bin/conda
+```
+
 
 # 헬로 파이썬 {#rmarkdown-python-hello-world} 
 
